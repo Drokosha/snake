@@ -1,62 +1,13 @@
 class SnakePart {
-                constructor(pos, prev, next) {
-                    this.coord = pos;
-                    this.next = next;
-                    this.prev = prev;
+    constructor(pos, prev, next) {
+        this.coord = pos;
+        this.next = next;
+        this.prev = prev;
+    }
+                Draw(){
+                    Snape ();
+                    this.Shape() = dir;
                 }
-            }
-window.onload = function() {
-    const canvas = document.getElementById("field");
-    const ctx = canvas.getContext("2d");
-            Draw(){
-               Snape ();
-               this.Shape() = dir;
-               switch (dir){
-                        case 1:
-                            this.DrawHead(dir);
-                            break;
-                        case 2:
-                            this.DrawHead(dir);
-                            break;
-                        case 3:
-                            this.DrawHead(dir);
-                            break;
-                        case 4:
-                            this.DrawHead(dir);
-                            break;
-                        case 10:
-                            this.DrawStraight(dir);
-                            break;
-                        case 11:
-                            this.DrawStraight(dir);
-                            break;
-                        case 20:
-                            this.DrawTurn(dir);
-                            break;
-                        case 21:
-                            this.DrawTurn(dir);
-                            break;
-                        case 22:
-                            this.DrawTurn(dir);
-                            break;
-                        case 23:
-                            this.DrawTurn(dir);
-                            break;
-                        case 30:
-                            this.DrawTail(dir);
-                            break;
-                        case 31:
-                            this.DrawTail(dir);
-                            break;
-                        case 32:
-                            this.DrawTail(dir);
-                            break;
-                        case 33:
-                            this.DrawTail(dir);
-                            break;    
-                            }
-            }
-
                Snape () {
                     if (this.next === null) {
                         if (this.prev.y < this.coord.y) { //вверх
@@ -106,7 +57,8 @@ window.onload = function() {
                                                 else if (dx == -1 && dy == 1) {
                                                     dir = 23;
                                                 }
-                    let dir = this.DrawHead(dir) {
+                    }
+                    DrawHead(dir) {
                         if(dir == 1) {
                             ctx.beginPath();
                             ctx.moveTo(253,250);
@@ -128,7 +80,7 @@ window.onload = function() {
                                     }
                         return result;   
                     }
-                        let dir = this.DrawTail(dir) {
+                        DrawTail(dir) {
                             if(dir == 30) {
                                 ctx.beginPath();
                                 ctx.moveTo(253,270);
@@ -150,7 +102,7 @@ window.onload = function() {
                                         }
                             return result;   
                         }     
-                            let dir = this.DrawStraight(dir){
+                            DrawStraight(dir){
                                 if(dir == 10) {
                                     ctx.beginPath();
                                     ctx.rect(20 * this.coord.x, 20 * this.coord.y, 20, 14);   
@@ -162,7 +114,7 @@ window.onload = function() {
                                     }
                                 return result;
                             }
-                                let dir = this.DrawTurn(dir){
+                                DrawTurn(dir){
                                     if(dir == 20) {
                                         ctx.beginPath();
                                         ctx.arc(20 * this.coord.x, 20 * this.coord.y, 17,  Math.PI, 3*Math.PI/2, 0); //слева вниз
@@ -184,6 +136,54 @@ window.onload = function() {
                                                 }
                                     return result;
                                 }
+}
+window.onload = function() {
+    const canvas = document.getElementById("field");
+    const ctx = canvas.getContext("2d");
+            switch (dir){
+                        case 1:
+                            this.DrawHead(dir);
+                            break;
+                        case 2:
+                            this.DrawHead(dir);
+                            break;
+                        case 3:
+                            this.DrawHead(dir);
+                            break;
+                        case 4:
+                            this.DrawHead(dir);
+                            break;
+                        case 10:
+                            this.DrawStraight(dir);
+                            break;
+                        case 11:
+                            this.DrawStraight(dir);
+                            break;
+                        case 20:
+                            this.DrawTurn(dir);
+                            break;
+                        case 21:
+                            this.DrawTurn(dir);
+                            break;
+                        case 22:
+                            this.DrawTurn(dir);
+                            break;
+                        case 23:
+                            this.DrawTurn(dir);
+                            break;
+                        case 30:
+                            this.DrawTail(dir);
+                            break;
+                        case 31:
+                            this.DrawTail(dir);
+                            break;
+                        case 32:
+                            this.DrawTail(dir);
+                            break;
+                        case 33:
+                            this.DrawTail(dir);
+                            break;
+            }    
 var snake = Array();
 snake[0] = new SnakePart({x: 7, y: 8}, null, {x: 7, y: 7});
 snake[1] = new SnakePart({x: 7, y: 7}, snake[0].coord, {x: 7, y: 6});
