@@ -40,6 +40,9 @@ Snape () {
   }
     dx = this.prev.x - this.next.x;
     dy = this.prev.y - this.next.y;
+    cx = this.next.x + this.prev.x - 2*this.coord.x;
+    cy = this.next.y + this.prev.y - 2*this.coord.y;
+
 
   if (dy == 0) {
    dir = 10;
@@ -47,17 +50,21 @@ Snape () {
   else if (dx == 0) {
    dir = 11;
   }
-
-  if (dx == 1 && dy == -1) {
+  
+  if (dx == 1 && dy == -1 &&
+      cx == 1 && cy == 1) {
    dir = 20;
   }
-  else if (dx == 1 && dy == 1) {
+  else if (dx == 1 && dy == 1 &&
+           cx == 1 && cy == 1) {
    dir = 21;
   }
-  else if (dx == -1 && dy == -1) {
+  else if (dx == -1 && dy == -1 &&
+           cx == -1 && cy == 1) {
    dir = 22;
   }
-  else if (dx == -1 && dy == 1) {
+  else if (dx == -1 && dy == 1 &&
+           cx == -1 && cy == -1) {
     dir = 23;
   }
 }
@@ -65,7 +72,7 @@ Snape () {
 DrawHead(dir) {
   const canvas = document.getElementById("field");
   const ctx = canvas.getContext("2d");
-  
+
   if(dir == 1) {
     ctx.beginPath();
     ctx.moveTo(253,250);
