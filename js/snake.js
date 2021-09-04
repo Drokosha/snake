@@ -4,7 +4,9 @@ class SnakePart {
     this.next = next;
     this.prev = prev;
   }
-Draw(){
+Draw(ctx){ // добавляем параметр методу Draw(), передаём канву
+  this.ctx = ctx; // делаем свойство текущему объекту, в которое присваиваем
+                  // значение полученного параметра
   let dir = Snape ();
 }
 Snape () {
@@ -70,13 +72,13 @@ Snape () {
 }
 
 DrawHead(dir) {
-  const canvas = document.getElementById("field");
-  const ctx = canvas.getContext("2d");
-
+  // везде, где нужно обратиться к канве, обращаемся к свойству объекта
+  // this.ctx
+  this.ctx.beginPath(); // это нужно вынести из if-а, begin path иначе 
+                        // будет только когда dir=1 вызываться
   if(dir == 1) {
-    ctx.beginPath();
-    ctx.moveTo(253,250);
-    ctx.bezierCurveTo(253,240,265,240,267,250);
+    this.ctx.moveTo(253,250);
+    this.ctx.bezierCurveTo(253,240,265,240,267,250);
   }
     
   else if(dir == 2) {
@@ -229,7 +231,9 @@ var snake = Array();
   snake[5] = new SnakePart({x: 5, y: 5}, snake[4].coord, {x: 5, y: 4});
   snake[6] = new SnakePart({x: 5, y: 4}, snake[5].coord, null);
 
-for (part in snake) {
-  snake[part].Draw();
+  const canvas = document.getElementById("field");
+  const ctx = canvas.getContext("2d");
+  for (part in snake) {
+    snake[part].Draw(ctx);
   }
 }
