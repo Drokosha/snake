@@ -7,7 +7,7 @@ class SnakePart {
 Draw(ctx){ // добавляем параметр методу Draw(), передаём канву
   this.ctx = ctx; // делаем свойство текущему объекту, в которое присваиваем
                   // значение полученного параметра
-  let dir = Snape ();
+  let dir = this.Snape ();
     switch (dir){
   case 1:
     this.DrawHead(dir);
@@ -84,61 +84,63 @@ Snape () {
     return 30;
    }
   }
-    dx = this.prev.x - this.next.x;
-    dy = this.prev.y - this.next.y;
-    cx = this.next.x + this.prev.x - 2*this.coord.x;
-    cy = this.next.y + this.prev.y - 2*this.coord.y;
-
+    let dx = this.prev.x - this.next.x;
+    let dy = this.prev.y - this.next.y;
+    let cx = this.next.x + this.prev.x - 2*this.coord.x;
+    let cy = this.next.y + this.prev.y - 2*this.coord.y;
 
   if (dy == 0) {
-   dir = 10;
+   return 10;
   }
   else if (dx == 0) {
-   dir = 11;
+   return 11;
   }
   
   if (dx == 1 && dy == -1 &&
       cx == 1 && cy == 1) {
-   dir = 20;
+   return 20;
   }
   else if (dx == 1 && dy == 1 &&
            cx == 1 && cy == 1) {
-   dir = 21;
+   return 21;
   }
   else if (dx == -1 && dy == -1 &&
            cx == -1 && cy == 1) {
-   dir = 22;
+   return 22;
   }
   else if (dx == -1 && dy == 1 &&
            cx == -1 && cy == -1) {
-    dir = 23;
+    return 23;
   }
 }
 
 DrawHead(dir) {
   // везде, где нужно обратиться к канве, обращаемся к свойству объекта
   // this.ctx
-  this.ctx.beginPath(); // это нужно вынести из if-а, begin path иначе 
+  this.ctx.beginPath();
+  this.ctx.fillStyle = "red"; // это нужно вынести из if-а, begin path иначе 
                         // будет только когда dir=1 вызываться
   if(dir == 1) {
     this.ctx.moveTo(253,250);
     this.ctx.bezierCurveTo(253,240,265,240,267,250);
+    this.ctx.fill();
   }
     
   else if(dir == 2) {
     this.ctx.moveTo(250,247);
     this.ctx.bezierCurveTo(260,247,260,233,250,233);
+    this.ctx.fill();
   }
   
   else if(dir == 3) {
     this.ctx.moveTo(253,270);
-    this.ctx.bezierCurveTo(253,280,265,280,267,270); 
+    this.ctx.bezierCurveTo(253,280,265,280,267,270);
+    this.ctx.fill(); 
   }
   
   else if(dir == 4) {
     this.ctx.moveTo(230,247);
     this.ctx.bezierCurveTo(220,247,220,233,230,233);
-    this.ctx.fillStyle = "red";
     this.ctx.fill();
   }
   return;   
@@ -146,27 +148,30 @@ DrawHead(dir) {
 
 DrawTail(dir) {
   this.ctx.beginPath();
+  this.ctx.fillStyle = "red";
   
   if(dir == 30) {
     
     this.ctx.moveTo(253,270);
     this.ctx.bezierCurveTo(253,290,265,290,267,270);
+    this.ctx.fill();
   }
 
   else if(dir == 31) {
     this.ctx.moveTo(230,247);
     this.ctx.bezierCurveTo(210,247,210,233,230,233);
+    this.ctx.fill();
   }
     
   else if(dir == 32) {
     this.ctx.moveTo(250,247);
-    this.ctx.bezierCurveTo(270,247,270,233,250,233);  
+    this.ctx.bezierCurveTo(270,247,270,233,250,233);
+    this.ctx.fill();  
   }
   
   else if(dir == 33) {
     this.ctx.moveTo(253,250);
     this.ctx.bezierCurveTo(253,230,265,230,267,250);
-    this.ctx.fillStyle = "red";
     this.ctx.fill();
   }
   return;   
@@ -174,15 +179,16 @@ DrawTail(dir) {
 
   DrawStraight(dir){
     this.ctx.beginPath();
+    this.ctx.fillStyle = "blue";
     
     if(dir == 10) {
       
-      this.ctx.rect(20 * this.coord.x, 20 * this.coord.y, 20, 14);   
+      this.ctx.rect(20 * this.coord.x, 20 * this.coord.y, 20, 14);
+      this.ctx.fill();   
     }
 
     else if(dir == 11) {
       this.ctx.rect(20 * this.coord.x, 20 * this.coord.y, 14, 20);
-      this.ctx.fillStyle = "blue";
       this.ctx.fill();    
     }
     return;
@@ -192,19 +198,25 @@ DrawTail(dir) {
     this.ctx.beginPath();
 
     if(dir == 20) {
-      
       this.ctx.arc(20 * this.coord.x, 20 * this.coord.y, 17,  Math.PI, 3*Math.PI/2, 0); //слева вниз
       this.ctx.arc(20 * this.coord.x, 20 * this.coord.y,  3,  -Math.PI/3, Math.PI, 1); //слева вниз
+      this.ctx.closePath();
+      this.ctx.fill();
     }
 
     else if(dir == 21) {
-      this.ctx.arc(20 * this.coord.x, 20 * this.coord.y, 17,  Math.PI/2,-Math.PI, 0);
+      this.ctx.arc(20 * this.coord.x, 20 * this.coord.y, 17,  Math.PI/2,-Math.PI, 0); //слева вниз
       this.ctx.arc(20 * this.coord.x, 20 * this.coord.y, 3,  -Math.PI, Math.PI/2, 1);
+      this.ctx.closePath();
+      this.ctx.fill();
     }
 
     else if(dir == 22) {
-      this.ctx.arc(20 * this.coord.x, 20 * this.coord.y, 17,  -Math.PI/2,0, 0);
-      this.ctx.arc(20 * this.coord.x, 20 * this.coord.y, 3,  0, 3*Math.PI/2, 1);
+      this.ctx.arc(20 * this.coord.x, 20 * this.coord.y, 17,  -Math.PI/2,0, 0); //право вниз
+      this.ctx.arc(20 * this.coord.x, 20 * this.coord.y, 3,  0, 3*Math.PI/2, 1); //право вниз
+      this.ctx.closePath();
+      this.ctx.fill();
+    
     }
 
     else if(dir == 23) {
@@ -219,13 +231,23 @@ DrawTail(dir) {
 window.onload = function() {
 
 var snake = Array();
-  snake[0] = new SnakePart({x: 7, y: 8}, null, {x: 7, y: 7});
-  snake[1] = new SnakePart({x: 7, y: 7}, snake[0].coord, {x: 7, y: 6});
-  snake[2] = new SnakePart({x: 7, y: 6}, snake[1].coord, {x: 6, y: 6});
-  snake[3] = new SnakePart({x: 6, y: 6}, snake[2].coord, {x: 5, y: 6});
-  snake[4] = new SnakePart({x: 5, y: 6}, snake[3].coord, {x: 5, y: 5});
-  snake[5] = new SnakePart({x: 5, y: 5}, snake[4].coord, {x: 5, y: 4});
-  snake[6] = new SnakePart({x: 5, y: 4}, snake[5].coord, null);
+  snake[0] = new SnakePart({x: 6, y: 7}, null, {x: 6, y: 6});
+  snake[1] = new SnakePart({x: 6, y: 6}, snake[0].coord, {x: 6, y: 5});
+  snake[2] = new SnakePart({x: 6, y: 5}, snake[1].coord, {x: 5, y: 5});
+  snake[3] = new SnakePart({x: 5, y: 5}, snake[2].coord, {x: 4, y: 5});
+  snake[4] = new SnakePart({x: 4, y: 5}, snake[3].coord, {x: 4, y: 4});
+  snake[5] = new SnakePart({x: 4, y: 4}, snake[4].coord, {x: 4, y: 3});
+  snake[6] = new SnakePart({x: 4, y: 3}, snake[5].coord, {x: 5, y: 3});
+  snake[7] = new SnakePart({x: 5, y: 3}, snake[6].coord, {x: 6, y: 3});
+  snake[8] = new SnakePart({x: 6, y: 3}, snake[7].coord, {x: 7, y: 3});
+  snake[9] = new SnakePart({x: 7, y: 3}, snake[8].coord, {x: 8, y: 3});
+  snake[10] = new SnakePart({x: 8, y: 3}, snake[9].coord, {x: 8, y: 4});
+  snake[11] = new SnakePart({x: 8, y: 4}, snake[10].coord, {x: 8, y: 5});
+  snake[12] = new SnakePart({x: 8, y: 5}, snake[11].coord, {x: 9, y: 5});
+  snake[13] = new SnakePart({x: 9, y: 5}, snake[12].coord, {x: 9, y: 4});
+  snake[14] = new SnakePart({x: 9, y: 4}, snake[13].coord, {x: 9, y: 3});
+  snake[15] = new SnakePart({x: 9, y: 3}, snake[14].coord, {x: 9, y: 2});
+  snake[16] = new SnakePart({x: 9, y: 2}, snake[15].coord, null);
 
   const canvas = document.getElementById("field");
   const ctx = canvas.getContext("2d");
