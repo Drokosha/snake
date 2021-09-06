@@ -96,20 +96,16 @@ Snape () {
    return 11;
   }
   
-  if (dx == 1 && dy == -1 &&
-      cx == 1 && cy == 1) {
+  if (cx == 1 && cy == 1) {
    return 20;
   }
-  else if (dx == 1 && dy == 1 &&
-           cx == 1 && cy == 1) {
+  else if (cx == 1 && cy == -1) {
    return 21;
   }
-  else if (dx == -1 && dy == -1 &&
-           cx == -1 && cy == 1) {
+  else if (cx == -1 && cy == 1) {
    return 22;
   }
-  else if (dx == -1 && dy == 1 &&
-           cx == -1 && cy == -1) {
+  else if (cx == -1 && cy == -1) {
     return 23;
   }
 }
@@ -133,9 +129,13 @@ DrawHead(dir) {
   }
   
   else if(dir == 3) {
-    this.ctx.moveTo(253,270);
-    this.ctx.bezierCurveTo(253,280,265,280,267,270);
-    this.ctx.fill(); 
+    this.ctx.moveTo(20*this.coord.x+3,20*this.coord.y);
+    this.ctx.quadraticCurveTo(20*this.coord.x+3,20*this.coord.y-17,20*this.coord.x+10,20*this.coord.y-17);
+    this.ctx.moveTo(20*this.coord.x+17,20*this.coord.y);
+    this.ctx.quadraticCurveTo(20*this.coord.x+17,20*this.coord.y-17,20*this.coord.x+10,20*this.coord.y-17);
+    //this.ctx.moveTo(20*this.coord.x,20*this.coord.y);
+    //this.ctx.quadraticCurveTo (20*this.coord.x,20*this.coord.y,267,270); // this.coord.x+3, 20 * this.coord.y
+    this.ctx.stroke(); 
   }
   
   else if(dir == 4) {
@@ -183,12 +183,12 @@ DrawTail(dir) {
     
     if(dir == 10) {
       
-      this.ctx.rect(20 * this.coord.x, 20 * this.coord.y, 20, 14);
+      this.ctx.rect(20 * this.coord.x, 20 * this.coord.y+3, 20, 14);
       this.ctx.fill();   
     }
 
     else if(dir == 11) {
-      this.ctx.rect(20 * this.coord.x, 20 * this.coord.y, 14, 20);
+      this.ctx.rect(20 * this.coord.x+3, 20 * this.coord.y, 14, 20);
       this.ctx.fill();    
     }
     return;
@@ -198,32 +198,49 @@ DrawTail(dir) {
     this.ctx.beginPath();
 
     if(dir == 20) {
-      this.ctx.arc(20 * this.coord.x, 20 * this.coord.y, 17,  Math.PI, 3*Math.PI/2, 0); //слева вниз
-      this.ctx.arc(20 * this.coord.x, 20 * this.coord.y,  3,  -Math.PI/3, Math.PI, 1); //слева вниз
-      this.ctx.closePath();
+      this.ctx.arc(20 * this.coord.x+20, 20 * this.coord.y+20, 17,  Math.PI, 3*Math.PI/2, 0); //слева вниз
+      this.ctx.arc(20 * this.coord.x+20, 20 * this.coord.y+20,  3,  -Math.PI/3, Math.PI, 1); //слева вниз
+      this.ctx.moveTo(20 * this.coord.x+17, 20 * this.coord.y+20);
+      this.ctx.lineTo(20 * this.coord.x+3, 20 * this.coord.y+20);
+      this.ctx.moveTo(20 * this.coord.x+20, 20 * this.coord.y+3);
+      this.ctx.lineTo(20 * this.coord.x+20, 20 * this.coord.y+17);
       this.ctx.fill();
+      
     }
 
     else if(dir == 21) {
-      this.ctx.arc(20 * this.coord.x, 20 * this.coord.y, 17,  Math.PI/2,-Math.PI, 0); //слева вниз
-      this.ctx.arc(20 * this.coord.x, 20 * this.coord.y, 3,  -Math.PI, Math.PI/2, 1);
-      this.ctx.closePath();
+      this.ctx.arc(20 * this.coord.x+20, 20 * this.coord.y, 17,  Math.PI/2,-Math.PI, 0); //слева вверх
+      this.ctx.arc(20 * this.coord.x+20, 20 * this.coord.y, 3,  -Math.PI, Math.PI/2, 1);
+      this.ctx.moveTo(20 * this.coord.x+20, 20 * this.coord.y+17);
+      this.ctx.lineTo(20 * this.coord.x+20, 20 * this.coord.y+3);
+      this.ctx.moveTo(20 * this.coord.x+17, 20 * this.coord.y);
+      this.ctx.lineTo(20 * this.coord.x+3, 20 * this.coord.y);
       this.ctx.fill();
+      
+      
     }
 
     else if(dir == 22) {
-      this.ctx.arc(20 * this.coord.x, 20 * this.coord.y, 17,  -Math.PI/2,0, 0); //право вниз
-      this.ctx.arc(20 * this.coord.x, 20 * this.coord.y, 3,  0, 3*Math.PI/2, 1); //право вниз
-      this.ctx.closePath();
+      this.ctx.arc(20 * this.coord.x, 20 * this.coord.y+20, 17,  -Math.PI/2,0, 0); //право вниз
+      this.ctx.arc(20 * this.coord.x, 20 * this.coord.y+20, 3,  0, 3*Math.PI/2, 1); //право вниз
+      this.ctx.moveTo(20 * this.coord.x, 20 * this.coord.y+17);
+      this.ctx.lineTo(20 * this.coord.x, 20 * this.coord.y+3);
+      this.ctx.moveTo(20 * this.coord.x+17, 20 * this.coord.y+20);
+      this.ctx.lineTo(20 * this.coord.x+3, 20 * this.coord.y+20);
       this.ctx.fill();
+      
     
     }
 
     else if(dir == 23) {
       this.ctx.arc(20 * this.coord.x, 20 * this.coord.y, 17,  0, Math.PI/2, 0); //право вверх
       this.ctx.arc(20 * this.coord.x, 20 * this.coord.y,  3,  -3*Math.PI/2, 2*Math.PI, 1); //право вверх
-      this.ctx.closePath();
+      this.ctx.moveTo(20 * this.coord.x, 20 * this.coord.y+17);
+      this.ctx.lineTo(20 * this.coord.x, 20 * this.coord.y+3);
+      this.ctx.moveTo(20 * this.coord.x+17, 20 * this.coord.y);
+      this.ctx.lineTo(20 * this.coord.x+3, 20 * this.coord.y);
       this.ctx.fill();
+      
     }
     return;
   }
