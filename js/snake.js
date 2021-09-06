@@ -129,10 +129,10 @@ DrawHead(dir) {
   }
   
   else if(dir == 3) {
-    this.ctx.moveTo(20*this.coord.x+3,20*this.coord.y);
-    this.ctx.quadraticCurveTo(20*this.coord.x+3,20*this.coord.y-17,20*this.coord.x+10,20*this.coord.y-17);
-    this.ctx.moveTo(20*this.coord.x+17,20*this.coord.y);
-    this.ctx.quadraticCurveTo(20*this.coord.x+17,20*this.coord.y-17,20*this.coord.x+10,20*this.coord.y-17);
+    this.ctx.moveTo(20*this.coord.x+4,20*(this.coord.y+1));
+    this.ctx.quadraticCurveTo(20*this.coord.x+3,20*(this.coord.y+1)-17,20*this.coord.x+10,20*(this.coord.y+1)-17);
+    this.ctx.moveTo(20*this.coord.x+16,20*(this.coord.y+1));
+    this.ctx.quadraticCurveTo(20*this.coord.x+17,20*(this.coord.y+1)-17,20*this.coord.x+10,20*(this.coord.y+1)-17);
     //this.ctx.moveTo(20*this.coord.x,20*this.coord.y);
     //this.ctx.quadraticCurveTo (20*this.coord.x,20*this.coord.y,267,270); // this.coord.x+3, 20 * this.coord.y
     this.ctx.stroke(); 
