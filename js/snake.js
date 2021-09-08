@@ -6,56 +6,56 @@ class SnakePart {
     this.ctx = ctx;
     this.cell = {width: 20, height: 20};
   }  
-}
-Draw(){ // добавляем параметр методу Draw(), передаём канву 
-   // делаем свойство текущему объекту, в которое присваиваем
-                  // значение полученного параметра
-  let dir = this.Snape ();
-    switch (dir){
-  case 1:
-    this.DrawHead(dir);
-   break;
-  case 2:
-    this.DrawHead(dir);
-   break;
-  case 3:
-    this.DrawHead(dir);
-   break;
-  case 4:
-    this.DrawHead(dir);
-   break;
-  case 10:
-    this.DrawStraight(dir);
-   break;
-  case 11:
-    this.DrawStraight(dir);
-   break;
-  case 20:
-    this.DrawTurn(dir);
-   break;
-  case 21:
-    this.DrawTurn(dir);
-   break;
-  case 22:
-    this.DrawTurn(dir);
-   break;
-  case 23:
-    this.DrawTurn(dir);
-   break;
-  case 30:
-    this.DrawTail(dir);
-   break;
-  case 31:
-    this.DrawTail(dir);
-   break;
-  case 32:
-    this.DrawTail(dir);
-   break;
-  case 33:
-    this.DrawTail(dir);
-   break;
-   }
-} 
+
+    Draw() { // добавляем параметр методу Draw(), передаём канву 
+       // делаем свойство текущему объекту, в которое присваиваем
+                      // значение полученного параметра
+      let dir = this.Snape ();
+        switch (dir){
+      case 1:
+        this.DrawHead(dir);
+       break;
+      case 2:
+        this.DrawHead(dir);
+       break;
+      case 3:
+        this.DrawHead(dir);
+       break;
+      case 4:
+        this.DrawHead(dir);
+       break;
+      case 10:
+        this.DrawStraight(dir);
+       break;
+      case 11:
+        this.DrawStraight(dir);
+       break;
+      case 20:
+        this.DrawTurn(dir);
+       break;
+      case 21:
+        this.DrawTurn(dir);
+       break;
+      case 22:
+        this.DrawTurn(dir);
+       break;
+      case 23:
+        this.DrawTurn(dir);
+       break;
+      case 30:
+        this.DrawTail(dir);
+       break;
+      case 31:
+        this.DrawTail(dir);
+       break;
+      case 32:
+        this.DrawTail(dir);
+       break;
+      case 33:
+        this.DrawTail(dir);
+       break;
+       }
+    } 
 
 Snape () {
   if (this.next === null) {
@@ -267,22 +267,24 @@ DrawTail(dir) {
       this.ctx.fill();
     }
   }
+}
+
 
 window.onload = function() {
   
   document.body.onkeydown = function(event) {
         switch (event.keyCode) {
             case 37:
-                alert("Left");
+                d = "Left";
                 break;
             case 38:
-                alert("Up");
+                d = "Up";
                 break;
             case 39:
-                alert("Right");
+                d = "Right";
                 break;
             case 40:
-                alert("Down");
+                d = "Down";
                 break;
             default:
                 break;
@@ -293,7 +295,7 @@ const canvas = document.getElementById("field");
 const ctx = canvas.getContext("2d");
 
 var snake = Array();
-  snake[0] = new SnakePart({x: 5, y: 6}, null, {x: 5, y: 7});
+  snake[0] = new SnakePart({x: 5, y: 6}, null, {x: 5, y: 7}, ctx);
   snake[1] = new SnakePart({x: 5, y: 7}, snake[0].coord, {x: 6, y: 7}, ctx);
   snake[2] = new SnakePart({x: 6, y: 7}, snake[1].coord, {x: 6, y: 6}, ctx);
   snake[3] = new SnakePart({x: 6, y: 6}, snake[2].coord, {x: 6, y: 5}, ctx);
@@ -301,5 +303,32 @@ var snake = Array();
 
   for (part in snake) {
     snake[part].Draw();
+
+direction(d);
+
   }
+}
+
+function direction(d) {
+    switch (d) {
+        case "Up":
+            snake[0].coord.x = snake[0].coord.x;
+            snake[0].coord.y = snake[0].coord.y-1;
+            break;
+        case "Down":
+            snake[0].coord.x = snake[0].coord.x;
+            snake[0].coord.y = snake[0].coord.y+1;
+            break;
+        case "Right":
+            snake[0].coord.x = snake[0].coord.x+1;
+            snake[0].coord.y = snake[0].coord.y;
+            break;
+        case "Left":
+            snake[0].coord.x = snake[0].coord.x-1;
+            snake[0].coord.y = snake[0].coord.y;
+        break;
+        default:
+        return;
+        break;
+    }
 }
