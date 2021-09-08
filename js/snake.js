@@ -1,15 +1,14 @@
 class SnakePart {
-  constructor(pos, prev, next) {
+  constructor(pos, prev, next, ctx) {
     this.coord = pos;
     this.next = next;
     this.prev = prev;
-    this.cell = {width: 20, height: 20};
     this.ctx = ctx;
-
-
-  }
-Draw(ctx){ // добавляем параметр методу Draw(), передаём канву 
-           // делаем свойство текущему объекту, в которое присваиваем
+    this.cell = {width: 20, height: 20};
+  }  
+}
+Draw(){ // добавляем параметр методу Draw(), передаём канву 
+   // делаем свойство текущему объекту, в которое присваиваем
                   // значение полученного параметра
   let dir = this.Snape ();
     switch (dir){
@@ -55,8 +54,9 @@ Draw(ctx){ // добавляем параметр методу Draw(), пере�
   case 33:
     this.DrawTail(dir);
    break;
+   }
 } 
-}
+
 Snape () {
   if (this.next === null) {
     
@@ -115,10 +115,9 @@ Snape () {
 }
 
 DrawHead(dir) {
-  // везде, где нужно обратиться к канве, обращаемся к свойству объекта
-  // this.ctx
-  this.ctx.beginPath();
-  this.ctx.fillStyle = "red"; // это нужно вынести из if-а, begin path иначе 
+
+   this.ctx.beginPath(); // везде, где нужно обратиться к канве, обращаемся к свойству объекта
+   this.ctx.fillStyle = "red"; // это нужно вынести из if-а, begin path иначе 
                         // будет только когда dir=1 вызываться
   if(dir == 1) {
     this.ctx.moveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y+1));
@@ -155,8 +154,7 @@ DrawHead(dir) {
     this.ctx.quadraticCurveTo(this.cell.width*(this.coord.x+1) -17,this.cell.height*this.coord.y+17,
                               this.cell.width*(this.coord.x+1),this.cell.height*this.coord.y+17);
   }
-  this.ctx.fill();
-  return;   
+  this.ctx.fill();  
 }
 
 DrawTail(dir) {
@@ -237,7 +235,6 @@ DrawTail(dir) {
       this.ctx.lineTo(this.cell.width * this.coord.x+3, this.cell.height * this.coord.y+20);
       this.ctx.moveTo(this.cell.width * this.coord.x+20, this.cell.height * this.coord.y+3);
       this.ctx.fill();
-      
     }
 
     else if(dir == 21) {
@@ -248,8 +245,6 @@ DrawTail(dir) {
       this.ctx.moveTo(this.cell.width * this.coord.x+17, this.cell.height * this.coord.y);
       this.ctx.lineTo(this.cell.width * this.coord.x+3, this.cell.height * this.coord.y);
       this.ctx.fill();
-      
-      
     }
 
     else if(dir == 22) {
@@ -270,48 +265,41 @@ DrawTail(dir) {
       this.ctx.moveTo(this.cell.width * this.coord.x+17, this.cell.height * this.coord.y);
       this.ctx.lineTo(this.cell.width * this.coord.x+3, this.cell.height * this.coord.y);
       this.ctx.fill();
-      
     }
   }
-}
+
 window.onload = function() {
-document.addEventListener ("keydown", direction);
+  
+  document.body.onkeydown = function(event) {
+        switch (event.keyCode) {
+            case 37:
+                alert("Left");
+                break;
+            case 38:
+                alert("Up");
+                break;
+            case 39:
+                alert("Right");
+                break;
+            case 40:
+                alert("Down");
+                break;
+            default:
+                break;
+        }
+    }
 
-function direction (event){
-  if (event.keyCode === 37) {
+const canvas = document.getElementById("field");
+const ctx = canvas.getContext("2d");
 
-        var new_x = this.coord.x-1;
-        var new_y = this.coord.y;
-  }
-
-  if (event.keyCode === 38) {
-
-        var new_x = this.coord.x;
-        var new_y = this.coord.y-1;
-  }
-
-  if (event.keyCode === 39) {
-
-        var new_x = this.coord.x+1;
-        var new_y = this.coord.y;
-  }
-
-  if (event.keyCode === 40) {
-
-        var new_x = this.coord.x;
-        var new_y = this.coord.y;
-  }
-}
 var snake = Array();
   snake[0] = new SnakePart({x: 5, y: 6}, null, {x: 5, y: 7});
-  snake[1] = new SnakePart({x: 5, y: 7}, snake[0].coord, {x: 6, y: 7});
-  snake[2] = new SnakePart({x: 6, y: 7}, snake[1].coord, {x: 6, y: 6});
-  snake[3] = new SnakePart({x: 6, y: 6}, snake[2].coord, {x: 6, y: 5});
-  snake[4] = new SnakePart({x: 6, y: 5}, snake[3].coord, null);
+  snake[1] = new SnakePart({x: 5, y: 7}, snake[0].coord, {x: 6, y: 7}, ctx);
+  snake[2] = new SnakePart({x: 6, y: 7}, snake[1].coord, {x: 6, y: 6}, ctx);
+  snake[3] = new SnakePart({x: 6, y: 6}, snake[2].coord, {x: 6, y: 5}, ctx);
+  snake[4] = new SnakePart({x: 6, y: 5}, snake[3].coord, null, ctx);
 
-  const canvas = document.getElementById("field");
-  const ctx = canvas.getContext("2d");
   for (part in snake) {
-    snake[part].Draw(ctx);
+    snake[part].Draw();
   }
 }
