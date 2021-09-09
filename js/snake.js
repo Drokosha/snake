@@ -272,24 +272,48 @@ DrawTail(dir) {
 
 window.onload = function() {
   
-  document.body.onkeydown = function(event) {
-        switch (event.keyCode) {
-            case 37:
-                d = "Left";
-                break;
-            case 38:
-                d = "Up";
-                break;
-            case 39:
-                d = "Right";
-                break;
-            case 40:
-                d = "Down";
-                break;
-            default:
-                break;
-        }
-    }
+  document.body.onkeydown = function (event) {
+    
+    let i;
+    let snake_length = 5;
+    
+    switch (event.keyCode) {
+  case 37:
+    snake[4].coord.x = snake[4].coord.x-1;
+    snake[4].coord.y = snake[4].coord.y;
+   break;
+  case 38:
+    snake[4].coord.x = snake[4].coord.x;
+    snake[4].coord.y = snake[4].coord.y-1;
+   break;
+  case 39:
+    snake[4].coord.x = snake[4].coord.x+1;
+    snake[4].coord.y = snake[4].coord.y;
+   break;
+  case 40:
+    snake[4].coord.x = snake[4].coord.x;
+    snake[4].coord.y = snake[4].coord.y+1;
+   break;
+    default:
+  }
+  
+  if (coord.x * 20 || coord.y * 20 < 0 && coord.x * 20 || coord.y * 20 > 
+      document.getElementById('field').height && document.getElementById('field').width) {
+    
+    alert ("GAME OVER");
+    document.location.reload();
+
+  }
+  
+  for (let i =0, snake.length-1; i >= 0; i++) {
+    //. не пойму что вставлять тут должна быть ссылка на класс? чтобы отрисовка произошла?
+  }
+  
+  for (let i = snake.length-1; i >= 0; i--) {
+      snake [i].x = snake[i-1].x;
+      snake [i].y = snake[i-1].y;    
+  }
+}
 
 const canvas = document.getElementById("field");
 const ctx = canvas.getContext("2d");
@@ -304,31 +328,5 @@ var snake = Array();
   for (part in snake) {
     snake[part].Draw();
 
-direction(d);
-
   }
-}
-
-function direction(d) {
-    switch (d) {
-        case "Up":
-            snake[0].coord.x = snake[0].coord.x;
-            snake[0].coord.y = snake[0].coord.y-1;
-            break;
-        case "Down":
-            snake[0].coord.x = snake[0].coord.x;
-            snake[0].coord.y = snake[0].coord.y+1;
-            break;
-        case "Right":
-            snake[0].coord.x = snake[0].coord.x+1;
-            snake[0].coord.y = snake[0].coord.y;
-            break;
-        case "Left":
-            snake[0].coord.x = snake[0].coord.x-1;
-            snake[0].coord.y = snake[0].coord.y;
-        break;
-        default:
-        return;
-        break;
-    }
 }
