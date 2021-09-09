@@ -271,10 +271,8 @@ DrawTail(dir) {
 
 
 window.onload = function() {
-  
-  document.body.onkeydown = direction;
 
- snakeMove (); 
+  document.body.onkeydown = snakeMove;
 
 const canvas = document.getElementById("field");
 const ctx = canvas.getContext("2d");
@@ -292,12 +290,12 @@ var snake = Array();
   }
 }
 
-function snakeMove (direction) {
+function snakeMove (event) {
     
     var i;
     var snake_length = 5;
     
-    switch (direction.keyCode) {
+    switch (event.keyCode) {
   case 37:
     snake[4].coord.x = snake[4].coord.x-1;
     snake[4].coord.y = snake[4].coord.y;
