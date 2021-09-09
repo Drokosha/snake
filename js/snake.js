@@ -117,7 +117,7 @@ Snape () {
 DrawHead(dir) {
 
    this.ctx.beginPath(); // везде, где нужно обратиться к канве, обращаемся к свойству объекта
-   this.ctx.fillStyle = "red"; // это нужно вынести из if-а, begin path иначе 
+   this.ctx.fillStyle = "black"; // это нужно вынести из if-а, begin path иначе 
                         // будет только когда dir=1 вызываться
   if(dir == 1) {
     this.ctx.moveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y+1));
@@ -159,7 +159,7 @@ DrawHead(dir) {
 
 DrawTail(dir) {
   this.ctx.beginPath();
-  this.ctx.fillStyle = "yellow";
+  this.ctx.fillStyle = "black";
   
   if(dir == 30) {
     
@@ -210,7 +210,7 @@ DrawTail(dir) {
 
   DrawStraight(dir){
     this.ctx.beginPath();
-    this.ctx.fillStyle = "blue";
+    this.ctx.fillStyle = "black";
     
     if(dir == 10) {
       
@@ -272,12 +272,32 @@ DrawTail(dir) {
 
 window.onload = function() {
   
-  document.body.onkeydown = function (event) {
+  document.body.onkeydown = direction;
+
+ snakeMove (); 
+
+const canvas = document.getElementById("field");
+const ctx = canvas.getContext("2d");
+
+var snake = Array();
+  snake[0] = new SnakePart({x: 5, y: 6}, null, {x: 5, y: 7}, ctx);
+  snake[1] = new SnakePart({x: 5, y: 7}, snake[0].coord, {x: 6, y: 7}, ctx);
+  snake[2] = new SnakePart({x: 6, y: 7}, snake[1].coord, {x: 6, y: 6}, ctx);
+  snake[3] = new SnakePart({x: 6, y: 6}, snake[2].coord, {x: 6, y: 5}, ctx);
+  snake[4] = new SnakePart({x: 6, y: 5}, snake[3].coord, null, ctx);
+
+  for (part in snake) {
+    snake[part].Draw();
+
+  }
+}
+
+function snakeMove (direction) {
     
-    let i;
-    let snake_length = 5;
+    var i;
+    var snake_length = 5;
     
-    switch (event.keyCode) {
+    switch (direction.keyCode) {
   case 37:
     snake[4].coord.x = snake[4].coord.x-1;
     snake[4].coord.y = snake[4].coord.y;
@@ -305,8 +325,8 @@ window.onload = function() {
 
   }
   
-  for (let i =0, snake.length-1; i >= 0; i++) {
-    //. не пойму что вставлять тут должна быть ссылка на класс? чтобы отрисовка произошла?
+  for (var i =0; i < snake.length; i++) {
+    Draw(); //. не пойму что вставлять тут должна быть ссылка на класс? чтобы отрисовка произошла?
   }
   
   for (let i = snake.length-1; i >= 0; i--) {
@@ -315,18 +335,3 @@ window.onload = function() {
   }
 }
 
-const canvas = document.getElementById("field");
-const ctx = canvas.getContext("2d");
-
-var snake = Array();
-  snake[0] = new SnakePart({x: 5, y: 6}, null, {x: 5, y: 7}, ctx);
-  snake[1] = new SnakePart({x: 5, y: 7}, snake[0].coord, {x: 6, y: 7}, ctx);
-  snake[2] = new SnakePart({x: 6, y: 7}, snake[1].coord, {x: 6, y: 6}, ctx);
-  snake[3] = new SnakePart({x: 6, y: 6}, snake[2].coord, {x: 6, y: 5}, ctx);
-  snake[4] = new SnakePart({x: 6, y: 5}, snake[3].coord, null, ctx);
-
-  for (part in snake) {
-    snake[part].Draw();
-
-  }
-}
