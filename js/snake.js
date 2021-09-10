@@ -11,7 +11,7 @@ class ApplePart {
     AppleDraw() {
       this.ctx.beginPath();
       this.ctx.fillStyle = "red";
-      this.ctx.rect(this.cell.width * this.coord.x+20, this.cell.height * this.coord.y+20, 20, 14);
+      this.ctx.rect(this.cell.width * this.coord.x, this.cell.height * this.coord.y, 20, 14);
       this.ctx.fill();   
 
     }
@@ -134,7 +134,7 @@ Snape () {
 }
 
 DrawHead(dir) {
-
+   this.ctx.clearRect(this.cell.width*this.coord.x, this.cell.height*this.coord.y, this.cell.width, this.cell.height);
    this.ctx.beginPath(); // везде, где нужно обратиться к канве, обращаемся к свойству объекта
    this.ctx.fillStyle = "black"; // это нужно вынести из if-а, begin path иначе 
                         // будет только когда dir=1 вызываться
@@ -307,8 +307,8 @@ const ctx = canvas.getContext("2d");
 
   }
 
-  apple[0] = new ApplePart({x: 40, y: 40}, ctx);
-  apple[1] = new ApplePart({x: 30, y: 80}, ctx);
+  apple[0] = new ApplePart({x: 5, y: 5}, ctx);
+  apple[1] = new ApplePart({x: 7, y: 7}, ctx);
 
   for (part in apple) {
     apple[part].AppleDraw();
@@ -318,7 +318,7 @@ const ctx = canvas.getContext("2d");
 function snakeMove (event) {
     
     var i;
-    var snake_length = 5;
+    var length = 5;
     
     switch (event.keyCode) {
   case 37:
@@ -350,18 +350,26 @@ function snakeMove (event) {
 
   }
   
-  snake[snake.length - 5].coord = snake[snake.length - 4];
-  snake[snake.length - 4].next = snake[snake.length - 4];
+  snake[snake.length - 1].coord.x = snake[snake.length-1].coord.x;
+  snake[snake.length - 1].coord.y = snake[snake.length-1].coord.y;
+  snake[snake.length - 2].prev.x = snake[snake.length - 1].prev.x;
+  snake[snake.length - 2].prev.y = snake[snake.length - 1].prev.y;
+  
 
-  for (let i = snake.length-4; i < 4; i++) {
-      snake [i].coord = snake[i+1].coord;
-      snake [i].prev = snake[i+1].prev;
-      snake [i].next = snake[i+1].next;
+  for (let i = snake.length-2; i < 1; i--) {
+      snake [i].coord.x = snake[i+1].coord.x;
+      snake [i].coord.y = snake[i+1].coord.y;
+      snake [i].prev.x = snake[i+1].prev.x;
+      snake [i].prev.y = snake[i+1].prev.y;
+      snake [i].next.x = snake[i+1].next.x;
+      snake [i].next.y = snake[i+1].next.y;
   }
 
-   snake[snake.length - 1].coord = snake[snake.length];
-   snake[snake.length - 2].prev = snake[snake.length - 1];
+  snake[0].coord.x = snake[1].coord.x;
+  snake[0].coord.y = snake[1].coord.y;
 
-   snake.Draw();
+    for (part in apple) {
+    apple[part].AppleDraw();
+    }
 }
 
