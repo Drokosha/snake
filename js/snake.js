@@ -350,7 +350,8 @@ function snakeMove (event) {
 
   }
   
-  snake[snake.length - 4].next = snake[snake.length - 3];
+  snake[snake.length - 5].coord = snake[snake.length - 4];
+  snake[snake.length - 4].next = snake[snake.length - 4];
 
   for (let i = snake.length-4; i < 4; i++) {
       snake [i].coord = snake[i+1].coord;
@@ -358,6 +359,7 @@ function snakeMove (event) {
       snake [i].next = snake[i+1].next;
   }
 
+   snake[snake.length - 1].coord = snake[snake.length];
    snake[snake.length - 2].prev = snake[snake.length - 1];
 
    snake.Draw();
