@@ -1,3 +1,22 @@
+var snake = Array();
+var apple = Array();
+
+class ApplePart {
+    constructor (pos, ctx) {
+        this.coord = pos;
+        this.ctx = ctx;
+        this.cell = {width: 20, height: 20};
+    }
+
+    AppleDraw() {
+      this.ctx.beginPath();
+      this.ctx.fillStyle = "red";
+      this.ctx.rect(this.cell.width * this.coord.x+20, this.cell.height * this.coord.y+20, 20, 14);
+      this.ctx.fill();   
+
+    }
+}
+
 class SnakePart {
   constructor(pos, prev, next, ctx) {
     this.coord = pos;
@@ -277,7 +296,6 @@ window.onload = function() {
 const canvas = document.getElementById("field");
 const ctx = canvas.getContext("2d");
 
-var snake = Array();
   snake[0] = new SnakePart({x: 5, y: 6}, null, {x: 5, y: 7}, ctx);
   snake[1] = new SnakePart({x: 5, y: 7}, snake[0].coord, {x: 6, y: 7}, ctx);
   snake[2] = new SnakePart({x: 6, y: 7}, snake[1].coord, {x: 6, y: 6}, ctx);
@@ -288,7 +306,14 @@ var snake = Array();
     snake[part].Draw();
 
   }
-}
+
+  apple[0] = new ApplePart({x: 40, y: 40}, ctx);
+  apple[1] = new ApplePart({x: 30, y: 80}, ctx);
+
+  for (part in apple) {
+    apple[part].AppleDraw();
+  }
+} 
 
 function snakeMove (event) {
     
@@ -315,21 +340,19 @@ function snakeMove (event) {
     default:
   }
   
-  if (coord.x * 20 || coord.y * 20 < 0 && coord.x * 20 || coord.y * 20 > 
-      document.getElementById('field').height && document.getElementById('field').width) {
+  if (snake[snake.length - 1].coord.x * 20 < 0 || 
+      snake[snake.length - 1].coord.y * 20 < 0 || 
+      snake[snake.length - 1].coord.x * 20 > document.getElementById('field').width || 
+      snake[snake.length - 1].coord.y * 20 > document.getElementById('field').height) {
     
     alert ("GAME OVER");
     document.location.reload();
 
   }
   
-  for (var i =0; i < snake.length; i++) {
-    Draw(); //. не пойму что вставлять тут должна быть ссылка на класс? чтобы отрисовка произошла?
-  }
-  
   for (let i = snake.length-1; i >= 0; i--) {
-      snake [i].x = snake[i-1].x;
-      snake [i].y = snake[i-1].y;    
+      snake [i].coord.x = snake[i-1].coord.x;
+      snake [i].coord.y = snake[i-1].coord.y; 
   }
 }
 
