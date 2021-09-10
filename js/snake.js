@@ -3,9 +3,9 @@ var apple = Array();
 
 class ApplePart {
     constructor (pos, ctx) {
-        this.coord = pos;
-        this.ctx = ctx;
-        this.cell = {width: 20, height: 20};
+      this.coord = pos;
+      this.ctx = ctx;
+      this.cell = {width: 20, height: 20};
     }
 
     AppleDraw() {
@@ -350,9 +350,16 @@ function snakeMove (event) {
 
   }
   
-  for (let i = snake.length-1; i >= 0; i--) {
-      snake [i].coord.x = snake[i-1].coord.x;
-      snake [i].coord.y = snake[i-1].coord.y; 
+  snake[snake.length - 4].next = snake[snake.length - 3];
+
+  for (let i = snake.length-4; i < 4; i++) {
+      snake [i].coord = snake[i+1].coord;
+      snake [i].prev = snake[i+1].prev;
+      snake [i].next = snake[i+1].next;
   }
+
+   snake[snake.length - 2].prev = snake[snake.length - 1];
+
+   snake.Draw();
 }
 
