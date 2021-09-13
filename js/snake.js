@@ -1,9 +1,6 @@
 var snake = Array();
 var apple = Array();
 
-var Xwidth = 17;
-var Yheight = 17; 
-
 class ApplePart {
     constructor (pos, ctx) {
       this.coord = pos;
@@ -80,41 +77,41 @@ class SnakePart {
     } 
 
 Shape () {
-  if (this.next === null) {
+  if (this.prev === null) {
     
-    if (this.prev.y > this.coord.y) { //вверх
+    if (this.next.y > this.coord.y) { //вверх
      return 1;
     }
-    else if (this.prev.x < this.coord.x) { //право
+    else if (this.next.x < this.coord.x) { //право
      return 2;
     }
-    else if (this.prev.y < this.coord.y) { //вниз
+    else if (this.next.y < this.coord.y) { //вниз
      return 3;
     }
-    else if (this.prev.x > this.coord.x) { //влево
+    else if (this.next.x > this.coord.x) { //влево
      return 4;
     }
   }
 
-  if (this.prev === null) {
-   if (this.next.y < this.coord.y) { //низ
+  if (this.next === null) {
+   if (this.prev.y < this.coord.y) { //низ
     return 30;
    }
-   else if (this.next.x < this.coord.x) { //лево
+   else if (this.prev.x < this.coord.x) { //лево
     return 31;
    }
-   else if (this.next.x > this.coord.x) { //право
+   else if (this.prev.x > this.coord.x) { //право
     return 32;
    }
-   else if (this.next.y > this.coord.y) { //лево
+   else if (this.prev.y > this.coord.y) { //лево
     return 33;
    }
   }
 
-    let dx = this.prev.x - this.next.x;
-    let dy = this.prev.y - this.next.y;
-    let cx = this.next.x + this.prev.x - 2*this.coord.x;
-    let cy = this.next.y + this.prev.y - 2*this.coord.y;
+    let dx = this.next.x - this.prev.x;
+    let dy = this.next.y - this.prev.y;
+    let cx = this.prev.x + this.next.x - 2*this.coord.x;
+    let cy = this.prev.y + this.next.y - 2*this.coord.y;
 
   if (dy == 0) {
    return 10;
@@ -303,10 +300,10 @@ window.onload = function() {
 const canvas = document.getElementById("field");
 const ctx = canvas.getContext("2d");
 
-  snake[0] = new SnakePart({x: 6, y: 8}, null, {x: 6, y: 7}, ctx);
-  snake[1] = new SnakePart({x: 6, y: 7}, snake[0].coord, {x: 6, y: 6}, ctx);
-  snake[2] = new SnakePart({x: 6, y: 6}, snake[1].coord, {x: 6, y: 5}, ctx);
-  snake[3] = new SnakePart({x: 6, y: 5}, snake[2].coord, null, ctx);
+  snake[0] = new SnakePart({x: 6, y: 8}, {x: 6, y: 7}, null, ctx);
+  snake[1] = new SnakePart({x: 6, y: 7}, {x: 6, y: 6}, snake[0].coord, ctx);
+  snake[2] = new SnakePart({x: 6, y: 6}, {x: 6, y: 5}, ctx, snake[1].coord);
+  snake[3] = new SnakePart({x: 6, y: 5}, null, snake[2].coord, ctx);
 
   for (part in snake) {
     snake[part].Draw();
@@ -356,31 +353,31 @@ function snakeMove (event) {
 
   }
 
-  snake[snake.length - 4].coord.x = snake[snake.length - 4].coord.x;
-  snake[snake.length - 4].coord.y = snake[snake.length - 4].coord.y;
-  snake[snake.length - 3].next.x = snake[snake.length - 2].next.x;
-  snake[snake.length - 3].next.y = snake[snake.length - 2].next.y;
+  snake[snake.length - 4].coord.x = snake[snake.length - 3].coord.x;
+  snake[snake.length - 4].coord.y = snake[snake.length - 3].coord.y;
+  snake[snake.length - 3].prev.x = snake[snake.length - 2].prev.x;
+  snake[snake.length - 3].prev.y = snake[snake.length - 2].prev.y;
 
   for (let i = snake.length-3; i < 1; i++) {
       snake [i].coord.x = snake[i+1].coord.x;
       snake [i].coord.y = snake[i+1].coord.y;
-      snake [i].prev.x = snake[i+1].prev.x;
-      snake [i].prev.y = snake[i+1].prev.y;
       snake [i].next.x = snake[i+1].next.x;
       snake [i].next.y = snake[i+1].next.y;
+      snake [i].prev.x = snake[i+1].prev.x;
+      snake [i].prev.y = snake[i+1].prev.y;
   }
 
   snake[snake.length - 1].coord.x = snake[snake.length -1].coord.x;
   snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y;
-  snake[snake.length - 2].prev.x = snake[snake.length - 1].prev.x;
-  snake[snake.length - 2].prev.y = snake[snake.length - 1].prev.y;
+  snake[snake.length - 2].next.x = snake[snake.length - 1].next.x;
+  snake[snake.length - 2].next.y = snake[snake.length - 1].next.y;
 
   snake[snake.length - 2].coord.x = snake[snake.length -1].coord.x;
   snake[snake.length - 2].coord.y = snake[snake.length - 1].coord.y;
-  snake[snake.length - 2].prev.x = snake[snake.length - 2].prev.x;
-  snake[snake.length - 2].prev.y = snake[snake.length - 2].prev.y;
-  snake[snake.length - 2].next.x = snake[snake.length - 1].next.x;
-  snake[snake.length - 2].next.y = snake[snake.length - 1].next.y;
+  snake[snake.length - 2].next.x = snake[snake.length - 2].next.x;
+  snake[snake.length - 2].next.y = snake[snake.length - 2].next.y;
+  snake[snake.length - 2].prev.x = snake[snake.length - 1].prev.x;
+  snake[snake.length - 2].prev.y = snake[snake.length - 1].prev.y;
 
 
     for (part in snake) {
