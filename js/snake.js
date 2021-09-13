@@ -1,6 +1,9 @@
 var snake = Array();
 var apple = Array();
 
+var Xwidth = 17;
+var Yheight = 17; 
+
 class ApplePart {
     constructor (pos, ctx) {
       this.coord = pos;
@@ -29,7 +32,7 @@ class SnakePart {
     Draw() { // добавляем параметр методу Draw(), передаём канву 
        // делаем свойство текущему объекту, в которое присваиваем
                       // значение полученного параметра
-      let dir = this.Snape ();
+      let dir = this.Shape ();
         switch (dir){
       case 1:
         this.DrawHead(dir);
@@ -76,7 +79,7 @@ class SnakePart {
        }
     } 
 
-Snape () {
+Shape () {
   if (this.next === null) {
     
     if (this.prev.y > this.coord.y) { //вверх
@@ -107,6 +110,7 @@ Snape () {
     return 33;
    }
   }
+
     let dx = this.prev.x - this.next.x;
     let dy = this.prev.y - this.next.y;
     let cx = this.next.x + this.prev.x - 2*this.coord.x;
@@ -142,7 +146,7 @@ DrawHead(dir) {
     this.ctx.moveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y+1));
     this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y+1)-17,
                               this.cell.width*this.coord.x+10,this.cell.height*(this.coord.y+1)-17);
-    this.ctx.moveTo(this.cell.width*this.coord.x+16,this.cell.height*(this.coord.y+1));
+    this.ctx.moveTo(this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y+1));
     this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y+1)-17,
                               this.cell.width*this.coord.x+10,this.cell.height*(this.coord.y+1)-17);
   }
@@ -160,7 +164,7 @@ DrawHead(dir) {
     this.ctx.moveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y-1));
     this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y+1)-17,
                               this.cell.width*this.coord.x+10,this.cell.height*(this.coord.y+1)-17);
-    this.ctx.moveTo(this.cell.width*this.coord.x+16,this.cell.height*(this.coord.y-1));
+    this.ctx.moveTo(this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y-1));
     this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y+1)-17,
                               this.cell.width*this.coord.x+10,this.cell.height*(this.coord.y+1)-17);
   }
@@ -177,6 +181,7 @@ DrawHead(dir) {
 }
 
 DrawTail(dir) {
+  this.ctx.clearRect(this.cell.width*this.coord.x, this.cell.height*this.coord.y, this.cell.width, this.cell.height);
   this.ctx.beginPath();
   this.ctx.fillStyle = "black";
   
@@ -189,7 +194,7 @@ DrawTail(dir) {
     this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y+1),
                               this.cell.width*this.coord.x+10,this.cell.height*(this.coord.y+1));
     this.ctx.moveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y-1));
-    this.ctx.lineTo (this.cell.width*this.coord.x+16,this.cell.height*(this.coord.y-1));
+    this.ctx.lineTo (this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y-1));
   }
 
   else if(dir == 31) {
@@ -228,6 +233,7 @@ DrawTail(dir) {
 }     
 
   DrawStraight(dir){
+    this.ctx.clearRect(this.cell.width*this.coord.x, this.cell.height*this.coord.y, this.cell.width, this.cell.height);
     this.ctx.beginPath();
     this.ctx.fillStyle = "black";
     
@@ -244,6 +250,7 @@ DrawTail(dir) {
 }
 
   DrawTurn(dir){
+    this.ctx.clearRect(this.cell.width*this.coord.x, this.cell.height*this.coord.y, this.cell.width, this.cell.height);
     this.ctx.beginPath();
     this.ctx.fillStyle = "black";
 
@@ -296,19 +303,18 @@ window.onload = function() {
 const canvas = document.getElementById("field");
 const ctx = canvas.getContext("2d");
 
-  snake[0] = new SnakePart({x: 5, y: 6}, null, {x: 5, y: 7}, ctx);
-  snake[1] = new SnakePart({x: 5, y: 7}, snake[0].coord, {x: 6, y: 7}, ctx);
-  snake[2] = new SnakePart({x: 6, y: 7}, snake[1].coord, {x: 6, y: 6}, ctx);
-  snake[3] = new SnakePart({x: 6, y: 6}, snake[2].coord, {x: 6, y: 5}, ctx);
-  snake[4] = new SnakePart({x: 6, y: 5}, snake[3].coord, null, ctx);
+  snake[0] = new SnakePart({x: 6, y: 8}, null, {x: 6, y: 7}, ctx);
+  snake[1] = new SnakePart({x: 6, y: 7}, snake[0].coord, {x: 6, y: 6}, ctx);
+  snake[2] = new SnakePart({x: 6, y: 6}, snake[1].coord, {x: 6, y: 5}, ctx);
+  snake[3] = new SnakePart({x: 6, y: 5}, snake[2].coord, null, ctx);
 
   for (part in snake) {
     snake[part].Draw();
 
   }
 
-  apple[0] = new ApplePart({x: 5, y: 5}, ctx);
-  apple[1] = new ApplePart({x: 7, y: 7}, ctx);
+  apple[0] = new ApplePart({x: 15, y: 5}, ctx);
+  apple[1] = new ApplePart({x: 20, y: 7}, ctx);
 
   for (part in apple) {
     apple[part].AppleDraw();
@@ -318,24 +324,24 @@ const ctx = canvas.getContext("2d");
 function snakeMove (event) {
     
     var i;
-    var length = 5;
+    var length = 4;
     
     switch (event.keyCode) {
   case 37:
-    snake[4].coord.x = snake[4].coord.x-1;
-    snake[4].coord.y = snake[4].coord.y;
+    snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x-1;
+    snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y;
    break;
   case 38:
-    snake[4].coord.x = snake[4].coord.x;
-    snake[4].coord.y = snake[4].coord.y-1;
+    snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x;
+    snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y-1;
    break;
   case 39:
-    snake[4].coord.x = snake[4].coord.x+1;
-    snake[4].coord.y = snake[4].coord.y;
+    snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x+1;
+    snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y;
    break;
   case 40:
-    snake[4].coord.x = snake[4].coord.x;
-    snake[4].coord.y = snake[4].coord.y+1;
+    snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x;
+    snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y+1;
    break;
     default:
   }
@@ -349,14 +355,13 @@ function snakeMove (event) {
     document.location.reload();
 
   }
-  
-  snake[snake.length - 1].coord.x = snake[snake.length-1].coord.x;
-  snake[snake.length - 1].coord.y = snake[snake.length-1].coord.y;
-  snake[snake.length - 2].prev.x = snake[snake.length - 1].prev.x;
-  snake[snake.length - 2].prev.y = snake[snake.length - 1].prev.y;
-  
 
-  for (let i = snake.length-2; i < 1; i--) {
+  snake[snake.length - 4].coord.x = snake[snake.length - 4].coord.x;
+  snake[snake.length - 4].coord.y = snake[snake.length - 4].coord.y;
+  snake[snake.length - 3].next.x = snake[snake.length - 2].next.x;
+  snake[snake.length - 3].next.y = snake[snake.length - 2].next.y;
+
+  for (let i = snake.length-3; i < 1; i++) {
       snake [i].coord.x = snake[i+1].coord.x;
       snake [i].coord.y = snake[i+1].coord.y;
       snake [i].prev.x = snake[i+1].prev.x;
@@ -365,11 +370,22 @@ function snakeMove (event) {
       snake [i].next.y = snake[i+1].next.y;
   }
 
-  snake[0].coord.x = snake[1].coord.x;
-  snake[0].coord.y = snake[1].coord.y;
+  snake[snake.length - 1].coord.x = snake[snake.length -1].coord.x;
+  snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y;
+  snake[snake.length - 2].prev.x = snake[snake.length - 1].prev.x;
+  snake[snake.length - 2].prev.y = snake[snake.length - 1].prev.y;
 
-    for (part in apple) {
-    apple[part].AppleDraw();
-    }
+  snake[snake.length - 2].coord.x = snake[snake.length -1].coord.x;
+  snake[snake.length - 2].coord.y = snake[snake.length - 1].coord.y;
+  snake[snake.length - 2].prev.x = snake[snake.length - 2].prev.x;
+  snake[snake.length - 2].prev.y = snake[snake.length - 2].prev.y;
+  snake[snake.length - 2].next.x = snake[snake.length - 1].next.x;
+  snake[snake.length - 2].next.y = snake[snake.length - 1].next.y;
+
+
+    for (part in snake) {
+    snake[part].Draw();
+  }
+
 }
 
