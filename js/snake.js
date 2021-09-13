@@ -353,12 +353,12 @@ function snakeMove (event) {
 
   }
 
-  snake[snake.length - 4].coord.x = snake[snake.length - 3].coord.x;
-  snake[snake.length - 4].coord.y = snake[snake.length - 3].coord.y;
-  snake[snake.length - 3].prev.x = snake[snake.length - 2].prev.x;
-  snake[snake.length - 3].prev.y = snake[snake.length - 2].prev.y;
+  snake[0].coord.x = snake[0].prev.x;
+  snake[0].coord.y = snake[0].prev.y;
+  snake[0].prev.x = snake[1].next.x;
+  snake[0].prev.y = snake[1].next.y;
 
-  for (let i = snake.length-3; i < 1; i++) {
+  for (let i = snake.length-3; i <= snake.length; i++) {
       snake [i].coord.x = snake[i+1].coord.x;
       snake [i].coord.y = snake[i+1].coord.y;
       snake [i].next.x = snake[i+1].next.x;
@@ -367,15 +367,10 @@ function snakeMove (event) {
       snake [i].prev.y = snake[i+1].prev.y;
   }
 
-  snake[snake.length - 1].coord.x = snake[snake.length -1].coord.x;
-  snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y;
-  snake[snake.length - 2].next.x = snake[snake.length - 1].next.x;
-  snake[snake.length - 2].next.y = snake[snake.length - 1].next.y;
-
-  snake[snake.length - 2].coord.x = snake[snake.length -1].coord.x;
-  snake[snake.length - 2].coord.y = snake[snake.length - 1].coord.y;
-  snake[snake.length - 2].next.x = snake[snake.length - 2].next.x;
-  snake[snake.length - 2].next.y = snake[snake.length - 2].next.y;
+  snake[snake.length - 2].coord.x = snake[snake.length -1].next.x;
+  snake[snake.length - 2].coord.y = snake[snake.length -1].next.y;
+  snake[snake.length - 2].next.x = snake[snake.length - 2].coord.x;
+  snake[snake.length - 2].next.y = snake[snake.length - 2].coord.y;
   snake[snake.length - 2].prev.x = snake[snake.length - 1].prev.x;
   snake[snake.length - 2].prev.y = snake[snake.length - 1].prev.y;
 
