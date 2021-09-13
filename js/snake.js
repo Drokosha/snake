@@ -303,7 +303,8 @@ const ctx = canvas.getContext("2d");
   snake[0] = new SnakePart({x: 6, y: 8}, {x: 6, y: 7}, null, ctx);
   snake[1] = new SnakePart({x: 6, y: 7}, {x: 6, y: 6}, snake[0].coord, ctx);
   snake[2] = new SnakePart({x: 6, y: 6}, {x: 6, y: 5}, ctx, snake[1].coord);
-  snake[3] = new SnakePart({x: 6, y: 5}, null, snake[2].coord, ctx);
+  snake[3] = new SnakePart({x: 6, y: 5}, {x: 6, y: 4}, snake[2].coord, ctx);
+  snake[4] = new SnakePart({x: 6, y: 4}, null, snake[3].coord, ctx);
 
   for (part in snake) {
     snake[part].Draw();
@@ -321,7 +322,7 @@ const ctx = canvas.getContext("2d");
 function snakeMove (event) {
     
     var i;
-    var length = 4;
+    var length = 5;
     
     switch (event.keyCode) {
   case 37:
@@ -353,12 +354,12 @@ function snakeMove (event) {
 
   }
 
-  snake[0].coord.x = snake[0].prev.x;
-  snake[0].coord.y = snake[0].prev.y;
-  snake[0].prev.x = snake[1].next.x;
-  snake[0].prev.y = snake[1].next.y;
+  snake[0].coord.x = snake[1].next.x;
+  snake[0].coord.y = snake[1].next.y;
+  snake[0].prev.x = snake[1].coord.x;
+  snake[0].prev.y = snake[1].coord.y;
 
-  for (let i = snake.length-3; i <= snake.length-2; i++) {
+  for (let i = snake.length-4; i < snake.length-2; i++) {
       snake [i].coord.x = snake[i+1].coord.x;
       snake [i].coord.y = snake[i+1].coord.y;
       snake [i].next.x = snake[i+1].next.x;
@@ -369,8 +370,8 @@ function snakeMove (event) {
 
   snake[snake.length - 2].coord.x = snake[snake.length -1].next.x;
   snake[snake.length - 2].coord.y = snake[snake.length -1].next.y;
-  snake[snake.length - 2].next.x = snake[snake.length - 2].coord.x;
-  snake[snake.length - 2].next.y = snake[snake.length - 2].coord.y;
+  snake[snake.length - 2].next.x = snake[snake.length - 1].coord.x;
+  snake[snake.length - 2].next.y = snake[snake.length - 1].coord.y;
   snake[snake.length - 2].prev.x = snake[snake.length - 1].prev.x;
   snake[snake.length - 2].prev.y = snake[snake.length - 1].prev.y;
 
