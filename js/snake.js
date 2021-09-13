@@ -358,7 +358,7 @@ function snakeMove (event) {
   snake[0].prev.x = snake[1].next.x;
   snake[0].prev.y = snake[1].next.y;
 
-  for (let i = snake.length-3; i <= snake.length; i++) {
+  for (let i = snake.length-3; i <= snake.length-2; i++) {
       snake [i].coord.x = snake[i+1].coord.x;
       snake [i].coord.y = snake[i+1].coord.y;
       snake [i].next.x = snake[i+1].next.x;
