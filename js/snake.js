@@ -29,7 +29,8 @@ class SnakePart {
     Draw() { // добавляем параметр методу Draw(), передаём канву 
        // делаем свойство текущему объекту, в которое присваиваем
                       // значение полученного параметра
-      let dir = this.Shape ();
+
+     let dir = this.Shape ();
         switch (dir){
       case 1:
         this.DrawHead(dir);
@@ -135,7 +136,7 @@ Shape () {
 }
 
 DrawHead(dir) {
-   this.ctx.clearRect(this.cell.width*this.coord.x, this.cell.height*this.coord.y, this.cell.width, this.cell.height);
+
    this.ctx.beginPath(); // везде, где нужно обратиться к канве, обращаемся к свойству объекта
    this.ctx.fillStyle = "black"; // это нужно вынести из if-а, begin path иначе 
                         // будет только когда dir=1 вызываться
@@ -178,7 +179,7 @@ DrawHead(dir) {
 }
 
 DrawTail(dir) {
-  this.ctx.clearRect(this.cell.width*this.coord.x, this.cell.height*this.coord.y, this.cell.width, this.cell.height);
+
   this.ctx.beginPath();
   this.ctx.fillStyle = "black";
   
@@ -230,7 +231,7 @@ DrawTail(dir) {
 }     
 
   DrawStraight(dir){
-    this.ctx.clearRect(this.cell.width*this.coord.x, this.cell.height*this.coord.y, this.cell.width, this.cell.height);
+    
     this.ctx.beginPath();
     this.ctx.fillStyle = "black";
     
@@ -247,7 +248,7 @@ DrawTail(dir) {
 }
 
   DrawTurn(dir){
-    this.ctx.clearRect(this.cell.width*this.coord.x, this.cell.height*this.coord.y, this.cell.width, this.cell.height);
+    
     this.ctx.beginPath();
     this.ctx.fillStyle = "black";
 
@@ -297,8 +298,8 @@ window.onload = function() {
 
   document.body.onkeydown = snakeMove;
 
-const canvas = document.getElementById("field");
-const ctx = canvas.getContext("2d");
+  const canvas = document.getElementById("field");
+  const ctx = canvas.getContext("2d");
 
   snake[0] = new SnakePart({x: 6, y: 8}, {x: 6, y: 7}, null, ctx);
   snake[1] = new SnakePart({x: 6, y: 7}, {x: 6, y: 6}, snake[0].coord, ctx);
@@ -324,25 +325,6 @@ function snakeMove (event) {
     var i;
     var length = 5;
     
-    switch (event.keyCode) {
-  case 37:
-    snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x-1;
-    snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y;
-   break;
-  case 38:
-    snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x;
-    snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y-1;
-   break;
-  case 39:
-    snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x+1;
-    snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y;
-   break;
-  case 40:
-    snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x;
-    snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y+1;
-   break;
-    default:
-  }
   
   if (snake[snake.length - 1].coord.x * 20 < 0 || 
       snake[snake.length - 1].coord.y * 20 < 0 || 
@@ -362,14 +344,39 @@ function snakeMove (event) {
   }
 
   snake[0].next = null;
+  
+  snake[snake.length - 2].coord.x = snake[snake.length -1].coord.x;
+  snake[snake.length - 2].coord.y = snake[snake.length -1].coord.y;
+  snake[snake.length - 2].next.x = snake[snake.length - 1].next.x;
+  snake[snake.length - 2].next.y = snake[snake.length - 1].next.y;
+  
+  switch (event.keyCode) {
+  case 37:
+    snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x-1;
+    snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y;
+   break;
+  case 38:
+    snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x;
+    snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y-1;
+   break;
+  case 39:
+    snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x+1;
+    snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y;
+   break;
+  case 40:
+    snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x;
+    snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y+1;
+   break;
+    default:
+  }
 
-  snake[snake.length - 2].coord.x = snake[snake.length -1].next.x;
-  snake[snake.length - 2].coord.y = snake[snake.length -1].next.y;
-  snake[snake.length - 2].next.x = snake[snake.length - 2].coord.x;
-  snake[snake.length - 2].next.y = snake[snake.length - 2].coord.y;
-  snake[snake.length - 2].prev.x = snake[snake.length - 1].prev.x;
-  snake[snake.length - 2].prev.y = snake[snake.length - 1].prev.y;
+  snake[snake.length - 2].prev.x = snake[length - 1].coord.x;
+  snake[snake.length - 2].prev.y = snake[length - 1].coord.y;
 
+const canvas = document.getElementById("field");
+const ctx = canvas.getContext("2d");
+
+ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for (part in snake) {
     snake[part].Draw();
