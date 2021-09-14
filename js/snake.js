@@ -310,7 +310,7 @@ window.onload = function() {
   snake[6] = new SnakePart({x: 5, y: 4}, {x: 4, y: 4}, {x: 5, y: 5}, ctx);
   snake[7] = new SnakePart({x: 4, y: 4}, {x: 4, y: 5}, {x: 5, y: 4}, ctx);
   snake[8] = new SnakePart({x: 4, y: 5}, {x: 3, y: 5}, {x: 4, y: 4}, ctx);
-  snake[9] = new SnakePart({x: 3, y: 5}, null, snake[8].coord, ctx);
+  snake[9] = new SnakePart({x: 3, y: 5}, null, {x: 4, y: 5}, ctx);
 
   for (part in snake) {
     snake[part].Draw();
