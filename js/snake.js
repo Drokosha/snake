@@ -159,12 +159,12 @@ DrawHead(dir) {
   }
   
   else if(dir == 3) {
-    this.ctx.moveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y-1));
-    this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y+1)-17,
-                              this.cell.width*this.coord.x+10,this.cell.height*(this.coord.y+1)-17);
-    this.ctx.moveTo(this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y-1));
-    this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y+1)-17,
-                              this.cell.width*this.coord.x+10,this.cell.height*(this.coord.y+1)-17);
+    this.ctx.moveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y-1)+17);
+    this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y+1),
+                              this.cell.width*this.coord.x+10,this.cell.height*(this.coord.y+1));
+    this.ctx.moveTo(this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y-1)+17);
+    this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y+1),
+                              this.cell.width*this.coord.x+10,this.cell.height*(this.coord.y+1));
   }
   
   else if(dir == 4) {
@@ -185,14 +185,14 @@ DrawTail(dir) {
   
   if(dir == 30) {
     
-    this.ctx.moveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y-1));
+    this.ctx.moveTo(this.cell.width*this.coord.x+3,this.cell.height*this.coord.y);
     this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y+1),
                               this.cell.width*this.coord.x+10,this.cell.height*(this.coord.y+1));
-    this.ctx.moveTo(this.cell.width*this.coord.x+16,this.cell.height*(this.coord.y-1));
+    this.ctx.moveTo(this.cell.width*this.coord.x+16,this.cell.height*this.coord.y);
     this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y+1),
                               this.cell.width*this.coord.x+10,this.cell.height*(this.coord.y+1));
-    this.ctx.moveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y-1));
-    this.ctx.lineTo (this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y-1));
+    this.ctx.moveTo(this.cell.width*this.coord.x+3,this.cell.height*this.coord.y);
+    this.ctx.lineTo (this.cell.width*this.coord.x+17,this.cell.height*this.coord.y);
   }
 
   else if(dir == 31) {
@@ -301,11 +301,16 @@ window.onload = function() {
   const canvas = document.getElementById("field");
   const ctx = canvas.getContext("2d");
 
-  snake[0] = new SnakePart({x: 6, y: 8}, {x: 6, y: 7}, null, ctx);
-  snake[1] = new SnakePart({x: 6, y: 7}, {x: 6, y: 6}, snake[0].coord, ctx);
-  snake[2] = new SnakePart({x: 6, y: 6}, {x: 6, y: 5}, snake[1].coord, ctx,);
-  snake[3] = new SnakePart({x: 6, y: 5}, {x: 6, y: 4}, snake[2].coord, ctx);
-  snake[4] = new SnakePart({x: 6, y: 4}, null, snake[3].coord, ctx);
+  snake[0] = new SnakePart({x: 7, y: 8}, {x: 7, y: 7}, null, ctx);
+  snake[1] = new SnakePart({x: 7, y: 7}, {x: 7, y: 6}, snake[0].coord, ctx);
+  snake[2] = new SnakePart({x: 7, y: 6}, {x: 6, y: 6}, snake[1].coord, ctx);
+  snake[3] = new SnakePart({x: 6, y: 6}, {x: 5, y: 6}, snake[2].coord, ctx);
+  snake[4] = new SnakePart({x: 5, y: 6}, {x: 5, y: 5}, snake[3].coord, ctx);
+  snake[5] = new SnakePart({x: 5, y: 5}, {x: 5, y: 4}, snake[4].coord, ctx);
+  snake[6] = new SnakePart({x: 5, y: 4}, {x: 4, y: 4}, snake[5].coord, ctx);
+  snake[7] = new SnakePart({x: 4, y: 4}, {x: 4, y: 5}, snake[6].coord, ctx);
+  snake[8] = new SnakePart({x: 4, y: 5}, {x: 3, y: 5}, snake[7].coord, ctx);
+  snake[9] = new SnakePart({x: 3, y: 5}, null, snake[8].coord, ctx);
 
   for (part in snake) {
     snake[part].Draw();
@@ -323,7 +328,7 @@ window.onload = function() {
 function snakeMove (event) {
     
     var i;
-    var length = 5;
+    var length = 10;
     
   
   if (snake[snake.length - 1].coord.x * 20 < 0 || 
@@ -339,8 +344,8 @@ function snakeMove (event) {
 
   for (let i = 0; i < snake.length-2; i++) {
       snake[i].coord = {x: snake[i+1].coord.x, y: snake[i+1].coord.y};
-      snake[i].coord = {x: snake[i+1].prev.x, y: snake[i+1].prev.y};
-      snake[i].coord = {x: snake[i+1].next.x, y: snake[i+1].next.y};
+      snake[i].prev = {x: snake[i+1].prev.x, y: snake[i+1].prev.y};
+      snake[i].next = {x: snake[i+1].next.x, y: snake[i+1].next.y};
   }
 
   snake[0].next = null;
