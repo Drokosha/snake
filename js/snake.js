@@ -302,14 +302,14 @@ window.onload = function() {
   const ctx = canvas.getContext("2d");
 
   snake[0] = new SnakePart({x: 7, y: 8}, {x: 7, y: 7}, null, ctx);
-  snake[1] = new SnakePart({x: 7, y: 7}, {x: 7, y: 6}, snake[0].coord, ctx);
-  snake[2] = new SnakePart({x: 7, y: 6}, {x: 6, y: 6}, snake[1].coord, ctx);
-  snake[3] = new SnakePart({x: 6, y: 6}, {x: 5, y: 6}, snake[2].coord, ctx);
-  snake[4] = new SnakePart({x: 5, y: 6}, {x: 5, y: 5}, snake[3].coord, ctx);
-  snake[5] = new SnakePart({x: 5, y: 5}, {x: 5, y: 4}, snake[4].coord, ctx);
-  snake[6] = new SnakePart({x: 5, y: 4}, {x: 4, y: 4}, snake[5].coord, ctx);
-  snake[7] = new SnakePart({x: 4, y: 4}, {x: 4, y: 5}, snake[6].coord, ctx);
-  snake[8] = new SnakePart({x: 4, y: 5}, {x: 3, y: 5}, snake[7].coord, ctx);
+  snake[1] = new SnakePart({x: 7, y: 7}, {x: 7, y: 6}, {x: 7, y: 8}, ctx);
+  snake[2] = new SnakePart({x: 7, y: 6}, {x: 6, y: 6}, {x: 7, y: 7}, ctx);
+  snake[3] = new SnakePart({x: 6, y: 6}, {x: 5, y: 6}, {x: 7, y: 6}, ctx);
+  snake[4] = new SnakePart({x: 5, y: 6}, {x: 5, y: 5}, {x: 6, y: 6}, ctx);
+  snake[5] = new SnakePart({x: 5, y: 5}, {x: 5, y: 4}, {x: 5, y: 6}, ctx);
+  snake[6] = new SnakePart({x: 5, y: 4}, {x: 4, y: 4}, {x: 5, y: 5}, ctx);
+  snake[7] = new SnakePart({x: 4, y: 4}, {x: 4, y: 5}, {x: 5, y: 4}, ctx);
+  snake[8] = new SnakePart({x: 4, y: 5}, {x: 3, y: 5}, {x: 4, y: 4}, ctx);
   snake[9] = new SnakePart({x: 3, y: 5}, null, snake[8].coord, ctx);
 
   for (part in snake) {
@@ -377,6 +377,9 @@ function snakeMove (event) {
 
   snake[snake.length - 2].prev.x = snake[length - 1].coord.x;
   snake[snake.length - 2].prev.y = snake[length - 1].coord.y;
+
+  snake[snake.length - 1].next.x = snake[snake.length - 2].coord.x;
+  snake[snake.length - 1].next.y = snake[snake.length - 2].coord.y;
 
 const canvas = document.getElementById("field");
 const ctx = canvas.getContext("2d");
