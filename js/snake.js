@@ -12,7 +12,7 @@ radius = 17;
 radiusM = 3;
 
 
-var length = 3;
+var length = 10;
 
 class ApplePart {
     constructor (pos, ctx) {
@@ -245,7 +245,7 @@ DrawTail(dir) {
     
     if(dir == 10) {
       
-      this.ctx.rect(this.cell.width * this.coord.x, this.cell.height * this.coord.y + margin, widthCell, height - 2*margin);
+      this.ctx.rect(this.cell.width * this.coord.x, this.cell.height * this.coord.y + margin, widthCell, heightCell - 2*margin);
       this.ctx.fill();   
     }
 
@@ -304,7 +304,14 @@ window.onload = function() {
 
   snake[0] = new SnakePart({x: 7, y: 8}, {x: 7, y: 7}, null, ctx);
   snake[1] = new SnakePart({x: 7, y: 7}, {x: 7, y: 6}, {x: 7, y: 8}, ctx);
-  snake[2] = new SnakePart({x: 7, y: 6}, null, {x: 7, y: 7}, ctx);
+  snake[2] = new SnakePart({x: 7, y: 6}, {x: 6, y: 6}, {x: 7, y: 7}, ctx);
+  snake[3] = new SnakePart({x: 6, y: 6}, {x: 5, y: 6}, {x: 7, y: 6}, ctx);
+  snake[4] = new SnakePart({x: 5, y: 6}, {x: 5, y: 5}, {x: 6, y: 6}, ctx);
+  snake[5] = new SnakePart({x: 5, y: 5}, {x: 5, y: 4}, {x: 5, y: 6}, ctx);
+  snake[6] = new SnakePart({x: 5, y: 4}, {x: 4, y: 4}, {x: 5, y: 5}, ctx);
+  snake[7] = new SnakePart({x: 4, y: 4}, {x: 4, y: 5}, {x: 5, y: 4}, ctx);
+  snake[8] = new SnakePart({x: 4, y: 5}, {x: 3, y: 5}, {x: 4, y: 4}, ctx);
+  snake[9] = new SnakePart({x: 3, y: 5}, null, {x: 4, y: 5}, ctx);
 
   for (part in snake) {
     snake[part].Draw();
@@ -318,6 +325,56 @@ window.onload = function() {
     apple[part].AppleDraw();
   }
 } 
+
+function check (event) {
+ 
+ switch (event.keyCode) {
+  case 37:
+   break;
+
+  case 38:
+   break;
+
+  case 39:
+   break;
+
+  case 40:
+   break;
+
+    default:
+  }
+
+ if (snake[snake.length - 1].coord.x * 20 < 0 || 
+     snake[snake.length - 1].coord.y * 20 < 0 || 
+     snake[snake.length - 1].coord.x * 20 > document.getElementById('field').width - 20 || 
+     snake[snake.length - 1].coord.y * 20 > document.getElementById('field').height -20){
+    
+    GameOver ();
+}
+     
+  for (var i = 0; i < snake.length; i++) {
+
+    if (snake[snake.length - 1].coord.x == snake [i].coord.x &&
+    snake[snake.length - 1].coord.y == snake [i].coord.y) {
+    
+    GameOver ();
+    }
+  }
+ 
+
+  if (snake[snake.length - 1].coord.x == apple [0].coord.x &&
+      snake[snake.length - 1].coord.y == apple [0].coord.y ||
+      snake[snake.length - 1].coord.x == apple [1].coord.x &&
+      snake[snake.length - 1].coord.y == apple [1].coord.y) {
+
+    snakeGrow (event.keyCode);
+    snakeMove (event.keyCode);
+  }
+
+  else { 
+    snakeMove (event.keyCode);
+  }   
+}
 
 function GameOver () {
 
@@ -351,45 +408,7 @@ function snakeGrow (){
 
     snake[snake.length - 2].prev.x = snake[length - 1].next.x;
     snake[snake.length - 2].prev.y = snake[length - 1].next.y;
-}
 
-function check (event) {
- 
- switch (event.keyCode) {
-  case 37:
-   break;
-
-  case 38:
-   break;
-
-  case 39:
-   break;
-
-  case 40:
-   break;
-
-    default:
-  }
-
- if (snake[snake.length - 1].coord.x * 20 < 0 || 
-     snake[snake.length - 1].coord.y * 20 < 0 || 
-     snake[snake.length - 1].coord.x * 20 > document.getElementById('field').width - 20 || 
-     snake[snake.length - 1].coord.y * 20 > document.getElementById('field').height -20)  {
-    
-      GameOver ();
-  }
-
-  if (snake[snake.length - 1].coord.x == apple [0].coord.x &&
-      snake[snake.length - 1].coord.y == apple [0].coord.y ||
-      snake[snake.length - 1].coord.x == apple [1].coord.x &&
-      snake[snake.length - 1].coord.y == apple [1].coord.y) {
-
-    snakeGrow (event.keyCode);
-  }
-
-  else { 
-    snakeMove (event.keyCode);
-  }   
 }
 
 function snakeMove () {
