@@ -1,6 +1,17 @@
 var snake = Array();
 var apple = Array();
 
+widthCell = 20;
+
+heightCell = 20;
+
+margin = 3;
+
+radius = 17;
+
+radiusM = 3;
+
+
 var length = 3;
 
 class ApplePart {
@@ -13,7 +24,8 @@ class ApplePart {
     AppleDraw() {
       this.ctx.beginPath();
       this.ctx.fillStyle = "red";
-      this.ctx.rect(this.cell.width * this.coord.x+3, this.cell.height * this.coord.y, 17, 17);
+      this.ctx.rect(this.cell.width * this.coord.x + 3, this.cell.height * this.coord.y, 
+                    widthCell - margin, heightCell - margin);
       this.ctx.fill();   
 
     }
@@ -143,42 +155,41 @@ DrawHead(dir) {
    this.ctx.fillStyle = "black"; // это нужно вынести из if-а, begin path иначе 
                         // будет только когда dir=1 вызываться
   if(dir == 1) {
-    this.ctx.moveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y+1));
-    this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y+1)-17,
-                              this.cell.width*this.coord.x+10,this.cell.height*(this.coord.y+1)-17);
-    this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y+1)-17,
-                              this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y+1));
-    this.ctx.lineTo (this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y+1));
+    this.ctx.moveTo(this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y + 1));
+    this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + margin,this.cell.height * (this.coord.y + 1) - heightCell - margin,
+                              this.cell.width * this.coord.x + widthCell/2 ,this.cell.height * (this.coord.y + 1) - heightCell - margin);
+    this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell - margin,this.cell.height * (this.coord.y + 1) - heightCell - margin,
+                              this.cell.width * this.coord.x + widthCell - margin,this.cell.height * (this.coord.y + 1));
+    this.ctx.lineTo (this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y + 1));
 
   }
     
   else if(dir == 2) {
-    this.ctx.moveTo(this.cell.width*this.coord.x,this.cell.height*this.coord.y+3);
-    this.ctx.quadraticCurveTo(this.cell.width*this.coord.x +17,this.cell.height*this.coord.y+3,
-                              this.cell.width*this.coord.x+17,this.cell.height*this.coord.y+10);
-    this.ctx.quadraticCurveTo(this.cell.width*this.coord.x +17,this.cell.height*this.coord.y+17,
-                              this.cell.width*this.coord.x,this.cell.height*this.coord.y+17);
-    this.ctx.lineTo (this.cell.width*this.coord.x,this.cell.height*this.coord.y+3);
+    this.ctx.moveTo(this.cell.width * this.coord.x, this.cell.height * this.coord.y + margin);
+    this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell-margin, this.cell.height * this.coord.y + margin,
+                              this.cell.width * this.coord.x + widthCell-margin, this.cell.height * this.coord.y + heightCell/2);
+    this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell-margin, this.cell.height * this.coord.y + heightCell - margin,
+                              this.cell.width * this.coord.x, this.cell.height * this.coord.y + heightCell - margin);
+    this.ctx.lineTo (this.cell.width * this.coord.x, this.cell.height * this.coord.y + margin);
 
   }
   
   else if(dir == 3) {
-    this.ctx.moveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y-1)+17);
-    this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y+1),
-                              this.cell.width*this.coord.x+10,this.cell.height*(this.coord.y+1));
-    //this.ctx.moveTo(this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y-1)+17);
-    this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y+1),
-                              this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y-1)+17);
-    this.ctx.lineTo (this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y-1)+17);
+    this.ctx.moveTo(this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y - 1) + heightCell - margin);
+    this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + margin,this.cell.height * (this.coord.y + 1),
+                              this.cell.width * this.coord.x + widthCell/2, this.cell.height * (this.coord.y + 1));
+    this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell - margin, this.cell.height * (this.coord.y + 1),
+                              this.cell.width * this.coord.x + widthCell - margin, this.cell.height * (this.coord.y - 1) + heightCell - margin);
+    this.ctx.lineTo (this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y - 1) + heightCell - margin);
   }
   
   else if(dir == 4) {
-    this.ctx.moveTo(this.cell.width*(this.coord.x+1)-17,this.cell.height*this.coord.y+10);
-    this.ctx.quadraticCurveTo(this.cell.width*(this.coord.x+1) -17,this.cell.height*this.coord.y+3,
-                              this.cell.width*(this.coord.x+1),this.cell.height*this.coord.y+3);
-    this.ctx.lineTo(this.cell.width*(this.coord.x+1),this.cell.height*this.coord.y+17);
-    this.ctx.quadraticCurveTo(this.cell.width*(this.coord.x+1) -17,this.cell.height*this.coord.y+17,
-                              this.cell.width*(this.coord.x+1)-17,this.cell.height*this.coord.y+10);
+    this.ctx.moveTo(this.cell.width * (this.coord.x + 1) - widthCell - margin, this.cell.height * this.coord.y + heightCell/2);
+    this.ctx.quadraticCurveTo(this.cell.width * (this.coord.x + 1) - widthCell - margin, this.cell.height * this.coord.y + margin,
+                              this.cell.width * (this.coord.x + 1), this.cell.height * this.coord.y + margin);
+    this.ctx.lineTo(this.cell.width * (this.coord.x + 1), this.cell.height * this.coord.y + heightCell - margin);
+    this.ctx.quadraticCurveTo(this.cell.width * (this.coord.x + 1) - widthCell - margin, this.cell.height * this.coord.y + heightCell - margin,
+                              this.cell.width * (this.coord.x + 1) - widthCell - margin, this.cell.height * this.coord.y + heightCell/2);
   }
   this.ctx.fill();  
 }
@@ -190,39 +201,39 @@ DrawTail(dir) {
   
   if(dir == 30) {
     
-    this.ctx.moveTo(this.cell.width*this.coord.x+3,this.cell.height*this.coord.y);
-    this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y+1),
-                              this.cell.width*this.coord.x+10,this.cell.height*(this.coord.y+1));
-    this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y+1),
-                              this.cell.width*this.coord.x+17,this.cell.height*this.coord.y);
-    this.ctx.lineTo (this.cell.width*this.coord.x+3,this.cell.height*this.coord.y);
+    this.ctx.moveTo(this.cell.width * this.coord.x + margin, this.cell.height * this.coord.y);
+    this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y + 1),
+                              this.cell.width * this.coord.x + widthCell/2, this.cell.height * (this.coord.y + 1));
+    this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell-margin, this.cell.height * (this.coord.y + 1),
+                              this.cell.width * this.coord.x + widthCell-margin, this.cell.height * this.coord.y);
+    this.ctx.lineTo (this.cell.width * this.coord.x + margin, this.cell.height * this.coord.y);
   }
 
   else if(dir == 31) {
-    this.ctx.moveTo(this.cell.width*this.coord.x,this.cell.height*this.coord.y+17);
-    this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+17,this.cell.height*this.coord.y+17,
-                              this.cell.width*this.coord.x+17,this.cell.height*this.coord.y+10);
-    this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+17,this.cell.height*this.coord.y+3,
-                              this.cell.width*this.coord.x,this.cell.height*this.coord.y+3);
-    this.ctx.lineTo (this.cell.width*this.coord.x,this.cell.height*this.coord.y+17);
+    this.ctx.moveTo(this.cell.width * this.coord.x, this.cell.height * this.coord.y + heightCell - margin);
+    this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell - margin, this.cell.height * this.coord.y + heightCell - margin,
+                              this.cell.width * this.coord.x + widthCell - margin, this.cell.height * this.coord.y + heightCell/2);
+    this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell - margin, this.cell.height * this.coord.y + margin,
+                              this.cell.width * this.coord.x, this.cell.height * this.coord.y + margin);
+    this.ctx.lineTo (this.cell.width * this.coord.x, this.cell.height * this.coord.y + heightCell - margin);
   }
     
   else if(dir == 32) {
-    this.ctx.moveTo(this.cell.width*(this.coord.x+1)-17,this.cell.height*this.coord.y+10);
-    this.ctx.quadraticCurveTo(this.cell.width*(this.coord.x+1) -17,this.cell.height*this.coord.y+3,
-                              this.cell.width*(this.coord.x+1),this.cell.height*this.coord.y+3);
-    this.ctx.lineTo (this.cell.width*(this.coord.x+1),this.cell.height*this.coord.y+17);
-    this.ctx.quadraticCurveTo(this.cell.width*(this.coord.x+1)-17,this.cell.height*this.coord.y+17,
-                              this.cell.width*(this.coord.x+1)-17,this.cell.height*this.coord.y+10);
+    this.ctx.moveTo(this.cell.width * (this.coord.x+1) - widthCell - margin, this.cell.height * this.coord.y + heightCell/2);
+    this.ctx.quadraticCurveTo(this.cell.width * (this.coord.x + 1) - widthCell - margin, this.cell.height * this.coord.y + margin,
+                              this.cell.width * (this.coord.x+1), this.cell.height * this.coord.y + margin);
+    this.ctx.lineTo (this.cell.width * (this.coord.x+1), this.cell.height * this.coord.y+heightCell - margin);
+    this.ctx.quadraticCurveTo(this.cell.width * (this.coord.x + 1) - widthCell - margin, this.cell.height * this.coord.y + heightCell - margin,
+                              this.cell.width * (this.coord.x + 1) - widthCell - margin, this.cell.height * this.coord.y + heightCell/2);
   }
   
   else if(dir == 33) {
-    this.ctx.moveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y+1));
-    this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y+1)-17,
-                              this.cell.width*this.coord.x+10,this.cell.height*(this.coord.y+1)-17);
-    this.ctx.quadraticCurveTo(this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y+1)-17,
-                              this.cell.width*this.coord.x+17,this.cell.height*(this.coord.y+1));
-    this.ctx.lineTo (this.cell.width*this.coord.x+3,this.cell.height*(this.coord.y+1));
+    this.ctx.moveTo(this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y + 1));
+    this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y + 1) - heightCell - margin,
+                              this.cell.width * this.coord.x + widthCell/2, this.cell.height * (this.coord.y+1)-heightCell - margin);
+    this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell-margin, this.cell.height * (this.coord.y + 1) - heightCell - margin,
+                              this.cell.width * this.coord.x + widthCell-margin, this.cell.height * (this.coord.y + 1));
+    this.ctx.lineTo (this.cell.width * this.coord.x+margin, this.cell.height * (this.coord.y + 1));
   }
   this.ctx.fill(); 
 }     
@@ -234,12 +245,12 @@ DrawTail(dir) {
     
     if(dir == 10) {
       
-      this.ctx.rect(this.cell.width * this.coord.x, this.cell.height * this.coord.y+3, 20, 14);
+      this.ctx.rect(this.cell.width * this.coord.x, this.cell.height * this.coord.y + margin, widthCell, height - 2*margin);
       this.ctx.fill();   
     }
 
     else if(dir == 11) {
-      this.ctx.rect(this.cell.width * this.coord.x+3, this.cell.height * this.coord.y, 14, 20);
+      this.ctx.rect(this.cell.width * this.coord.x + margin, this.cell.height * this.coord.y, widthCell - 2*margin, heightCell);
       this.ctx.fill();    
     }
 }
@@ -250,34 +261,34 @@ DrawTail(dir) {
     this.ctx.fillStyle = "green";
 
     if(dir == 20) {
-      this.ctx.arc(this.cell.width * this.coord.x+20, this.cell.height * this.coord.y+20, 17,  Math.PI, 3*Math.PI/2, 0); //слева вниз
-      this.ctx.lineTo(this.cell.width * this.coord.x+20, this.cell.height * this.coord.y+17);
-      this.ctx.arc(this.cell.width * this.coord.x+20, this.cell.height * this.coord.y+20,  3,  -Math.PI/2, Math.PI, 1); //слева вниз
-      this.ctx.lineTo(this.cell.width * this.coord.x+3, this.cell.height * this.coord.y+20);
-      this.ctx.fill();;
+      this.ctx.arc(this.cell.width * (this.coord.x + 1), this.cell.height * (this.coord.y + 1), radius,  Math.PI, 3*Math.PI/2, 0); //слева вниз
+      this.ctx.lineTo(this.cell.width * (this.coord.x+1), this.cell.height * this.coord.y + heightCell - margin);
+      this.ctx.arc(this.cell.width * (this.coord.x + 1), this.cell.height * (this.coord.y + 1),  radiusM,  -Math.PI/2, Math.PI, 1); //слева вниз
+      this.ctx.lineTo(this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y + 1));
+      this.ctx.fill();
     }
 
     else if(dir == 21) {
-      this.ctx.arc(this.cell.width * this.coord.x+20, this.cell.height * this.coord.y, 17,  Math.PI/2,-Math.PI, 0); //слева вверх
-      this.ctx.lineTo(this.cell.width * this.coord.x+17, this.cell.height * this.coord.y);
-      this.ctx.arc(this.cell.width * this.coord.x+20, this.cell.height * this.coord.y, 3,  -Math.PI, Math.PI/2, 1);
-      this.ctx.lineTo(this.cell.width * (this.coord.x+1), this.cell.height * this.coord.y+17);
+      this.ctx.arc(this.cell.width * (this.coord.x + 1), this.cell.height * this.coord.y, radius,  Math.PI/2,-Math.PI, 0); //слева вверх
+      this.ctx.lineTo(this.cell.width * this.coord.x + widthCell-margin, this.cell.height * this.coord.y);
+      this.ctx.arc(this.cell.width * (this.coord.x + 1), this.cell.height * this.coord.y, radiusM,  -Math.PI, Math.PI/2, 1);
+      this.ctx.lineTo(this.cell.width * (this.coord.x + 1), this.cell.height * this.coord.y + heightCell - margin);
       this.ctx.fill();
     }
 
     else if(dir == 22) {
-      this.ctx.arc(this.cell.width * this.coord.x, this.cell.height * this.coord.y+20, 17,  -Math.PI/2,0, 0); //право вниз
-      this.ctx.lineTo(this.cell.width * this.coord.x+3, this.cell.height * this.coord.y+20);
-      this.ctx.arc(this.cell.width * this.coord.x, this.cell.height * this.coord.y+20, 3,  0, 3*Math.PI/2, 1); //право вниз
-      this.ctx.lineTo(this.cell.width * this.coord.x, this.cell.height * this.coord.y+3);
+      this.ctx.arc(this.cell.width * this.coord.x, this.cell.height * (this.coord.y + 1), radius,  -Math.PI/2,0, 0); //право вниз
+      this.ctx.lineTo(this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y + 1));
+      this.ctx.arc(this.cell.width * this.coord.x, this.cell.height * (this.coord.y + 1), radiusM,  0, 3 * Math.PI/2, 1); //право вниз
+      this.ctx.lineTo(this.cell.width * this.coord.x, this.cell.height * this.coord.y + margin);
       this.ctx.fill();
     }
 
     else if(dir == 23) {
-      this.ctx.arc(this.cell.width * this.coord.x, this.cell.height * this.coord.y, 17,  0, Math.PI/2, 0); //право вверх
-      this.ctx.lineTo(this.cell.width * this.coord.x, this.cell.height * this.coord.y + 3);
-      this.ctx.arc(this.cell.width * this.coord.x, this.cell.height * this.coord.y,  3,  -3*Math.PI/2, 2*Math.PI, 1); //право вверх
-      this.ctx.lineTo(this.cell.width * this.coord.x+17, this.cell.height * this.coord.y);
+      this.ctx.arc(this.cell.width * this.coord.x, this.cell.height * this.coord.y, radius,  0, Math.PI/2, 0); //право вверх
+      this.ctx.lineTo(this.cell.width * this.coord.x, this.cell.height * this.coord.y + margin);
+      this.ctx.arc(this.cell.width * this.coord.x, this.cell.height * this.coord.y,  radiusM,  -3*Math.PI/2, 2*Math.PI, 1); //право вверх
+      this.ctx.lineTo(this.cell.width * this.coord.x + widthCell - margin, this.cell.height * this.coord.y);
       this.ctx.fill();
     }
   }
@@ -319,7 +330,7 @@ function snakeGrow (){
   length++;
 
     if (event.keyCode == 37) {
-     snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x-1, y: snake[snake.length - 1].coord.y}, null, 
+     snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x - 1, y: snake[snake.length - 1].coord.y}, null, 
                                      {x: snake[snake.length - 1].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
     }
 
@@ -334,7 +345,7 @@ function snakeGrow (){
     }
     
     if (event.keyCode == 40) {
-     snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y+1}, null, 
+     snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y + 1}, null, 
                                      {x: snake[snake.length - 1].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
     }
 
@@ -400,20 +411,20 @@ function snakeMove () {
   
   switch (event.keyCode) {
   case 37:
-    snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x-1;
+    snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x - 1;
     snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y;
    break;
   case 38:
     snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x;
-    snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y-1;
+    snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y - 1;
    break;
   case 39:
-    snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x+1;
+    snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x + 1;
     snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y;
    break;
   case 40:
     snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x;
-    snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y+1;
+    snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y + 1;
    break;
     default:
   }
