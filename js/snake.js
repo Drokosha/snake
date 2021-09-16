@@ -1,3 +1,4 @@
+var dir;
 var snake = Array();
 var apple = Array();
 
@@ -320,32 +321,28 @@ window.onload = function() {
 
   for (part in apple) {
     apple[part].AppleDraw();
+
+    setTimeout(check, 200);
   }
 } 
 
 function Game (event) {
+
 switch (event.keyCode) {
   case 37:
-   do {
-  check (); 
-} while (37);
-  
-  case 38:
-  do {
-  check (); 
-} while (38);
+    dir = 37;
    break;
   
+  case 38:
+    dir = 38;
+   break;
+
   case 39:
-  do {
-  check (); 
-} while (39);
+    dir = 39;
    break;
   
   case 40:
-    do {
-  check (); 
-} while (40);
+    dir = 40;
    break;
   default:
 }
@@ -356,7 +353,7 @@ function check () {
  var newX = snake[snake.length - 1].coord.x;
  var newY = snake[snake.length - 1].coord.y; 
 
-switch (event.keyCode) {
+switch (dir) {
   case 37:
     newX = snake[snake.length - 1].coord.x - 1;
     newY = snake[snake.length - 1].coord.y;
