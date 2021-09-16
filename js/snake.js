@@ -344,7 +344,7 @@ switch (event.keyCode) {
   case 40:
     newX = snake[snake.length - 1].coord.x;
     newY = snake[snake.length - 1].coord.y + 1;
-
+   break;
   default:
 }
 
@@ -353,29 +353,29 @@ switch (event.keyCode) {
      newX * 20 > document.getElementById('field').width - 20 || 
      newY * 20 > document.getElementById('field').height -20) {
     
-    GameOver ();
+  GameOver ();
+   return;
 }
-     
- for (var i = 1; i < snake.length; i++) {
+
+for (var i = 1; i < snake.length; i++) {
 
   if (newX == snake[i].coord.x && newY == snake[i].coord.y) {
 
   GameOver ();
+   return;
   }
 }
  
- for (var i = 1, i < apple.length; i++) {
+ for (var i = 0; i < apple.length; i++) {
   
   if (newX == apple[i].coord.x && newY == apple[i].coord.y) {
    
    snakeGrow (event.keyCode);
+    return;
   }
 }
-
- else {
-
-  snakeMove (event.keyCode);
- }  
+     
+  snakeMove (event.keyCode);  
 }
 
 function GameOver () {
@@ -410,6 +410,7 @@ snake[snake.length - 2].prev.y = snake[snake.length - 1].next.y;
 function snakeMove () {
     
     var i;
+    var length = 10;
     
   for (let i = 0; i < snake.length-2; i++) {
       snake[i].coord = {x: snake[i+1].coord.x, y: snake[i+1].coord.y};
