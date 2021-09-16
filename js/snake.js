@@ -12,7 +12,7 @@ radius = 17;
 radiusM = 3;
 
 
-var length = 10;
+var snake.length = 10;
 
 class ApplePart {
     constructor (pos, ctx) {
@@ -327,53 +327,55 @@ window.onload = function() {
 } 
 
 function check (event) {
- 
- switch (event.keyCode) {
+
+ var newX = snake[snake.length - 1].coord.x;
+ var newY = snake[snake.length - 1].coord.y; 
+
+switch (event.keyCode) {
   case 37:
+    newX = snake[snake.length - 1].coord.x - 1;
+    newY = snake[snake.length - 1].coord.y;
    break;
-
   case 38:
+    newX = snake[snake.length - 1].coord.x;
+    newY = snake[snake.length - 1].coord.y - 1;
    break;
-
   case 39:
+    newX = snake[snake.length - 1].coord.x + 1;
+    newY = snake[snake.length - 1].coord.y;
    break;
-
   case 40:
-   break;
+    newX = snake[snake.length - 1].coord.x;
+    newY = snake[snake.length - 1].coord.y + 1;
 
-    default:
-  }
+  default:
+}
 
- if (snake[snake.length - 1].coord.x * 20 < 0 || 
-     snake[snake.length - 1].coord.y * 20 < 0 || 
-     snake[snake.length - 1].coord.x * 20 > document.getElementById('field').width - 20 || 
-     snake[snake.length - 1].coord.y * 20 > document.getElementById('field').height -20){
+ if (newX * 20 < 0 || 
+     newY * 20 < 0 || 
+     newX * 20 > document.getElementById('field').width - 20 || 
+     newY * 20 > document.getElementById('field').height -20){
     
     GameOver ();
 }
      
-  for (var i = 0; i < snake.length; i++) {
+ for (var i = 1; i < snake.length; i++) {
 
-    if (snake[snake.length - 1].coord.x == snake [i].coord.x &&
-    snake[snake.length - 1].coord.y == snake [i].coord.y) {
-    
-    GameOver ();
-    }
+  if (newX == snake [i].coord.x && newY == snake [i].coord.y){
+
+  GameOver ();
   }
+}
  
+ if (newX == apple [0].coord.x && newY == apple [0].coord.y ||
+     newX == apple [1].coord.x && newY == apple [1].coord.y) {
 
-  if (snake[snake.length - 1].coord.x == apple [0].coord.x &&
-      snake[snake.length - 1].coord.y == apple [0].coord.y ||
-      snake[snake.length - 1].coord.x == apple [1].coord.x &&
-      snake[snake.length - 1].coord.y == apple [1].coord.y) {
+ snakeGrow (event.keyCode);
+}
 
-    snakeGrow (event.keyCode);
-    snakeMove (event.keyCode);
-  }
-
-  else { 
-    snakeMove (event.keyCode);
-  }   
+ else { 
+  snakeMove (event.keyCode);
+ }   
 }
 
 function GameOver () {
@@ -384,30 +386,30 @@ function GameOver () {
 
 function snakeGrow (){
 
-  length++;
+  snake.length++;
 
     if (event.keyCode == 37) {
      snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x - 1, y: snake[snake.length - 1].coord.y}, null, 
-                                     {x: snake[snake.length - 1].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
+                                     {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
     }
 
     if (event.keyCode == 38) {
      snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y-1}, null, 
-                                     {x: snake[snake.length - 1].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
+                                     {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
     }
 
     if (event.keyCode == 39) {
      snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x+1, y: snake[snake.length - 1].coord.y}, null, 
-                                     {x: snake[snake.length - 1].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
+                                     {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
     }
     
     if (event.keyCode == 40) {
      snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y + 1}, null, 
-                                     {x: snake[snake.length - 1].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
+                                     {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
     }
 
-    snake[snake.length - 2].prev.x = snake[length - 1].next.x;
-    snake[snake.length - 2].prev.y = snake[length - 1].next.y;
+    snake[snake.length - 2].prev.x = snake[snake.length - 1].next.x;
+    snake[snake.length - 2].prev.y = snake[snake.length - 1].next.y;
 
 }
 
