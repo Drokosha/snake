@@ -21,7 +21,7 @@ class ApplePart {
     AppleDraw() {
       this.ctx.beginPath();
       this.ctx.fillStyle = "red";
-      this.ctx.rect(this.cell.width * this.coord.x + 3, this.cell.height * this.coord.y, 
+      this.ctx.rect(this.cell.width * this.coord.x + margin, this.cell.height * this.coord.y, 
                     widthCell - margin, heightCell - margin);
       this.ctx.fill();   
 
@@ -294,7 +294,7 @@ DrawTail(dir) {
 
 window.onload = function() {
 
-  document.body.onkeydown = check;
+  document.body.onkeydown = Game;
 
   const canvas = document.getElementById("field");
   const ctx = canvas.getContext("2d");
@@ -323,7 +323,35 @@ window.onload = function() {
   }
 } 
 
-function check (event) {
+function Game (event) {
+switch (event.keyCode) {
+  case 37:
+   do {
+  check (); 
+} while (37);
+  
+  case 38:
+  do {
+  check (); 
+} while (38);
+   break;
+  
+  case 39:
+  do {
+  check (); 
+} while (39);
+   break;
+  
+  case 40:
+    do {
+  check (); 
+} while (40);
+   break;
+  default:
+}
+}
+
+function check () {
 
  var newX = snake[snake.length - 1].coord.x;
  var newY = snake[snake.length - 1].coord.y; 
@@ -375,7 +403,7 @@ for (var i = 1; i < snake.length; i++) {
   }
 }
      
-  snakeMove (event.keyCode);  
+  snakeMove (event.keyCode);
 }
 
 function GameOver () {
@@ -386,31 +414,35 @@ function GameOver () {
 
 function snakeGrow (){
 
-  if (event.keyCode == 37) {snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x - 1, y: snake[snake.length - 1].coord.y}, null, 
+    const canvas = document.getElementById("field");
+    const ctx = canvas.getContext("2d");
+
+  if (event.keyCode == 37) {snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x - 1, y: snake[snake.length - 1].coord.y}, null, 
                            {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
   }
 
-  if (event.keyCode == 38) {snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y-1}, null, 
+  else if (event.keyCode == 38) {snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y-1}, null, 
                            {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
   }
 
-  if (event.keyCode == 39) {snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x+1, y: snake[snake.length - 1].coord.y}, null, 
+  else if (event.keyCode == 39) {snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x+1, y: snake[snake.length - 1].coord.y}, null, 
                            {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
   }
     
-  if (event.keyCode == 40) {snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y + 1}, null, 
+  else if (event.keyCode == 40) {snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y + 1}, null, 
                            {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
   }
 
-snake[snake.length - 2].prev.x = snake[snake.length - 1].next.x;
-snake[snake.length - 2].prev.y = snake[snake.length - 1].next.y;
+snake[snake.length - 2].prev = {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y};
+
+ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 }
 
 function snakeMove () {
     
     var i;
-    var length = 10;
+  
     
   for (let i = 0; i < snake.length-2; i++) {
       snake[i].coord = {x: snake[i+1].coord.x, y: snake[i+1].coord.y};
@@ -445,8 +477,8 @@ function snakeMove () {
     default:
   }
 
-  snake[snake.length - 2].prev.x = snake[length - 1].coord.x;
-  snake[snake.length - 2].prev.y = snake[length - 1].coord.y;
+  snake[snake.length - 2].prev.x = snake[snake.length - 1].coord.x;
+  snake[snake.length - 2].prev.y = snake[snake.length - 1].coord.y;
 
   snake[snake.length - 1].next.x = snake[snake.length - 2].coord.x;
   snake[snake.length - 1].next.y = snake[snake.length - 2].coord.y;
