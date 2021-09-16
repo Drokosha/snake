@@ -11,9 +11,6 @@ radius = 17;
 
 radiusM = 3;
 
-
-var snake.length = 10;
-
 class ApplePart {
     constructor (pos, ctx) {
       this.coord = pos;
@@ -354,23 +351,23 @@ switch (event.keyCode) {
  if (newX * 20 < 0 || 
      newY * 20 < 0 || 
      newX * 20 > document.getElementById('field').width - 20 || 
-     newY * 20 > document.getElementById('field').height -20){
+     newY * 20 > document.getElementById('field').height -20) {
     
     GameOver ();
 }
      
  for (var i = 1; i < snake.length; i++) {
 
-  if (newX == snake [i].coord.x && newY == snake [i].coord.y){
+  if (newX == snake[i].coord.x && newY == snake[i].coord.y) {
 
   GameOver ();
   }
 }
  
- if (newX == apple [0].coord.x && newY == apple [0].coord.y ||
-     newX == apple [1].coord.x && newY == apple [1].coord.y) {
-
- snakeGrow (event.keyCode);
+ for (var i = 1, i < apple.length; i++) {
+  if (newX == apple[i].coord.x && newY == apple[i].coord.y) {
+   snakeGrow (event.keyCode);
+  }
 }
 
  else { 
@@ -386,30 +383,24 @@ function GameOver () {
 
 function snakeGrow (){
 
-  snake.length++;
+  if (event.keyCode == 37) {snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x - 1, y: snake[snake.length - 1].coord.y}, null, 
+                           {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
+  }
 
-    if (event.keyCode == 37) {
-     snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x - 1, y: snake[snake.length - 1].coord.y}, null, 
-                                     {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
-    }
+  if (event.keyCode == 38) {snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y-1}, null, 
+                           {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
+  }
 
-    if (event.keyCode == 38) {
-     snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y-1}, null, 
-                                     {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
-    }
-
-    if (event.keyCode == 39) {
-     snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x+1, y: snake[snake.length - 1].coord.y}, null, 
-                                     {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
-    }
+  if (event.keyCode == 39) {snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x+1, y: snake[snake.length - 1].coord.y}, null, 
+                           {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
+  }
     
-    if (event.keyCode == 40) {
-     snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y + 1}, null, 
-                                     {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
-    }
+  if (event.keyCode == 40) {snake[snake.length] = new snake({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y + 1}, null, 
+                           {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
+  }
 
-    snake[snake.length - 2].prev.x = snake[snake.length - 1].next.x;
-    snake[snake.length - 2].prev.y = snake[snake.length - 1].next.y;
+snake[snake.length - 2].prev.x = snake[snake.length - 1].next.x;
+snake[snake.length - 2].prev.y = snake[snake.length - 1].next.y;
 
 }
 
@@ -469,7 +460,6 @@ ctx.clearRect(0, 0, canvas.width, canvas.height);
   for (part in apple) {
     apple[part].AppleDraw();
   }
-
 }
 
 
