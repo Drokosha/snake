@@ -365,14 +365,17 @@ switch (event.keyCode) {
 }
  
  for (var i = 1, i < apple.length; i++) {
+  
   if (newX == apple[i].coord.x && newY == apple[i].coord.y) {
+   
    snakeGrow (event.keyCode);
   }
 }
 
- else { 
+ else {
+
   snakeMove (event.keyCode);
- }   
+ }  
 }
 
 function GameOver () {
