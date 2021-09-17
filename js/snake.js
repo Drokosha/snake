@@ -1,4 +1,4 @@
-var dir;
+var select = 37;
 var snake = Array();
 var apple = Array();
 
@@ -25,7 +25,6 @@ class ApplePart {
       this.ctx.rect(this.cell.width * this.coord.x + margin, this.cell.height * this.coord.y, 
                     widthCell - margin, heightCell - margin);
       this.ctx.fill();   
-
     }
 }
 
@@ -313,7 +312,6 @@ window.onload = function() {
 
   for (part in snake) {
     snake[part].Draw();
-
   }
 
   apple[0] = new ApplePart({x: 15, y: 5}, ctx);
@@ -322,30 +320,27 @@ window.onload = function() {
   for (part in apple) {
     apple[part].AppleDraw();
 
-    setTimeout(check, 200);
+    setTimeout(check, 400);
   }
 } 
 
 function Game (event) {
 
-switch (event.keyCode) {
-  case 37:
-    dir = 37;
-   break;
-  
-  case 38:
-    dir = 38;
-   break;
+ if (event.keyCode == 37 && select != 39) {
+  select = 37;
+ }
 
-  case 39:
-    dir = 39;
-   break;
-  
-  case 40:
-    dir = 40;
-   break;
-  default:
-}
+ else if (event.keyCode == 38 && select != 40) {
+  select = 38;
+ }
+
+ else if (event.keyCode == 39 && select != 37) {
+  select = 39;
+ }
+
+ else if (event.keyCode == 40 && select != 38) {
+  select = 40;
+ }
 }
 
 function check () {
@@ -353,7 +348,7 @@ function check () {
  var newX = snake[snake.length - 1].coord.x;
  var newY = snake[snake.length - 1].coord.y; 
 
-switch (dir) {
+switch (select) {
   case 37:
     newX = snake[snake.length - 1].coord.x - 1;
     newY = snake[snake.length - 1].coord.y;
@@ -384,7 +379,7 @@ switch (dir) {
 
 for (var i = 1; i < snake.length; i++) {
 
-  if (newX == snake[i].coord.x && newY == snake[i].coord.y) {
+  if (newX == snake[i].coord.x && newY == snake[i].coord.y ) {
 
   GameOver ();
    return;
@@ -395,18 +390,19 @@ for (var i = 1; i < snake.length; i++) {
   
   if (newX == apple[i].coord.x && newY == apple[i].coord.y) {
    
-   snakeGrow (event.keyCode);
+   snakeGrow (select);
     return;
   }
 }
      
-  snakeMove (event.keyCode);
+ snakeMove (select);
+
+ setTimeout(check, 200);
 }
 
 function GameOver () {
 
   alert ("GAME OVER");
-  document.location.reload();
 }
 
 function snakeGrow (){
@@ -414,25 +410,26 @@ function snakeGrow (){
     const canvas = document.getElementById("field");
     const ctx = canvas.getContext("2d");
 
-  if (event.keyCode == 37) {snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x - 1, y: snake[snake.length - 1].coord.y}, null, 
+  if (select == 37) {snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x - 1, y: snake[snake.length - 1].coord.y}, null, 
                            {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
   }
 
-  else if (event.keyCode == 38) {snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y-1}, null, 
+  else if (select == 38) {snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y-1}, null, 
                            {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
   }
 
-  else if (event.keyCode == 39) {snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x+1, y: snake[snake.length - 1].coord.y}, null, 
+  else if (select == 39) {snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x+1, y: snake[snake.length - 1].coord.y}, null, 
                            {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
   }
     
-  else if (event.keyCode == 40) {snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y + 1}, null, 
+  else if (select == 40) {snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y + 1}, null, 
                            {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
   }
 
 snake[snake.length - 2].prev = {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y};
 
-ctx.clearRect(0, 0, canvas.width, canvas.height);
+apple[0].coord = {x: Math.floor((Math.random() * 17 + 1)) * widthCell, y: Math.floor((Math.random() * 17 + 1)) * heightCell};
+apple[1].coord = {x: Math.floor((Math.random() * 15 + 3)) * widthCell, y: Math.floor((Math.random() * 15 + 3)) * heightCell};
 
 }
 
@@ -454,7 +451,7 @@ function snakeMove () {
   snake[snake.length - 2].next.x = snake[snake.length - 1].next.x;
   snake[snake.length - 2].next.y = snake[snake.length - 1].next.y;
   
-  switch (event.keyCode) {
+  switch (select) {
   case 37:
     snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x - 1;
     snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y;
