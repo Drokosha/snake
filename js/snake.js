@@ -1,6 +1,7 @@
 var select = 37;
 var snake = Array();
 var apple = Array();
+var setTime = 200;
 
 widthCell = 20;
 
@@ -319,9 +320,9 @@ window.onload = function() {
 
   for (part in apple) {
     apple[part].AppleDraw();
-
-    setTimeout(check, 400);
   }
+
+  setTimeout(check, setTime);
 } 
 
 function Game (event) {
@@ -391,13 +392,16 @@ for (var i = 1; i < snake.length; i++) {
   if (newX == apple[i].coord.x && newY == apple[i].coord.y) {
    
    snakeGrow (select);
+
+ setTimeout (check, setTime);
+
     return;
   }
 }
      
  snakeMove (select);
 
- setTimeout(check, 200);
+ setTimeout(check, setTime);
 }
 
 function GameOver () {
@@ -411,25 +415,40 @@ function snakeGrow (){
     const ctx = canvas.getContext("2d");
 
   if (select == 37) {snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x - 1, y: snake[snake.length - 1].coord.y}, null, 
-                           {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
+                    {x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y}, ctx);
   }
 
   else if (select == 38) {snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y-1}, null, 
-                           {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
+                         {x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y}, ctx);
   }
 
   else if (select == 39) {snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x+1, y: snake[snake.length - 1].coord.y}, null, 
-                           {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
+                           {x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y}, ctx);
   }
     
   else if (select == 40) {snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y + 1}, null, 
-                           {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y}, ctx);
+                           {x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y}, ctx);
   }
 
-snake[snake.length - 2].prev = {x: snake[snake.length - 2].coord.x, y: snake[snake.length - 2].coord.y};
+snake[snake.length - 2].prev = {x: snake[snake.length-1].coord.x, y: snake[snake.length-1].coord.y};
 
-apple[0].coord = {x: Math.floor((Math.random() * 17 + 1)) * widthCell, y: Math.floor((Math.random() * 17 + 1)) * heightCell};
-apple[1].coord = {x: Math.floor((Math.random() * 15 + 3)) * widthCell, y: Math.floor((Math.random() * 15 + 3)) * heightCell};
+  if (snake[snake.length -1].coord.x == apple[0].coord.x || snake[snake.length -1].coord.y == apple[0].coord.y) {
+    apple[0].coord = {x: Math.floor((Math.random() * (29 - 0 +1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
+  }
+
+  if (snake[snake.length -1].coord.x == apple[1].coord.x || snake[snake.length -1].coord.y == apple[1].coord.y) {
+    apple[1].coord = {x: Math.floor((Math.random() * (29 - 0 +1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
+  }
+
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+for (part in snake) {
+    snake[part].Draw();
+  }
+
+for (part in apple) {
+    apple[part].AppleDraw();
+  }
 
 }
 
