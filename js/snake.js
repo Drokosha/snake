@@ -550,32 +550,31 @@ ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 function snakeObject(snake) {
 
- const canvas = document.getElementById("field");
- const ctx = canvas.getContext("2d");
+   const canvas = document.getElementById("field");
+   const ctx = canvas.getContext("2d");
  
- var i = 0;
+   var i = 0;
 
- var j = 0;
+   var j = 0;
    
- snake[i] = new SnakePart({x: i, y: j}, {x: i + 1, y: j}, null, ctx);
+   snake[i] = new SnakePart({x: i, y: j}, {x: i + 1, y: j}, null, ctx);
 
- for (var i = 1; i >= 28; i++) {
+   for (var i = 1; i >= 28; i++) {
        
-  snake[i+1] = new SnakePart({x: i + 1, y: j}, {x: i + 1, y:j}, {x: i - 1, y:j}, ctx);
- }
+    snake[i+1] = new SnakePart({x: i + 1, y: j}, {x: i + 1, y:j}, {x: i - 1, y:j}, ctx);
+   }
 
-snake[i + 28] = new SnakePart({x: i + 28, y: j}, {x: i + 28, y:j + 1}, {x: i + 27, y: j}, ctx);
-snake[i + 29] = new SnakePart({x: i + 28, y: j + 1}, {x: i + 27, y:j + 1}, {x: i + 28, y: j}, ctx);
+    snake[i + 28] = new SnakePart({x: i + 28, y: j}, {x: i + 28, y:j + 1}, {x: i + 27, y: j}, ctx);
+    snake[i + 29] = new SnakePart({x: i + 28, y: j + 1}, {x: i + 27, y:j + 1}, {x: i + 28, y: j}, ctx);
 
  
- for (var i = 28 ; i <= 28; i--) {
+   for (var i = 28 ; i <= 28; i--) {
        
-  snake[i] = new SnakePart({x: i, y: j}, {x: i-1, y: j + 1}, {x: i + 1, y: j + 1}, ctx);
- }
+    snake[i] = new SnakePart({x: i, y: j}, {x: i-1, y: j + 1}, {x: i + 1, y: j + 1}, ctx);
+   }
 
-snake[i - 28] = new SnakePart({x: i - 28, y: j + 1}, {x: i - 27, y:j + 1}, {x: i- 28, y: j + 3}, ctx);
-snake[i + 29] = new SnakePart({x: i - 28, y: j + 3}, {x: i+1, y:j + 3}, {x: i-28, y: j + 2}, ctx);
-
+    snake[i - 28] = new SnakePart({x: i - 28, y: j + 1}, {x: i - 27, y:j + 1}, {x: i- 28, y: j + 3}, ctx);
+    snake[i + 29] = new SnakePart({x: i - 28, y: j + 3}, {x: i+1, y:j + 3}, {x: i-28, y: j + 2}, ctx);
 }
 
 
