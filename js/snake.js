@@ -4,7 +4,7 @@ var snake = Array();
 
 var apple = Array();
 
-var setTime = 200;
+var setTime = 300;
 
 var widthCell = 20;
 
@@ -310,21 +310,23 @@ DrawTurn(dir){
 
 window.onload = function() {
 
-  document.body.onkeydown = Game;
+  document.body.onkeyup = Game;
 
   const canvas = document.getElementById("field");
   const ctx = canvas.getContext("2d");
 
-  snake[0] = new SnakePart({x: 7, y: 8}, {x: 7, y: 7}, null, ctx);
-  snake[1] = new SnakePart({x: 7, y: 7}, {x: 7, y: 6}, {x: 7, y: 8}, ctx);
-  snake[2] = new SnakePart({x: 7, y: 6}, {x: 6, y: 6}, {x: 7, y: 7}, ctx);
-  snake[3] = new SnakePart({x: 6, y: 6}, {x: 5, y: 6}, {x: 7, y: 6}, ctx);
-  snake[4] = new SnakePart({x: 5, y: 6}, {x: 5, y: 5}, {x: 6, y: 6}, ctx);
-  snake[5] = new SnakePart({x: 5, y: 5}, {x: 5, y: 4}, {x: 5, y: 6}, ctx);
-  snake[6] = new SnakePart({x: 5, y: 4}, {x: 4, y: 4}, {x: 5, y: 5}, ctx);
-  snake[7] = new SnakePart({x: 4, y: 4}, {x: 4, y: 5}, {x: 5, y: 4}, ctx);
-  snake[8] = new SnakePart({x: 4, y: 5}, {x: 3, y: 5}, {x: 4, y: 4}, ctx);
-  snake[9] = new SnakePart({x: 3, y: 5}, null, {x: 4, y: 5}, ctx);
+  snakeObject();
+
+  //snake[0] = new SnakePart({x: 7, y: 8}, {x: 7, y: 7}, null, ctx);
+  //snake[1] = new SnakePart({x: 7, y: 7}, {x: 7, y: 6}, {x: 7, y: 8}, ctx);
+  //snake[2] = new SnakePart({x: 7, y: 6}, {x: 6, y: 6}, {x: 7, y: 7}, ctx);
+  //snake[3] = new SnakePart({x: 6, y: 6}, {x: 5, y: 6}, {x: 7, y: 6}, ctx);
+  //snake[4] = new SnakePart({x: 5, y: 6}, {x: 5, y: 5}, {x: 6, y: 6}, ctx);
+  //snake[5] = new SnakePart({x: 5, y: 5}, {x: 5, y: 4}, {x: 5, y: 6}, ctx);
+  //snake[6] = new SnakePart({x: 5, y: 4}, {x: 4, y: 4}, {x: 5, y: 5}, ctx);
+  //snake[7] = new SnakePart({x: 4, y: 4}, {x: 4, y: 5}, {x: 5, y: 4}, ctx);
+  //snake[8] = new SnakePart({x: 4, y: 5}, {x: 3, y: 5}, {x: 4, y: 4}, ctx);
+  //snake[9] = new SnakePart({x: 3, y: 5}, null, {x: 4, y: 5}, ctx);
 
   for (part in snake) {
    snake[part].Draw();
@@ -342,19 +344,20 @@ window.onload = function() {
 
 function Game (event) {
 
- if (event.keyCode == 37 && select != 39) {
+
+ if (event.keyCode == 37 && select != 39 && event.keyCode != 38 && event.keyCode != 39 && event.keyCode != 40) {
   select = 37;
  }
 
- else if (event.keyCode == 38 && select != 40) {
+ if (event.keyCode == 38 && select != 40 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 40) {
   select = 38;
  }
 
- else if (event.keyCode == 39 && select != 37) {
+ if (event.keyCode == 39 && select != 37 && event.keyCode != 38 && event.keyCode != 37 && event.keyCode != 40) {
   select = 39;
  }
 
- else if (event.keyCode == 40 && select != 38) {
+ if (event.keyCode == 40 && select != 38 && event.keyCode != 38 && event.keyCode != 39 && event.keyCode != 37) {
   select = 40;
  }
 }
@@ -545,6 +548,35 @@ ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 }
 
+function snakeObject(snake) {
+
+ const canvas = document.getElementById("field");
+ const ctx = canvas.getContext("2d");
+ 
+ var i = 0;
+
+ var j = 0;
+   
+ snake[i] = new SnakePart({x: i, y: j}, {x: i + 1, y: j}, null, ctx);
+
+ for (var i = 1; i >= 28; i++) {
+       
+  snake[i+1] = new SnakePart({x: i + 1, y: j}, {x: i + 1, y:j}, {x: i - 1, y:j}, ctx);
+ }
+
+snake[i + 28] = new SnakePart({x: i + 28, y: j}, {x: i + 28, y:j + 1}, {x: i + 27, y: j}, ctx);
+snake[i + 29] = new SnakePart({x: i + 28, y: j + 1}, {x: i + 27, y:j + 1}, {x: i + 28, y: j}, ctx);
+
+ 
+ for (var i = 28 ; i <= 28; i--) {
+       
+  snake[i] = new SnakePart({x: i, y: j}, {x: i-1, y: j + 1}, {x: i + 1, y: j + 1}, ctx);
+ }
+
+snake[i - 28] = new SnakePart({x: i - 28, y: j + 1}, {x: i - 27, y:j + 1}, {x: i- 28, y: j + 3}, ctx);
+snake[i + 29] = new SnakePart({x: i - 28, y: j + 3}, {x: i+1, y:j + 3}, {x: i-28, y: j + 2}, ctx);
+
+}
 
 
 
