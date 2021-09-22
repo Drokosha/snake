@@ -1,4 +1,4 @@
-var select = 39;
+var select = 40;
 
 var snake = Array();
 
@@ -580,13 +580,13 @@ function snakeObject() {
    if (con > 0) {
        i = 0;
        
-       if (i == 0) {
-           p++;
-           line = line + 1;
-           snake [p] = new SnakePart({x: i, y: j + line}, {x: i, y:j + line + 1}, {x: i + 1, y:j}, ctx);
-           i++;
-           line = line - 1;
-       }
+       //if (i == 0) {
+         //  p++;
+           //line = line + 1;
+           //snake [p] = new SnakePart({x: i, y: j + line}, {x: i, y:j + line + 1}, {x: i + 1, y:j}, ctx);
+           //i++;
+           //line = line - 1;
+       //}
        
        for (var p; p <= widthH * pop - 2; p++) {
            snake[p+1] = new SnakePart({x: i, y: j + line}, {x: i + 1, y:j + line}, {x:i - 1, y:j + line}, ctx);
