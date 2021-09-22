@@ -1,10 +1,10 @@
-var select = 37;
+var select = 39;
 
 var snake = Array();
 
 var apple = Array();
 
-var setTime = 300;
+var setTime = 200;
 
 var widthCell = 20;
 
@@ -310,7 +310,7 @@ DrawTurn(dir){
 
 window.onload = function() {
 
-  document.body.onkeyup = Game;
+  document.body.onkeydown = Game;
 
   const canvas = document.getElementById("field");
   const ctx = canvas.getContext("2d");
@@ -548,30 +548,49 @@ function snakeMove () {
   }
 }
 
-function snakeObject(snake) {
+function snakeObject() {
 
    const canvas = document.getElementById("field");
    const ctx = canvas.getContext("2d");
  
-   var i = 0;
+   var widthH = canvas.width/widthCell - 2;
    var j = 0;
+   var i = 1;
+   var line = 0;
+   var pop = 1;
+   var vertical = 0;
+   var con = 0;
    
-   snake[0] = new SnakePart({x: i, y: j}, {x: i + 1, y: j}, null, ctx);
+   snake[0] = new SnakePart({x: 0, y: 0}, {x: 1, y: 0}, null, ctx);
 
-   for (var i = 1; i >= 28; i++) {
-        snake[i+1] = new SnakePart({x: i + 1, y: j}, {x: i + 1, y:j}, {x: i - 1, y:j}, ctx);
+   do {
+          
+   for (var i; i <= widthH * pop; i++) {
+       snake[i] = new SnakePart({x: i - vertical, y: j + line}, {x: i - vertical + 1, y:j + line}, {x: snake[i - 1].coord.x - vertical, y:j + line}, ctx);
    }
+       snake[i + 1] = new SnakePart({x: i - vertical, y: j + line}, {x: i - vertical, y:j + line + 1}, {x: i - vertical- 1, y: j + line}, ctx);
+       snake[i + 2] = new SnakePart({x: i - vertical, y: j + 1 + line}, {x: i - vertical- 1, y:j + line + 1}, {x: i - vertical, y: j + line}, ctx);
 
-   snake[i + 28] = new SnakePart({x: i + 28, y: j}, {x: i + 28, y:j + 1}, {x: i + 27, y: j}, ctx);
-   snake[i + 29] = new SnakePart({x: i + 28, y: j + 1}, {x: i + 27, y:j + 1}, {x: i + 28, y: j}, ctx);
+   i = i + 3;
 
- 
-   for (var i = 28 ; i <= 28; i--) {
-        snake[i] = new SnakePart({x: i, y: j}, {x: i-1, y: j + 1}, {x: i + 1, y: j + 1}, ctx);
-   }
+   vertical = i - 3;
 
-   snake[i - 28] = new SnakePart({x: i - 28, y: j + 1}, {x: i - 27, y:j + 1}, {x: i- 28, y: j + 3}, ctx);
-   snake[i + 29] = new SnakePart({x: i - 28, y: j + 3}, {x: i+1, y:j + 3}, {x: i-28, y: j + 2}, ctx);
+   line++;
+
+   pop++;
+   //snake[i] = new SnakePart({x: i, y: j}, {x: i, y:j + 1}, {x: i - 1, y: j}, ctx);
+   //snake[i + 1] = new SnakePart({x: i, y: j + 1}, {x: i - 1, y:j + 1}, {x: i, y: j}, ctx);
+   } while (line == 1);
+
+   //for (var i = 31; i <= widthH * 2 + 2; i++) {
+       //j = 1;
+
+       //snake[i] = new SnakePart({x: snake [i - 1].prev.x, y: j}, {x: snake [i - 1].prev.x - 1, y: j}, {x: snake [i - 1].prev.x + 1, y: j}, ctx);
+    //}
+
+    //snake[i] = new SnakePart({x: snake [i - 1].prev.x, y: j}, {x: snake [i - 1].prev.x, y:j + 1}, {x: snake [i - 1].prev.x + 1, y: j}, ctx);
+    //snake[i + 1] = new SnakePart({x: snake [i - 1].prev.x, y: j + 1}, {x: snake [i - 1].prev.x, y:j}, {x: snake [i - 1].prev.x + 1, y: j + 1}, ctx);
+    //snake[i + 2] = new SnakePart({x: snake [i - 1].prev.x + 1, y: j + 1}, null, {x: snake [i - 1].prev.x, y: j + 1}, ctx);
 }
 
 
