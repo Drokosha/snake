@@ -549,71 +549,37 @@ function snakeMove () {
 }
 
 function snakeObject() {
-
     const canvas = document.getElementById("field");
     const ctx = canvas.getContext("2d");
-
-    var widthH = canvas.width/widthCell;
-    var i = 1;
-    var p = 1;
-    var line = 0;
-    var pop = 1;
-    var con = 0;
-    
-    snake[0] = new SnakePart({x: 0, y: 0}, {x: 1, y: 0}, null, ctx);
-
-    for (p; p <= widthH - 2; p++) {
-                snake[p] = new SnakePart({x: i, y: line}, {x: i + 1, y: line}, {x: i - 1, y: line}, ctx);
-                i++;
-            }
-
-    snake[p] = new SnakePart({x: p, y: line}, {x: p, y:line + 1}, {x: p - 1, y: line}, ctx);
-
-    do {
-        
-        line = line + 1;
-        
-        //p++;
-        
-        if (line % 2 != 0) {
-            
-            i = 29;
-            p++;
-
-            snake[p] = new SnakePart({x: i, y: line}, {x: i - 1, y: line}, {x: i, y: line - 1}, ctx);
-            
-            i --;
-
-            for (var com = widthH - 2; com >= 1; com--) {
-                snake[p + 1] = new SnakePart({x: i, y: line}, {x: i - 1, y: line}, {x:i + 1, y: line}, ctx);
-                p++;
-                i--;
-            }
-            
-            p++;
-            snake[p] = new SnakePart({x: i, y: line}, {x: i, y: line + 1}, {x: i + 1, y: line}, ctx);
-        }
-
-        else if ((line % 2) == 0) {
-            i = 0;
-            p++;
-
-            snake[p] = new SnakePart({x: i, y: line}, {x: i + 1, y: line}, {x: i, y: line - 1}, ctx);
-
-            i++;
-            for (var com = widthH - 2; com >= 1; com--) {
-            snake[p + 1] = new SnakePart({x: i, y: line}, {x: i + 1, y: line}, {x:i - 1, y: line}, ctx);
-            p++;
-            i++;
-        }
-            p++;
-
-            snake[p] = new SnakePart({x: i, y: line}, {x: i, y: line + 1}, {x: i - 1, y: line}, ctx);
-        }
-
-    } while (line <= 1);
-
-    snake[p + 1] = new SnakePart({x: snake[p].prev.x, y: snake[p].prev.y}, null, {x: snake[p].coord.x, y: snake[p].coord.y}, ctx);
+	
+	var fieldHeight = Math.floor(canvas.height / heightCell) - 1; // Количество ячеек на игровом поле в высоту
+	var fieldWidth = Math.floor(canvas.width / widthCell) - 1; // Количество ячеек на игровом поле в ширину
+	var snakeLength = Math.ceil((fieldWidth + 1) * (fieldHeight + 1) / 2) + 10; // Длина змеи - кол-во ячеек определено так,
+															   					// чтобы змея заняла половину игрового поля
+	
+    snake[0] = new SnakePart({x: 0, y: 0}, {x: 1, y: 0}, null, ctx); // Хвост змеи
+	for (let i = 1; i <= snakeLength - 1; i++) {
+		let rowNo = Math.floor(i / (fieldWidth + 1)); // rowNo - текущий номер ряда, в котором мы размещаем змею
+		// вычислим смещение текущей ячейки 
+		// если ряд чётный, то смещение от начала ряда. Если нечётный - то с конца
+		let cellNo = i - rowNo * (fieldWidth + 1);
+		// если ряд чётный, то чтобы получить следующую ячейку, мы вычитаем единицу
+		// если нечётный, то прибавляем
+		let dX = 1;
+		if (rowNo % 2 != 0) {
+			cellNo = fieldWidth - cellNo;
+			dX = -1;
+		}
+		if (cellNo == 0 || cellNo == fieldWidth) { // крайняя ячейка, делаем поворот
+			snake[i] = new SnakePart({x: cellNo, y: rowNo}, {x: cellNo, y: rowNo + 1}, {x: snake[i-1].coord.x, y: snake[i-1].coord.y}, ctx);
+			snake[++i] = new SnakePart({x: cellNo, y: rowNo + 1}, {x: cellNo - dX, y: rowNo + 1}, {x: snake[i-1].coord.x, y: snake[i-1].coord.y}, ctx);
+			continue;
+		}	
+		// а если это не крайняя ячейка, делаем обычный кусок змеи
+		snake[i] = new SnakePart({x: cellNo, y: rowNo}, {x: cellNo + dX, y: rowNo}, {x: snake[i-1].coord.x, y: snake[i-1].coord.y}, ctx);
+	}
+	// У головы нет предыдущего элемента
+	snake[snakeLength - 1].prev = null;
 }
 
 
