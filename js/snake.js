@@ -453,25 +453,25 @@ function snakeGrow (){
  snake[snake.length - 2].prev = {x: snake[snake.length-1].coord.x, y: snake[snake.length-1].coord.y};
 
   do {
-  
-   var i;
 
    var collision = 0;
    
    if (snake[snake.length -1].coord.x == apple[0].coord.x || snake[snake.length -1].coord.y == apple[0].coord.y) {
-       apple[0].coord = {x: Math.floor((Math.random() * (29 - 0 +1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
+       apple[0].coord = {x: Math.floor((Math.random() * (29 - 0 + 1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
    }
 
    if (snake[snake.length -1].coord.x == apple[1].coord.x || snake[snake.length -1].coord.y == apple[1].coord.y) {
-       apple[1].coord = {x: Math.floor((Math.random() * (29 - 0 +1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
+       apple[1].coord = {x: Math.floor((Math.random() * (29 - 0 + 1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
    }
 
-   for (let i = 0; i < snake.length-1; i++) {
+   for (var i = 0; i < snake.length-1; i++) {
    snake[i].coord = {x: snake[i].coord.x, y: snake[i].coord.y};
   
     if (apple[0].coord.x == snake[i].coord.x && apple[0].coord.y == snake[i].coord.y ||
         apple[1].coord.x == snake[i].coord.x && apple[1].coord.y == snake[i].coord.y) {
     collision = 1;
+    alert ("Яблоко в змее")
+
     break;
     }
   }
@@ -553,67 +553,73 @@ function snakeObject() {
     const canvas = document.getElementById("field");
     const ctx = canvas.getContext("2d");
 
-    var widthH = canvas.width/widthCell;
-    var i = 1;
-    var p = 1;
-    var line = 0;
-    var pop = 1;
-    var con = 0;
-    
-    snake[0] = new SnakePart({x: 0, y: 0}, {x: 1, y: 0}, null, ctx);
+    var widthH = canvas.width/widthCell; // Задаю предельное значение в строке при создании объекта
+    var i = 1; //задаю координату х, которая будеи учавствовать при созщдании объекта. 
+    var p = 1; //переменная которая считает создаваемые объекты массива snake 
+    var line = 0; //переменная которая за координату Y, а так же за строчки в зависимости в какой мы находимся.
 
-    for (p; p <= widthH - 2; p++) {
-                snake[p] = new SnakePart({x: i, y: line}, {x: i + 1, y: line}, {x: i - 1, y: line}, ctx);
-                i++;
-            }
+    snake[0] = new SnakePart({x: 0, y: 0}, {x: 1, y: 0}, null, ctx); // задаем 1 объект хвост
 
-    snake[p] = new SnakePart({x: p, y: line}, {x: p, y:line + 1}, {x: p - 1, y: line}, ctx);
+    for (p; p <= widthH - 2; p++) { // запускаем цикл, чтобы создать новые объекты змеи в 1 строчке до поворота
+                snake[p] = new SnakePart({x: i, y: line}, {x: i + 1, y: line}, {x: i - 1, y: line}, ctx); // вычесление координат создаваемых объектов
+                i++; //после того как вычислили объект и задали координаты увеличиваем координату Х на 1, чтобы следующий элемент шел следом. 
+            } //Соотвественно задаем координаты coord prev next в соотвествии с конструктором
+
+    snake[p] = new SnakePart({x: p, y: line}, {x: p, y:line + 1}, {x: p - 1, y: line}, ctx); // задаем координаты поворота 1 строчке
+    // Сделал это строку -нулевую отдельно так как она первая из-за хвоста. В уме я понимаю, что ее можно создавать и 583 строке, но как то не задалось
 
     do {
         
-        line = line + 1;
-        
-        //p++;
-        
-        if (line % 2 != 0) {
+        line++; // после того как мы создали 1 строку, мы должны увеличить значение Y (количество строк) на 1
+        // так как у нас строки разные слева направо и справа на лево нам необходимо определить четная у нас строка или нет
+        // и в зависимости от этого делать разные циклы и рисовать повороты.
+        if (line % 2 != 0) { // проверка на четность, если line (строка) не четная то заходим в оператора и производит действия
             
-            i = 29;
-            p++;
+            i = 29; //Так как у нас координаты пойдут справа на лево и последняя клетка в строке имеет данное значение, это и будет координата 1 массива во втрой строке. 
+            p++; // увеличиваю количество объектов массива так как последний массив был создан поворот, а нам нужен следующий массив по порядку. 
 
-            snake[p] = new SnakePart({x: i, y: line}, {x: i - 1, y: line}, {x: i, y: line - 1}, ctx);
+            snake[p] = new SnakePart({x: i, y: line}, {x: i - 1, y: line}, {x: i, y: line - 1}, ctx); //задаю поворот 1 массив объекта нечетной строки
             
-            i --;
+            i --; // уменьшаю координату Х, так как при вхождении в цикл нам нужно следующая ячейка, а первый прогон цикла нам не ндаст это сделать
 
-            for (var com = widthH - 2; com >= 1; com--) {
-                snake[p + 1] = new SnakePart({x: i, y: line}, {x: i - 1, y: line}, {x:i + 1, y: line}, ctx);
-                p++;
-                i--;
+            for (var com = widthH - 2; com >= 1; com--) {// собственно цикл создания объектов с 28 до 1
+                snake[p + 1] = new SnakePart({x: i, y: line}, {x: i - 1, y: line}, {x:i + 1, y: line}, ctx); // координаты вычесления нечетной строки 
+                p++; // увеличиваю количество объектов массива 
+                i--; //меньшаю координату Х,
             }
             
-            p++;
-            snake[p] = new SnakePart({x: i, y: line}, {x: i, y: line + 1}, {x: i + 1, y: line}, ctx);
+            p++; // увеличиваю количество объектов массива 
+            snake[p] = new SnakePart({x: i, y: line}, {x: i, y: line + 1}, {x: i + 1, y: line}, ctx); // поворот в конце строки
         }
 
-        else if ((line % 2) == 0) {
-            i = 0;
-            p++;
+        else { //убрать полностью else не получилось. 
+            i = 0; // так как у нас четная строка от 0 до 29 слева направо, задаем координату Х
+            p++; // увеличиваю количество объектов массива 
 
-            snake[p] = new SnakePart({x: i, y: line}, {x: i + 1, y: line}, {x: i, y: line - 1}, ctx);
+            snake[p] = new SnakePart({x: i, y: line}, {x: i + 1, y: line}, {x: i, y: line - 1}, ctx);// задаю поворот
 
-            i++;
-            for (var com = widthH - 2; com >= 1; com--) {
-            snake[p + 1] = new SnakePart({x: i, y: line}, {x: i + 1, y: line}, {x:i - 1, y: line}, ctx);
-            p++;
-            i++;
+            i++; //увеличиваю  координату х
+
+            for (var com = widthH - 2; com >= 1; com--) {// собственно цикл создания объектов с 1 до 28
+            snake[p + 1] = new SnakePart({x: i, y: line}, {x: i + 1, y: line}, {x:i - 1, y: line}, ctx); // координаты
+            p++;// увеличиваю количество объектов массива 
+            i++;//увеличиваю координату Х,
         }
-            p++;
+            p++;// увеличиваю количество объектов массива так как нам нужен следующий эелемент массива
 
-            snake[p] = new SnakePart({x: i, y: line}, {x: i, y: line + 1}, {x: i - 1, y: line}, ctx);
+            snake[p] = new SnakePart({x: i, y: line}, {x: i, y: line + 1}, {x: i - 1, y: line}, ctx); // поворот
         }
 
-    } while (line <= 1);
+    } while (line <= 25); // завершаем большой цикл. в зависимости от параметра line определяем количество необходимых строк
 
-    snake[p + 1] = new SnakePart({x: snake[p].prev.x, y: snake[p].prev.y}, null, {x: snake[p].coord.x, y: snake[p].coord.y}, ctx);
+    snake[p + 1] = new SnakePart({x: snake[p].prev.x, y: snake[p].prev.y}, null, {x: snake[p].coord.x, y: snake[p].coord.y}, ctx)
+    // прописываем голову
+}
+
+function appleTest(){
+
+    if (newX == apple[i].coord.x && newY == apple[i].coord.y) {}
+
 }
 
 
