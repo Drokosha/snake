@@ -618,7 +618,7 @@ function snakeObject() {
 
 function appleTest(){
 
-    if (newX == apple[i].coord.x && newY == apple[i].coord.y) {}
+    if (newX == apple[i].coord.x && newY == apple[i].coord.y) { }
 
 }
 
