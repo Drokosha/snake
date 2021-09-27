@@ -452,31 +452,46 @@ function snakeGrow (){
 
  snake[snake.length - 2].prev = {x: snake[snake.length-1].coord.x, y: snake[snake.length-1].coord.y};
 
-  do {
+ 
+   
+    if (snake[snake.length -1].coord.x == apple[0].coord.x || snake[snake.length -1].coord.y == apple[0].coord.y) {
+        var appleCool = 0;
+    }
+
+    //if (snake[snake.length -1].coord.x == apple[1].coord.x || snake[snake.length -1].coord.y == apple[1].coord.y) {
+    
+    if (snake[snake.length -1].coord.x == apple[1].coord.x || snake[snake.length -1].coord.y == apple[1].coord.y){
+        appleCool = 1;   
+    }
 
    var collision = 0;
-   
-   if (snake[snake.length -1].coord.x == apple[0].coord.x || snake[snake.length -1].coord.y == apple[0].coord.y) {
-       apple[0].coord = {x: Math.floor((Math.random() * (29 - 0 + 1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
-   }
+    
+    do {
 
-   if (snake[snake.length -1].coord.x == apple[1].coord.x || snake[snake.length -1].coord.y == apple[1].coord.y) {
-       apple[1].coord = {x: Math.floor((Math.random() * (29 - 0 + 1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
-   }
+        if (appleCool = 0) {
+            apple[0].coord = {x: Math.floor((Math.random() * (29 - 0 + 1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
+        } 
 
-   for (var i = 0; i < snake.length-1; i++) {
-   snake[i].coord = {x: snake[i].coord.x, y: snake[i].coord.y};
-  
-    if (apple[0].coord.x == snake[i].coord.x && apple[0].coord.y == snake[i].coord.y ||
-        apple[1].coord.x == snake[i].coord.x && apple[1].coord.y == snake[i].coord.y) {
-    collision = 1;
-    alert ("Яблоко в змее")
+        if (appleCool = 1) {
+            apple[1].coord = {x: Math.floor((Math.random() * (29 - 0 + 1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
+        }
 
-    break;
-    }
-  }
+        for (var i = 0; i < snake.length-1; i++) {
+            snake[i].coord = {x: snake[i].coord.x, y: snake[i].coord.y};
 
-  } while (collision == 1);
+            if (apple[0].coord.x == snake[i].coord.x && apple[0].coord.y == snake[i].coord.y ||
+                apple[1].coord.x == snake[i].coord.x && apple[1].coord.y == snake[i].coord.y) {
+            
+                collision = 0;
+            }
+            
+            else {
+                collision = 1;
+                break;
+            }
+        }
+
+    } while (collision == 0);
 
  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -592,12 +607,11 @@ function snakeObject() {
 
         line++;
 
-    } while (line <= 10); // завершаем большой цикл.  в зависимости от параметра line определяем количество необходимых строк, т.е сколько раз цикл будет выполнять код
-
-    snake[0].next = null;
+    } while (line <= 0); // завершаем большой цикл.  в зависимости от параметра line определяем количество необходимых строк, т.е сколько раз цикл будет выполнять код
 
     snake[p + 1] = new SnakePart({x: snake[p].prev.x, y: snake[p].prev.y}, null, {x: snake[p].coord.x, y: snake[p].coord.y}, ctx)
     // создаем последний элемент массива snake, в котором будет распологаться голова.
+    snake[0].next = null;
 }
 
 function appleTest(){
