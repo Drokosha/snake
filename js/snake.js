@@ -458,7 +458,7 @@ function snakeGrow (){
 
     for (var i = 0; i < apple.length; i++) {
         if (snake[snake.length -1].coord.x == apple[i].coord.x && snake[snake.length -1].coord.y == apple[i].coord.y) {
-        appleMatch ();
+        appleMatch (i);
         }
     }
 
@@ -581,19 +581,19 @@ function snakeObject() {
     snake[0].next = null;
 }
 
-function appleMatch () {
+function appleMatch (appleID) {
 
     var collision;
 
     do {
         var son = 0;
-        for (var son; son < snake.length-1; son++) {
+        for ( ; son < snake.length-1; son++) {
             snake[son].coord = {x: snake[son].coord.x, y: snake[son].coord.y};
             
-            if ((apple[i].coord.x == snake[son].coord.x && apple[i].coord.y == snake[son].coord.y) ||
-                (apple[i].coord.x == apple[i].coord.x && apple[i].coord.y == apple[i].coord.y)) {
+            if ((apple[appleID].coord.x == snake[son].coord.x && apple[appleID].coord.y == snake[son].coord.y) ||
+                (apple[appleID].coord.x == apple[appleID].coord.x && apple[appleID].coord.y == apple[appleID].coord.y)) {
                 
-                apple[i].coord = {x: Math.floor((Math.random() * (29 - 0 + 1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
+                apple[appleID].coord = {x: Math.floor((Math.random() * (29 - 0 + 1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
                 collision = 1;
                 son = 0;
             }
