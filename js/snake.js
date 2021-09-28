@@ -456,43 +456,11 @@ function snakeGrow (){
 
     snake[snake.length - 2].prev = {x: snake[snake.length-1].coord.x, y: snake[snake.length-1].coord.y};
 
-    if (snake[snake.length -1].coord.x == apple[0].coord.x || snake[snake.length -1].coord.y == apple[0].coord.y) {
-        apple[0].coord = {x: Math.floor((Math.random() * (29 - 0 + 1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
-    }
-
-    if (snake[snake.length -1].coord.x == apple[1].coord.x || snake[snake.length -1].coord.y == apple[1].coord.y){
-        apple[1].coord = {x: Math.floor((Math.random() * (29 - 0 + 1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
-    }
-
-    var collision;
-
-    do {
-        var i = 0;
-        for (var i; i < snake.length-1; i++) {
-            snake[i].coord = {x: snake[i].coord.x, y: snake[i].coord.y};
-            
-            if (((apple[0].coord.x == snake[i].coord.x && apple[0].coord.y == snake[i].coord.y) ||
-                 (apple[1].coord.x == snake[i].coord.x && apple[1].coord.y == snake[i].coord.y)) ||
-                  apple[0].coord.x == apple[1].coord.x && apple[0].coord.y == apple[1].coord.y) {
-                
-                apple[0].coord = {x: Math.floor((Math.random() * (29 - 0 + 1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
-                collision = 1;
-                i = 0;
-            }
-            
-            else if (((apple[1].coord.x == snake[i].coord.x && apple[1].coord.y == snake[i].coord.y) ||
-                     (apple[0].coord.x == snake[i].coord.x && apple[0].coord.y == snake[i].coord.y)) ||
-                     apple[1].coord.x == apple[0].coord.x && apple[1].coord.y == apple[0].coord.y) {
-                
-                apple[1].coord = {x: Math.floor((Math.random() * (29 - 0 + 1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
-                collision = 1;
-                i = 0;
-            }
-            collision = 0;
+    for (var i = 0; i < apple.length; i++) {
+        if (snake[snake.length -1].coord.x == apple[i].coord.x && snake[snake.length -1].coord.y == apple[i].coord.y) {
+        appleMatch ();
         }
-         
-    } while (collision == 1);
-
+    }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -611,6 +579,29 @@ function snakeObject() {
     snake[p] = new SnakePart({x: snake[p - 1].prev.x, y: snake[p - 1].prev.y}, null, {x: snake[p - 1].coord.x, y: snake[p - 1].coord.y}, ctx)
     // создаем последний элемент массива snake, в котором будет распологаться голова.
     snake[0].next = null;
+}
+
+function appleMatch () {
+
+    var collision;
+
+    do {
+        var son = 0;
+        for (var son; son < snake.length-1; son++) {
+            snake[son].coord = {x: snake[son].coord.x, y: snake[son].coord.y};
+            
+            if ((apple[i].coord.x == snake[son].coord.x && apple[i].coord.y == snake[son].coord.y) ||
+                (apple[i].coord.x == apple[i].coord.x && apple[i].coord.y == apple[i].coord.y)) {
+                
+                apple[i].coord = {x: Math.floor((Math.random() * (29 - 0 + 1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
+                collision = 1;
+                son = 0;
+            }
+            
+            collision = 0;
+        }
+         
+    } while (collision == 1);
 }
 
 
