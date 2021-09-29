@@ -583,11 +583,13 @@ function snakeObject() {
 
 function appleMatch (appleID) {
 
-    var collision;
-
     do {
+        var collision = 0;
         var son = 0;
         var app = 0;
+        
+        var newX = apple[appleID].coord.x;
+        var newY = apple[appleID].coord.y; 
         
         apple[appleID].coord = {x: Math.floor((Math.random() * (29 - 0 + 1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
         
@@ -598,22 +600,23 @@ function appleMatch (appleID) {
                 collision = 1;
                 break;
             }
+        }
             
-            for ( ; app < apple.length; app++) {
-                apple[app].coord = {x: apple[app].coord.x, y: apple[app].coord.y};
+        if (collision == 1) {
+            continue;
+        }
+
+        for ( ; app < apple.length; app++) {
+            apple[app].coord = {x: apple[app].coord.x, y: apple[app].coord.y};
                     
-                if ((apple[appleID].coord.x == apple[app].coord.x && apple[appleID].coord.y == apple[app].coord.y) || 
-                    (apple[appleID].coord.x != apple[appleID].coord.x && apple[appleID].coord.y != apple[appleID].coord.y)) {
-                    collision = 1;
-                    break;
-                }
+            if ((apple[appleID].coord.x == apple[app].coord.x && apple[appleID].coord.y == apple[app].coord.y) &&
+                (apple[appleID].coord.x != newX && apple[appleID].coord.x != newY)) {
+                collision = 1;
+                break;
             }
-            
-            collision = 0;
         }
          
     } while (collision == 1);
 }
-
 
 
