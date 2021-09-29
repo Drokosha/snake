@@ -574,7 +574,7 @@ function snakeObject() {
         }
         line++;
 
-    } while (line <= 27); // завершаем большой цикл.  в зависимости от параметра line определяем количество необходимых строк, т.е сколько раз цикл будет выполнять код
+    } while (line <= 1); // завершаем большой цикл.  в зависимости от параметра line определяем количество необходимых строк, т.е сколько раз цикл будет выполнять код
 
     snake[p] = new SnakePart({x: snake[p - 1].prev.x, y: snake[p - 1].prev.y}, null, {x: snake[p - 1].coord.x, y: snake[p - 1].coord.y}, ctx)
     // создаем последний элемент массива snake, в котором будет распологаться голова.
@@ -597,14 +597,15 @@ function appleMatch (appleID) {
                 son = 0;
             }
             
-                for ( ; app < apple.length; app++) {
-                    apple[app].coord = {x: apple[app].coord.x, y: apple[app].coord.y};
+            for ( ; app < apple.length; app++) {
+                apple[app].coord = {x: apple[app].coord.x, y: apple[app].coord.y};
                     
-                    if ((apple[appleID].coord.x == apple[app].coord.x && apple[appleID].coord.y == apple[app].coord.y) || (apple[appleID].coord.x != apple[appleID].coord.x && apple[appleID].coord.y != apple[appleID].coord.y)) {
-                        apple[appleID].coord = {x: Math.floor((Math.random() * (29 - 0 + 1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
-                        collision = 1;
-                    }
+                if ((apple[appleID].coord.x == apple[app].coord.x && apple[appleID].coord.y == apple[app].coord.y) || 
+                    (apple[appleID].coord.x != apple[appleID].coord.x && apple[appleID].coord.y != apple[appleID].coord.y)) {
+                    apple[appleID].coord = {x: Math.floor((Math.random() * (29 - 0 + 1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
+                    collision = 1;
                 }
+            }
             
             collision = 0;
         }
