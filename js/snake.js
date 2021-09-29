@@ -345,20 +345,24 @@ window.onload = function() {
 function Game (event) {
 
 
-    if (event.keyCode == 37 && select != 39 && event.keyCode != 38 && event.keyCode != 39 && event.keyCode != 40) {
+    if (event.keyCode == 37 && select != 39) {
         select = 37;
+        
     }
 
-    if (event.keyCode == 38 && select != 40 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 40) {
+    if (event.keyCode == 38 && select != 40) {
         select = 38;
+       
     }
 
-    if (event.keyCode == 39 && select != 37 && event.keyCode != 38 && event.keyCode != 37 && event.keyCode != 40) {
+    if (event.keyCode == 39 && select != 37) {
         select = 39;
+        
     }
 
-    if (event.keyCode == 40 && select != 38 && event.keyCode != 38 && event.keyCode != 39 && event.keyCode != 37) {
+    if (event.keyCode == 40 && select != 38) {
         select = 40;
+        
     }
 }
 
@@ -601,7 +605,7 @@ function appleMatch (appleID) {
             }
         }
             
-        if (collision == 1) {
+        if (collision == 1 || (apple[appleID].coord.x != newX && apple[appleID].coord.x != newY)) {
             continue;
         }
 
@@ -611,8 +615,7 @@ function appleMatch (appleID) {
                 continue;
             }
                     
-            if ((apple[appleID].coord.x == apple[app].coord.x && apple[appleID].coord.y == apple[app].coord.y) &&
-                (apple[appleID].coord.x != newX && apple[appleID].coord.x != newY)) {
+            if (apple[appleID].coord.x == apple[app].coord.x && apple[appleID].coord.y == apple[app].coord.y) {
                 collision = 1;
                 break;
             }
