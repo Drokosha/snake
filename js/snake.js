@@ -594,8 +594,7 @@ function appleMatch (appleID) {
         apple[appleID].coord = {x: Math.floor((Math.random() * (29 - 0 + 1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
         
         for ( ; son < snake.length-1; son++) {
-            snake[son].coord = {x: snake[son].coord.x, y: snake[son].coord.y};
-
+           
             if (apple[appleID].coord.x == snake[son].coord.x && apple[appleID].coord.y == snake[son].coord.y) {
                 collision = 1;
                 break;
@@ -607,7 +606,10 @@ function appleMatch (appleID) {
         }
 
         for ( ; app < apple.length; app++) {
-            apple[app].coord = {x: apple[app].coord.x, y: apple[app].coord.y};
+            
+            if ( app == appleID ) {
+                continue;
+            }
                     
             if ((apple[appleID].coord.x == apple[app].coord.x && apple[appleID].coord.y == apple[app].coord.y) &&
                 (apple[appleID].coord.x != newX && apple[appleID].coord.x != newY)) {
