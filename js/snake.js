@@ -1,5 +1,7 @@
 var select = 40;
 
+var posol;
+
 var snake = Array();
 
 var apple = Array();
@@ -346,23 +348,44 @@ function Game (event) {
 
 
     if (event.keyCode == 37 && select != 39) {
-        select = 37;
+        if (posol == 0) {
+            select = 37;
+        }
         
+        else {
+
+        }
+
     }
 
     if (event.keyCode == 38 && select != 40) {
-        select = 38;
-       
+        if (posol == 0) {
+            select = 38;
+        }
+        
+        else {
+
+        }
     }
 
     if (event.keyCode == 39 && select != 37) {
-        select = 39;
+        if (posol == 0) {
+            select = 39;
+        }
         
+        else {
+
+        }
     }
 
     if (event.keyCode == 40 && select != 38) {
-        select = 40;
+        if (posol == 0) {
+            select = 40;
+        }
         
+        else {
+
+        }
     }
 }
 
@@ -372,23 +395,23 @@ function check () {
     var newY = snake[snake.length - 1].coord.y; 
 
     switch (select) {
-    case 37:
-        newX = snake[snake.length - 1].coord.x - 1;
-        newY = snake[snake.length - 1].coord.y;
-      break;
-    case 38:
-        newX = snake[snake.length - 1].coord.x;
-        newY = snake[snake.length - 1].coord.y - 1;
-      break;
-    case 39:
-        newX = snake[snake.length - 1].coord.x + 1;
-        newY = snake[snake.length - 1].coord.y;
-      break;
-    case 40:
-        newX = snake[snake.length - 1].coord.x;
-        newY = snake[snake.length - 1].coord.y + 1;
-      break;
-    default:
+        case 37:
+            newX = snake[snake.length - 1].coord.x - 1;
+            newY = snake[snake.length - 1].coord.y;
+         break;
+        case 38:
+            newX = snake[snake.length - 1].coord.x;
+            newY = snake[snake.length - 1].coord.y - 1;
+         break;
+        case 39:
+            newX = snake[snake.length - 1].coord.x + 1;
+            newY = snake[snake.length - 1].coord.y;
+         break;
+        case 40:
+            newX = snake[snake.length - 1].coord.x;
+            newY = snake[snake.length - 1].coord.y + 1;
+         break;
+        default:
     }
 
     if (newX * 20 < 0 || newY * 20 < 0 || 
@@ -427,6 +450,9 @@ function check () {
     snakeMove (select);
 
     setTimeout(check, setTime);
+
+    posol = 0;
+
 }
 
 function GameOver () {
@@ -578,7 +604,7 @@ function snakeObject() {
         }
         line++;
 
-    } while (line <= 27); // завершаем большой цикл.  в зависимости от параметра line определяем количество необходимых строк, т.е сколько раз цикл будет выполнять код
+    } while (line <= 0); // завершаем большой цикл.  в зависимости от параметра line определяем количество необходимых строк, т.е сколько раз цикл будет выполнять код
 
     snake[p] = new SnakePart({x: snake[p - 1].prev.x, y: snake[p - 1].prev.y}, null, {x: snake[p - 1].coord.x, y: snake[p - 1].coord.y}, ctx)
     // создаем последний элемент массива snake, в котором будет распологаться голова.
