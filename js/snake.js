@@ -1,6 +1,6 @@
 var select = 40;
 
-var posol;
+var posol = 0;
 
 var snake = Array();
 
@@ -346,7 +346,10 @@ window.onload = function() {
 
 function Game (event) {
 
-
+    if (posol == 1) {
+        return;
+    }
+    
     if (event.keyCode == 37 && select != 39) {
         select = 37;
     }
@@ -366,10 +369,6 @@ function Game (event) {
 }
 
 function check () {
-
-    if (posol == 1) {
-        return;
-    }
 
     var newX = snake[snake.length - 1].coord.x;
     var newY = snake[snake.length - 1].coord.y; 
