@@ -350,6 +350,7 @@ function Game (event) {
     if (event.keyCode == 37 && select != 39) {
         if (posol == 0) {
             select = 37;
+            posol = 1;
         }
         
         else {
@@ -361,6 +362,7 @@ function Game (event) {
     if (event.keyCode == 38 && select != 40) {
         if (posol == 0) {
             select = 38;
+            posol = 1;
         }
         
         else {
@@ -371,6 +373,7 @@ function Game (event) {
     if (event.keyCode == 39 && select != 37) {
         if (posol == 0) {
             select = 39;
+            posol = 1;
         }
         
         else {
@@ -381,6 +384,7 @@ function Game (event) {
     if (event.keyCode == 40 && select != 38) {
         if (posol == 0) {
             select = 40;
+            posol = 1;
         }
         
         else {
