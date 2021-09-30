@@ -6,6 +6,8 @@ var snake = Array();
 
 var apple = Array();
 
+var memory = Array();
+
 var setTime = 200;
 
 var widthCell = 20;
@@ -350,19 +352,19 @@ function Game (event) {
         return;
     }
     
-    if (event.keyCode == 37 && select != 39) {
+    if (event.keyCode == 37) {
         select = 37;
     }
 
-    if (event.keyCode == 38 && select != 40) {
+    if (event.keyCode == 38) {
         select = 38;
     }
 
-    if (event.keyCode == 39 && select != 37) {
+    if (event.keyCode == 39) {
         select = 39;
     }
         
-    if (event.keyCode == 40 && select != 38) {
+    if (event.keyCode == 40) {
         select = 40;
     }
     posol = 1;
