@@ -6,7 +6,7 @@ var snake = Array();
 
 var apple = Array();
 
-var memory = Array();
+var memory = [];
 
 var setTime = 200;
 
@@ -314,7 +314,7 @@ class SnakePart {
 
 window.onload = function() {
 
-    document.body.onkeydown = Game;
+    document.body.onkeydown = check;
 
     const canvas = document.getElementById("field");
     const ctx = canvas.getContext("2d");
@@ -346,7 +346,7 @@ window.onload = function() {
     setTimeout(check, setTime);
 } 
 
-function Game (event) {
+function check () {
 
     if (posol == 1) {
         return;
@@ -354,46 +354,72 @@ function Game (event) {
     
     if (event.keyCode == 37) {
         select = 37;
+        memory[0] = 37;
     }
 
     if (event.keyCode == 38) {
         select = 38;
+        memory[0] = 38;
     }
 
     if (event.keyCode == 39) {
         select = 39;
+        memory[0] = 39;
     }
         
     if (event.keyCode == 40) {
         select = 40;
+        memory[0] = 40;
     }
     posol = 1;
-}
-
-function check () {
 
     var newX = snake[snake.length - 1].coord.x;
     var newY = snake[snake.length - 1].coord.y; 
 
-    switch (select) {
-        case 37:
-            newX = snake[snake.length - 1].coord.x - 1;
-            newY = snake[snake.length - 1].coord.y;
-         break;
-        case 38:
-            newX = snake[snake.length - 1].coord.x;
-            newY = snake[snake.length - 1].coord.y - 1;
-         break;
-        case 39:
-            newX = snake[snake.length - 1].coord.x + 1;
-            newY = snake[snake.length - 1].coord.y;
-         break;
-        case 40:
-            newX = snake[snake.length - 1].coord.x;
-            newY = snake[snake.length - 1].coord.y + 1;
-         break;
-        default:
+    if (select = 37 && memory[0] == 37) {
+        newX = snake[snake.length - 1].coord.x - 1;
+        newY = snake[snake.length - 1].coord.y;
+        memory.shift();
     }
+
+    if (select = 38 && memory[0] == 38) {
+        newX = snake[snake.length - 1].coord.x;
+        newY = snake[snake.length - 1].coord.y - 1;
+        memory.shift();
+    }
+
+    if (select = 39 && memory[0] == 39) {
+        newX = snake[snake.length - 1].coord.x + 1;
+        newY = snake[snake.length - 1].coord.y;
+        memory.shift();
+    }
+
+    if (select = 40 && memory[0] == 40) {
+        newX = snake[snake.length - 1].coord.x;
+        newY = snake[snake.length - 1].coord.y + 1;
+        memory.shift();
+    }
+
+
+
+        //case 37:
+            //newX = snake[snake.length - 1].coord.x - 1;
+            //newY = snake[snake.length - 1].coord.y;
+         //break;
+        //case 38:
+            //newX = snake[snake.length - 1].coord.x;
+            //newY = snake[snake.length - 1].coord.y - 1;
+         break;
+        //case 39:
+            //newX = snake[snake.length - 1].coord.x + 1;
+            //newY = snake[snake.length - 1].coord.y;
+         //break;
+        //case 40:
+            //newX = snake[snake.length - 1].coord.x;
+            //newY = snake[snake.length - 1].coord.y + 1;
+         //break;
+        //default:
+    //}
 
     if (newX * 20 < 0 || newY * 20 < 0 || 
         newX * 20 > document.getElementById('field').width - 20 || 
