@@ -376,9 +376,18 @@ function check () {
     var newX = snake[snake.length - 1].coord.x;
     var newY = snake[snake.length - 1].coord.y; 
 
+    
+    if (select = 37 && memory[0] != 37) {
+        memory.shift();
+    }
+
     if (select = 37 && memory[0] == 37) {
         newX = snake[snake.length - 1].coord.x - 1;
         newY = snake[snake.length - 1].coord.y;
+        memory.shift();
+    }
+
+    if (select = 38 && memory[0] != 38) {
         memory.shift();
     }
 
@@ -388,9 +397,17 @@ function check () {
         memory.shift();
     }
 
+    if (select = 39 && memory[0] != 39) {
+        memory.shift();
+    }
+
     if (select = 39 && memory[0] == 39) {
         newX = snake[snake.length - 1].coord.x + 1;
         newY = snake[snake.length - 1].coord.y;
+        memory.shift();
+    }
+
+    if (select = 40 && memory[0] != 40) {
         memory.shift();
     }
 
@@ -400,8 +417,6 @@ function check () {
         memory.shift();
     }
 
-
-
         //case 37:
             //newX = snake[snake.length - 1].coord.x - 1;
             //newY = snake[snake.length - 1].coord.y;
@@ -409,7 +424,7 @@ function check () {
         //case 38:
             //newX = snake[snake.length - 1].coord.x;
             //newY = snake[snake.length - 1].coord.y - 1;
-         break;
+         //break;
         //case 39:
             //newX = snake[snake.length - 1].coord.x + 1;
             //newY = snake[snake.length - 1].coord.y;
@@ -423,7 +438,7 @@ function check () {
 
     if (newX * 20 < 0 || newY * 20 < 0 || 
         newX * 20 > document.getElementById('field').width - 20 || 
-        newY * 20 > document.getElementById('field').height -20) {
+        newY * 20 > document.getElementById('field').height - 20) {
 
         GameOver ();
         return;
