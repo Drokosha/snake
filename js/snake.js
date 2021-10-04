@@ -314,7 +314,7 @@ class SnakePart {
 
 window.onload = function() {
 
-    document.body.onkeydown = check;
+    document.body.onkeydown = Game;
 
     const canvas = document.getElementById("field");
     const ctx = canvas.getContext("2d");
@@ -346,8 +346,10 @@ window.onload = function() {
     setTimeout(check, setTime);
 } 
 
-function check () {
 
+
+function Game(event) {
+   
     if (posol == 1) {
         return;
     }
@@ -372,6 +374,10 @@ function check () {
         memory[0] = 40;
     }
     posol = 1;
+}
+
+function check () {
+
 
     var newX = snake[snake.length - 1].coord.x;
     var newY = snake[snake.length - 1].coord.y; 
