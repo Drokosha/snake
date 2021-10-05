@@ -1,4 +1,4 @@
-var select = 40;
+var select = 38;
 
 var posol = 0;
 
@@ -7,6 +7,8 @@ var snake = Array();
 var apple = Array();
 
 var memory = [];
+
+memory[0] = 38;
 
 var setTime = 200;
 
@@ -319,18 +321,11 @@ window.onload = function() {
     const canvas = document.getElementById("field");
     const ctx = canvas.getContext("2d");
 
-    snakeObject();
+    //snakeObject();
 
-    //snake[0] = new SnakePart({x: 7, y: 8}, {x: 7, y: 7}, null, ctx);
-    //snake[1] = new SnakePart({x: 7, y: 7}, {x: 7, y: 6}, {x: 7, y: 8}, ctx);
-    //snake[2] = new SnakePart({x: 7, y: 6}, {x: 6, y: 6}, {x: 7, y: 7}, ctx);
-    //snake[3] = new SnakePart({x: 6, y: 6}, {x: 5, y: 6}, {x: 7, y: 6}, ctx);
-    //snake[4] = new SnakePart({x: 5, y: 6}, {x: 5, y: 5}, {x: 6, y: 6}, ctx);
-    //snake[5] = new SnakePart({x: 5, y: 5}, {x: 5, y: 4}, {x: 5, y: 6}, ctx);
-    //snake[6] = new SnakePart({x: 5, y: 4}, {x: 4, y: 4}, {x: 5, y: 5}, ctx);
-    //snake[7] = new SnakePart({x: 4, y: 4}, {x: 4, y: 5}, {x: 5, y: 4}, ctx);
-    //snake[8] = new SnakePart({x: 4, y: 5}, {x: 3, y: 5}, {x: 4, y: 4}, ctx);
-    //snake[9] = new SnakePart({x: 3, y: 5}, null, {x: 4, y: 5}, ctx);
+    snake[0] = new SnakePart({x: 6, y: 7}, {x: 6, y: 6}, null, ctx);
+    snake[1] = new SnakePart({x: 6, y: 6}, {x: 6, y: 5}, {x: 6, y: 7}, ctx);
+    snake[2] = new SnakePart({x: 6, y: 5}, null, {x: 6, y: 6}, ctx);
 
     for (part in snake) {
         snake[part].Draw();
@@ -348,7 +343,7 @@ window.onload = function() {
 
 
 
-function Game(event) {
+function Game (event) {
    
     if (posol == 1) {
         return;
@@ -414,7 +409,7 @@ function check () {
     if (select == 37 && memory[0] == 37) {
         newX = snake[snake.length - 1].coord.x - 1;
         newY = snake[snake.length - 1].coord.y;
-        memory.shift();
+        
     }
 
     if (select == 38 && memory[0] != 38) {
@@ -424,7 +419,7 @@ function check () {
     if (select == 38 && memory[0] == 38) {
         newX = snake[snake.length - 1].coord.x;
         newY = snake[snake.length - 1].coord.y - 1;
-        memory.shift();
+        
     }
 
     if (select == 39 && memory[0] != 39) {
@@ -434,7 +429,7 @@ function check () {
     if (select == 39 && memory[0] == 39) {
         newX = snake[snake.length - 1].coord.x + 1;
         newY = snake[snake.length - 1].coord.y;
-        memory.shift();
+        
     }
 
     if (select == 40 && memory[0] != 40) {
@@ -444,7 +439,7 @@ function check () {
     if (select == 40 && memory[0] == 40) {
         newX = snake[snake.length - 1].coord.x;
         newY = snake[snake.length - 1].coord.y + 1;
-        memory.shift();
+        
     }
 
         //case 37:
