@@ -355,23 +355,47 @@ function Game(event) {
     }
     
     if (event.keyCode == 37) {
-        select = 37;
-        memory[0] = 37;
+        if (memory[0] == 37) {
+            memory[1] = 39;
+        }
+
+        else {
+            select = 37;
+            memory[0] = 37;
+        }
     }
 
     if (event.keyCode == 38) {
-        select = 38;
-        memory[0] = 38;
+        if (memory[0] == 38) {
+            memory[1] = 40;
+        }
+
+        else {
+            select = 38;
+            memory[0] = 38;
+        }
     }
 
     if (event.keyCode == 39) {
-        select = 39;
-        memory[0] = 39;
+        if (memory[0] == 39) {
+            memory[1] = 37;
+        }
+
+        else { 
+            select = 39;
+            memory[0] = 39;
+        }
     }
         
     if (event.keyCode == 40) {
-        select = 40;
-        memory[0] = 40;
+        if (memory[0] == 40) {
+            memory[1] = 38;
+        }
+
+        else {
+            select = 40;
+            memory[0] = 40;
+        }
     }
     posol = 1;
 }
@@ -383,41 +407,41 @@ function check () {
     var newY = snake[snake.length - 1].coord.y; 
 
     
-    if (select = 37 && memory[0] != 37) {
+    if (select == 37 && memory[0] != 37) {
         memory.shift();
     }
 
-    if (select = 37 && memory[0] == 37) {
+    if (select == 37 && memory[0] == 37) {
         newX = snake[snake.length - 1].coord.x - 1;
         newY = snake[snake.length - 1].coord.y;
         memory.shift();
     }
 
-    if (select = 38 && memory[0] != 38) {
+    if (select == 38 && memory[0] != 38) {
         memory.shift();
     }
 
-    if (select = 38 && memory[0] == 38) {
+    if (select == 38 && memory[0] == 38) {
         newX = snake[snake.length - 1].coord.x;
         newY = snake[snake.length - 1].coord.y - 1;
         memory.shift();
     }
 
-    if (select = 39 && memory[0] != 39) {
+    if (select == 39 && memory[0] != 39) {
         memory.shift();
     }
 
-    if (select = 39 && memory[0] == 39) {
+    if (select == 39 && memory[0] == 39) {
         newX = snake[snake.length - 1].coord.x + 1;
         newY = snake[snake.length - 1].coord.y;
         memory.shift();
     }
 
-    if (select = 40 && memory[0] != 40) {
+    if (select == 40 && memory[0] != 40) {
         memory.shift();
     }
 
-    if (select = 40 && memory[0] == 40) {
+    if (select == 40 && memory[0] == 40) {
         newX = snake[snake.length - 1].coord.x;
         newY = snake[snake.length - 1].coord.y + 1;
         memory.shift();
