@@ -369,46 +369,44 @@ function check () {
     
     
     if (memory.length == 0) {
-        memory[memory.length] = 38;
+        if (deltaX < 0) {
+            newX = snake[snake.length - 1].coord.x - 1;
+            newY = snake[snake.length - 1].coord.y;
+        }
+
+        if (deltaX > 0) {
+            newX = snake[snake.length - 1].coord.x + 1;
+            newY = snake[snake.length - 1].coord.y;
+        }
+
+        if (deltaY < 0) {
+            newX = snake[snake.length - 1].coord.x;
+            newY = snake[snake.length - 1].coord.y - 1;
+        }
+
+        if (deltaY > 0) {
+            newX = snake[snake.length - 1].coord.x;
+            newY = snake[snake.length - 1].coord.y + 1;
+        }
     }
 
     if (memory.length > 0) {
-        if (memory[0] == 37 && (deltaX > 0 || deltaX > 0)) {
-            memory.shift();
-        }
         
-            else {
-                newX = snake[snake.length - 1].coord.x - 1;
-                newY = snake[snake.length - 1].coord.y;
-            }
-    
-        if (memory[0] == 39 && (deltaX > 0 || deltaX > 0)) {
-            memory.shift();
-        }
-        
-            else {
-                newX = snake[snake.length - 1].coord.x + 1;
-                newY = snake[snake.length - 1].coord.y;
-            }
+        for (var i = 0; i < memory.length; i++) {
+            
+            if (memory.length > 0) {
+                if ((memory[0] == 38 || memory[0] == 40) && deltaY != 0) {
+                    memory.shift();
+                }
 
-        if (memory[0] == 38 && (deltaY > 0 || deltaY > 0)) {
-            memory.shift();
-        }
-        
-            else {
-                newX = snake[snake.length - 1].coord.x;
-                newY = snake[snake.length - 1].coord.y - 1;
+                else if ((memory[0] == 37 || memory[0] == 39) && deltaX != 0) {
+                    memory.shift();
+                }
+                else {
+                    brake;
+                }
             }
-        
-        if (memory[0] == 40 && (deltaY > 0 || deltaY > 0)) {
-            memory.shift();
         }
-        
-            else {
-                newX = snake[snake.length - 1].coord.x + 1;
-                newY = snake[snake.length - 1].coord.y;
-            }
-
     }
 
 
