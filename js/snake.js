@@ -374,25 +374,8 @@ function check () {
     
     
     if (memory.length == 0) {
-        if (deltaX < 0) {
-            newX = snake[snake.length - 1].coord.x - 1;
-            newY = snake[snake.length - 1].coord.y;
-        }
-
-        if (deltaX > 0) {
-            newX = snake[snake.length - 1].coord.x + 1;
-            newY = snake[snake.length - 1].coord.y;
-        }
-
-        if (deltaY < 0) {
-            newX = snake[snake.length - 1].coord.x;
-            newY = snake[snake.length - 1].coord.y - 1;
-        }
-
-        if (deltaY > 0) {
-            newX = snake[snake.length - 1].coord.x;
-            newY = snake[snake.length - 1].coord.y + 1;
-        }
+        newX = newX + deltaX;
+        newY = newY + deltaY;
     }
 
     if (memory.length > 0) {
@@ -400,23 +383,11 @@ function check () {
         do {
             
             if ((memory[0] == 38 || memory[0] == 40) && deltaY != 0) {
-                memory.shift();
                 select = 1;
             }
             
             else {
-
-                if (memory[0] == 38) {
-                    newX = snake[snake.length - 1].coord.x;
-                    newY = snake[snake.length - 1].coord.y - 1;
-                    memory.shift();
-                }
-                
-                if (memory[0] == 40) {
-                    newX = snake[snake.length - 1].coord.x;
-                    newY = snake[snake.length - 1].coord.y + 1;
-                    memory.shift();
-                }
+                newY += deltaY
                 select = 0;
             }
             
@@ -427,21 +398,12 @@ function check () {
             }
             
             else {
-                
-                if (memory[0] == 37) {
-                    newX = snake[snake.length - 1].coord.x - 1;
-                    newY = snake[snake.length - 1].coord.y;
-                    memory.shift();
-                }
-                
-                if (memory[0] == 39) {
-                    newX = snake[snake.length - 1].coord.x + 1;
-                    newY = snake[snake.length - 1].coord.y;
-                    memory.shift();
-                }
+                newX += deltaX;
                 select = 0;
             }
-        } while (select == 1)
+            memory.shift();
+
+        } while (select == 1 && memory.length > 0)
     }
 
     if (newX * 20 < 0 || newY * 20 < 0 || 
@@ -452,19 +414,12 @@ function check () {
         return;
     }
 
+    
+
     for (var i = 1; i < snake.length; i++) {
 
         if (newX == snake[i].coord.x && newY == snake[i].coord.y) {
 
-            if (select == 1) { 
-
-            }
-            
-            else {
-
-                GameOver ();
-                return;
-            }
         }
     }
  
