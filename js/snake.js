@@ -397,51 +397,51 @@ function check () {
 
     if (memory.length > 0) {
         
-        for (var i = 0; i < memory.length; i++) {
+        do {
             
-            if (memory.length > 0) {
-                if ((memory[0] == 38 || memory[0] == 40) && deltaY != 0) {
-                    memory.shift();
-                    select = 1;
-                }
-                
-                else {
-
-                    if (memory[0] == 38) {
-                        newX = snake[snake.length - 1].coord.x;
-                        newY = snake[snake.length - 1].coord.y - 1;
-                        memory.shift();
-                    }
-                    
-                    if (memory[0] == 40) {
-                        newX = snake[snake.length - 1].coord.x;
-                        newY = snake[snake.length - 1].coord.y + 1;
-                        memory.shift();
-                    }
-                }
-                
-
-                if ((memory[0] == 37 || memory[0] == 39) && deltaX != 0) {
-                    memory.shift();
-                    select = 1;
-                }
-                
-                else {
-                    
-                    if (memory[0] == 37) {
-                        newX = snake[snake.length - 1].coord.x - 1;
-                        newY = snake[snake.length - 1].coord.y;
-                        memory.shift();
-                    }
-                    
-                    if (memory[0] == 39) {
-                        newX = snake[snake.length - 1].coord.x + 1;
-                        newY = snake[snake.length - 1].coord.y;
-                        memory.shift();
-                    }
-                }
+            if ((memory[0] == 38 || memory[0] == 40) && deltaY != 0) {
+                memory.shift();
+                select = 1;
             }
-        }
+            
+            else {
+
+                if (memory[0] == 38) {
+                    newX = snake[snake.length - 1].coord.x;
+                    newY = snake[snake.length - 1].coord.y - 1;
+                    memory.shift();
+                }
+                
+                if (memory[0] == 40) {
+                    newX = snake[snake.length - 1].coord.x;
+                    newY = snake[snake.length - 1].coord.y + 1;
+                    memory.shift();
+                }
+                select = 0;
+            }
+            
+
+            if ((memory[0] == 37 || memory[0] == 39) && deltaX != 0) {
+                memory.shift();
+                select = 1;
+            }
+            
+            else {
+                
+                if (memory[0] == 37) {
+                    newX = snake[snake.length - 1].coord.x - 1;
+                    newY = snake[snake.length - 1].coord.y;
+                    memory.shift();
+                }
+                
+                if (memory[0] == 39) {
+                    newX = snake[snake.length - 1].coord.x + 1;
+                    newY = snake[snake.length - 1].coord.y;
+                    memory.shift();
+                }
+                select = 0;
+            }
+        } while (select == 1)
     }
 
     if (newX * 20 < 0 || newY * 20 < 0 || 
@@ -497,7 +497,7 @@ function GameOver () {
     alert ("GAME OVER");
 }
 
-function snakeGrow (){
+function snakeGrow (newX, newY){
     const canvas = document.getElementById("field");
     const ctx = canvas.getContext("2d");
 
@@ -524,7 +524,7 @@ function snakeGrow (){
 
 }
 
-function snakeMove () {
+function snakeMove (newX, newY) {
     
     var i;
     
