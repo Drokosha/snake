@@ -372,18 +372,21 @@ function check () {
     var deltaX = snake[snake.length - 1].coord.x - snake[snake.length - 2].coord.x;
     var deltaY = snake[snake.length - 1].coord.y - snake[snake.length - 2].coord.y;
     
-    
-    if (memory.length == 0) {
-        newX = newX + deltaX;
-        newY = newY + deltaY;
-    }
+    var boll = 0;
 
-    if (memory.length > 0) {
+    do {
+
+        if (memory.length == 0) {
+            newX = newX + deltaX;
+            newY = newY + deltaY;
+        }
+
         
         do {
             
             if ((memory[0] == 38 || memory[0] == 40) && deltaY != 0) {
                 select = 1;
+                boll = 1;
             }
             
             else {
@@ -394,13 +397,14 @@ function check () {
                 if (memory[0] == 40) {
                     newY = newY + 1;
                 }
-
+                boll = 0;
                 select = 0;
             }
             
 
             if ((memory[0] == 37 || memory[0] == 39) && deltaX != 0) {
                 select = 1;
+                boll = 1;
             }
             
             else {
@@ -411,13 +415,14 @@ function check () {
                 if (memory[0] == 39) {
                     newX = newX + 1;
                 }
-
+                boll = 0;
                 select = 0;
             }
             memory.shift();
 
         } while (select == 1 && memory.length > 0)
-    }
+
+    } while (boll == 1)
 
     if (newX * 20 < 0 || newY * 20 < 0 || 
         newX * 20 > document.getElementById('field').width - 20 || 
