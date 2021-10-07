@@ -387,18 +387,31 @@ function check () {
             }
             
             else {
-                newY += deltaY
+                if (memory[0] == 38) {
+                    newY = newY - 1;
+                }
+
+                if (memory[0] == 40) {
+                    newY = newY + 1;
+                }
+
                 select = 0;
             }
             
 
             if ((memory[0] == 37 || memory[0] == 39) && deltaX != 0) {
-                memory.shift();
                 select = 1;
             }
             
             else {
-                newX += deltaX;
+                if (memory[0] == 37) {
+                    newX = newX - 1;
+                }
+
+                if (memory[0] == 39) {
+                    newX = newX + 1;
+                }
+
                 select = 0;
             }
             memory.shift();
