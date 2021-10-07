@@ -2,6 +2,8 @@ var newX;
 
 var newY;
 
+var select = 0; 
+
 var snake = Array();
 
 var apple = Array();
@@ -400,9 +402,11 @@ function check () {
             if (memory.length > 0) {
                 if ((memory[0] == 38 || memory[0] == 40) && deltaY != 0) {
                     memory.shift();
+                    select = 1;
                 }
                 
                 else {
+
                     if (memory[0] == 38) {
                         newX = snake[snake.length - 1].coord.x;
                         newY = snake[snake.length - 1].coord.y - 1;
@@ -415,12 +419,15 @@ function check () {
                         memory.shift();
                     }
                 }
+                
 
                 if ((memory[0] == 37 || memory[0] == 39) && deltaX != 0) {
                     memory.shift();
+                    select = 1;
                 }
                 
                 else {
+                    
                     if (memory[0] == 37) {
                         newX = snake[snake.length - 1].coord.x - 1;
                         newY = snake[snake.length - 1].coord.y;
@@ -447,10 +454,17 @@ function check () {
 
     for (var i = 1; i < snake.length; i++) {
 
-        if (newX == snake[i].coord.x && newY == snake[i].coord.y ) {
+        if (newX == snake[i].coord.x && newY == snake[i].coord.y) {
 
-            GameOver ();
-            return;
+            if (select == 1) { 
+
+            }
+            
+            else {
+
+                GameOver ();
+                return;
+            }
         }
     }
  
@@ -469,6 +483,8 @@ function check () {
             return;
         }
     }
+
+    select = 0;
      
     snakeMove (newX, newY);
 
