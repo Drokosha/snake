@@ -1,3 +1,6 @@
+var newX;
+
+var newY;
 
 var snake = Array();
 
@@ -362,8 +365,8 @@ function Game (event) {
 function check () {
 
 
-    var newX = snake[snake.length - 1].coord.x;
-    var newY = snake[snake.length - 1].coord.y; 
+    newX = snake[snake.length - 1].coord.x;
+    newY = snake[snake.length - 1].coord.y; 
     var deltaX = snake[snake.length - 1].coord.x - snake[snake.length - 2].coord.x;
     var deltaY = snake[snake.length - 1].coord.y - snake[snake.length - 2].coord.y;
     
@@ -398,17 +401,41 @@ function check () {
                 if ((memory[0] == 38 || memory[0] == 40) && deltaY != 0) {
                     memory.shift();
                 }
+                
+                else {
+                    if (memory[0] == 38) {
+                        newX = snake[snake.length - 1].coord.x;
+                        newY = snake[snake.length - 1].coord.y - 1;
+                        memory.shift();
+                    }
+                    
+                    if (memory[0] == 40) {
+                        newX = snake[snake.length - 1].coord.x;
+                        newY = snake[snake.length - 1].coord.y + 1;
+                        memory.shift();
+                    }
+                }
 
-                else if ((memory[0] == 37 || memory[0] == 39) && deltaX != 0) {
+                if ((memory[0] == 37 || memory[0] == 39) && deltaX != 0) {
                     memory.shift();
                 }
+                
                 else {
-                    brake;
+                    if (memory[0] == 37) {
+                        newX = snake[snake.length - 1].coord.x - 1;
+                        newY = snake[snake.length - 1].coord.y;
+                        memory.shift();
+                    }
+                    
+                    if (memory[0] == 39) {
+                        newX = snake[snake.length - 1].coord.x + 1;
+                        newY = snake[snake.length - 1].coord.y;
+                        memory.shift();
+                    }
                 }
             }
         }
     }
-
 
     if (newX * 20 < 0 || newY * 20 < 0 || 
         newX * 20 > document.getElementById('field').width - 20 || 
@@ -435,7 +462,7 @@ function check () {
 
             document.getElementById('score').innerHTML = 'Your score:'+score;
 
-            snakeGrow (memory[0]);
+            snakeGrow (newX, newY);
 
             setTimeout (check, setTime);
 
@@ -443,7 +470,7 @@ function check () {
         }
     }
      
-    snakeMove (memory[0]);
+    snakeMove (newX, newY);
 
     setTimeout(check, setTime);
 
@@ -458,25 +485,8 @@ function snakeGrow (){
     const canvas = document.getElementById("field");
     const ctx = canvas.getContext("2d");
 
-    if (memory[0] == 37) {
-        snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x - 1, y: snake[snake.length - 1].coord.y}, null, 
-        {x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y}, ctx);
-    }
-
-    else if (memory[0] == 38) {
-        snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y-1}, null, 
-        {x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y}, ctx);
-    }
-
-    else if (memory[0] == 39) {
-        snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x+1, y: snake[snake.length - 1].coord.y}, null, 
-        {x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y}, ctx);
-    }
     
-    else if (memory[0] == 40) {
-        snake[snake.length] = new SnakePart({x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y + 1}, null, 
-        {x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y}, ctx);
-    }
+    snake[snake.length] = new SnakePart({x: newX, y: newY}, null, {x: snake[snake.length - 1].coord.x, y: snake[snake.length - 1].coord.y}, ctx);
 
     snake[snake.length - 2].prev = {x: snake[snake.length-1].coord.x, y: snake[snake.length-1].coord.y};
 
@@ -515,25 +525,10 @@ function snakeMove () {
     snake[snake.length - 2].next.x = snake[snake.length - 1].next.x;
     snake[snake.length - 2].next.y = snake[snake.length - 1].next.y;
   
-    switch (memory[0]) {
-        case 37:
-            snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x - 1;
-            snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y;
-          break;
-        case 38:
-            snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x;
-            snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y - 1;
-          break;
-        case 39:
-            snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x + 1;
-            snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y;
-          break;
-        case 40:
-            snake[snake.length - 1].coord.x = snake[snake.length - 1].coord.x;
-            snake[snake.length - 1].coord.y = snake[snake.length - 1].coord.y + 1;
-          break;
-        default:
-    }
+   
+    snake[snake.length - 1].coord.x = newX;
+    snake[snake.length - 1].coord.y = newY;
+        
 
     snake[snake.length - 2].prev.x = snake[snake.length - 1].coord.x;
     snake[snake.length - 2].prev.y = snake[snake.length - 1].coord.y;
