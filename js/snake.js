@@ -374,15 +374,12 @@ function check () {
     
     var boll = 1;
 
-    do {
-
         if (memory.length == 0) {
             newX = newX + deltaX;
             newY = newY + deltaY;
-            boll = 0;
         }
 
-        while (memory.length > 0) {
+        while (boll == 1 && memory.length > 0) {
             
             if ((memory[0] == 38 || memory[0] == 40) && deltaY == 0) {
                 if (memory[0] == 38) {
@@ -409,9 +406,10 @@ function check () {
             }
 
             memory.shift();
-        }
 
-    } while (boll == 1)
+            newX = newX + deltaX;
+            newY = newY + deltaY;
+        }
 
     if (newX * 20 < 0 || newY * 20 < 0 || 
         newX * 20 > document.getElementById('field').width - 20 || 
