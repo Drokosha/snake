@@ -16,7 +16,7 @@ var heightCell = 20;
 
 var margin = 3;
 
-var radius = 17;
+var radius = widthCell - margin;
 
 var radiusM = 3;
 
@@ -26,7 +26,7 @@ class ApplePart {
     constructor (pos, ctx) {
         this.coord = pos;
         this.ctx = ctx;
-        this.cell = {width: 20, height: 20};
+        this.cell = {width: widthCell, height: heightCell};
     }
 
     AppleDraw() {
@@ -44,7 +44,7 @@ class SnakePart {
         this.next = next;
         this.prev = prev;
         this.ctx = ctx;
-        this.cell = {width: 20, height: 20};
+        this.cell = {width: widthCell, height: heightCell};
     }  
 
     Draw() { // добавляем параметр методу Draw(), передаём канву 
@@ -265,12 +265,12 @@ class SnakePart {
         this.ctx.fillStyle = "green";
     
         if (dir == 10) {
-            this.ctx.rect(this.cell.width * this.coord.x, this.cell.height * this.coord.y + margin, widthCell, heightCell - 2*margin);
+            this.ctx.rect(this.cell.width * this.coord.x, this.cell.height * this.coord.y + margin, widthCell, heightCell - 2 * margin);
             this.ctx.fill();   
         }
 
         else if (dir == 11) {
-            this.ctx.rect(this.cell.width * this.coord.x + margin, this.cell.height * this.coord.y, widthCell - 2*margin, heightCell);
+            this.ctx.rect(this.cell.width * this.coord.x + margin, this.cell.height * this.coord.y, widthCell - 2 * margin, heightCell);
             this.ctx.fill();    
         }
     }
@@ -281,9 +281,9 @@ class SnakePart {
         this.ctx.fillStyle = "green";
 
         if (dir == 20) {
-            this.ctx.arc(this.cell.width * (this.coord.x + 1), this.cell.height * (this.coord.y + 1), radius,  Math.PI, 3*Math.PI/2, 0); //слева вниз
-            this.ctx.lineTo(this.cell.width * (this.coord.x+1), this.cell.height * this.coord.y + heightCell - margin);
-            this.ctx.arc(this.cell.width * (this.coord.x + 1), this.cell.height * (this.coord.y + 1),  radiusM,  -Math.PI/2, Math.PI, 1); //слева вниз
+            this.ctx.arc(this.cell.width * (this.coord.x + 1), this.cell.height * (this.coord.y + 1), radius,  Math.PI, 3 * Math.PI/2, 0); //слева вниз
+            this.ctx.lineTo(this.cell.width * (this.coord.x + 1), this.cell.height * this.coord.y + (heightCell - margin));
+            this.ctx.arc(this.cell.width * (this.coord.x + 1), this.cell.height * (this.coord.y + 1),  radiusM,  - Math.PI/2, Math.PI, 1); //слева вниз
             this.ctx.lineTo(this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y + 1));
             this.ctx.fill();
         }
@@ -408,9 +408,9 @@ function check () {
         newY = newY + deltaY;
     }
 
-    if (newX * 20 < 0 || newY * 20 < 0 || 
-        newX * 20 > document.getElementById('field').width - 20 || 
-        newY * 20 > document.getElementById('field').height - 20) {
+    if (newX * widthCell < 0 || newY * heightCell < 0 || 
+        newX * widthCell > document.getElementById('field').width - widthCell || 
+        newY * heightCell > document.getElementById('field').height - heightCell) {
 
         GameOver ();
         return;
@@ -540,11 +540,12 @@ function snakeObject() {
     const canvas = document.getElementById("field");
     const ctx = canvas.getContext("2d");
 
-    var widthH = canvas.width/widthCell; // Переменная, которая отвечает за крайнию цифру в строке canvas/
+     // Переменная, которая отвечает за крайнию цифру в строке canvas/
     var i = 0; //задаю координату х элементов массива snake.
     var p = 0; //переменная которая считает элементы массива snake 
     var line = 0; //задаю координату Y элементов массива, так же она она определяет в какой строке canvas мы находимся.
-
+    var widthH = canvas.width/widthCell;
+    
     do {
         if (line % 2 == 0) { // проверка на четность, если line (строка) не четная то заходим в оператора и производит действия
             snake[p] = new SnakePart({x: i, y: line}, {x: i + 1, y: line}, {x: i, y: line - 1}, ctx); //аналогично 585 строке
@@ -586,6 +587,11 @@ function snakeObject() {
 
 function appleMatch (appleID) {
 
+    const canvas = document.getElementById("field");
+    const ctx = canvas.getContext("2d");
+    
+    var widthH = canvas.width/widthCell;
+
     do {
         var collision = 0;
         var son = 0;
@@ -594,7 +600,7 @@ function appleMatch (appleID) {
         var newX = apple[appleID].coord.x;
         var newY = apple[appleID].coord.y; 
         
-        apple[appleID].coord = {x: Math.floor((Math.random() * (29 - 0 + 1))), y: Math.floor((Math.random() * (29 - 0 +1)))};
+        apple[appleID].coord = {x: Math.floor((Math.random() * ((widthH - 1) - 0 + 1))), y: Math.floor((Math.random() * ((widthH - 1) - 0 + 1)))};
         
         for ( ; son < snake.length-1; son++) {
            
