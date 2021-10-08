@@ -1,7 +1,13 @@
 #score{
-            margin-top: 0;
-            margin-left: 72px;
-            font-size: 31px;
-            color: #FF0000;
-            text-shadow: 0 0 6px #010;
-        }
+    margin-top: height - 10 px;
+    margin-left: 20px;
+    font-size: 31px;
+    color: #FF0000;
+    text-shadow: 0 0 6px #010;
+}
+#field {
+    color: #FFA500;
+}
+
+
+

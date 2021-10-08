@@ -2,15 +2,13 @@ var newX;
 
 var newY;
 
-var select = 0; 
-
 var snake = Array();
 
 var apple = Array();
 
 var memory = [];
 
-var setTime = 200;
+var setTime = 400;
 
 var widthCell = 20;
 
@@ -52,6 +50,8 @@ class SnakePart {
     Draw() { // добавляем параметр методу Draw(), передаём канву 
        // делаем свойство текущему объекту, в которое присваиваем
                       // значение полученного параметра
+
+        //palitra ();
 
         let dir = this.Shape ();
  
@@ -374,42 +374,39 @@ function check () {
     
     var boll = 1;
 
-        if (memory.length == 0) {
-            newX = newX + deltaX;
-            newY = newY + deltaY;
-        }
-
-        while (boll == 1 && memory.length > 0) {
-            
-            if ((memory[0] == 38 || memory[0] == 40) && deltaY == 0) {
-                if (memory[0] == 38) {
-                    newY = newY - 1;
-                }
-
-                else if (memory[0] == 40) {
-                    newY = newY + 1;
-                }
-
-                boll = 0;
-            }
-            
-
-            if ((memory[0] == 37 || memory[0] == 39) && deltaX == 0) {
-                if (memory[0] == 37) {
-                    newX = newX - 1;
-                }
-
-                else if (memory[0] == 39) {
-                    newX = newX + 1;
-                }
-                boll = 0;
+    while (boll == 1 && memory.length > 0) {
+        
+        if ((memory[0] == 38 || memory[0] == 40) && deltaY == 0) {
+            if (memory[0] == 38) {
+                newY = newY - 1;
             }
 
-            memory.shift();
+            else if (memory[0] == 40) {
+                newY = newY + 1;
+            }
 
-            newX = newX + deltaX;
-            newY = newY + deltaY;
+            boll = 0;
         }
+        
+        if ((memory[0] == 37 || memory[0] == 39) && deltaX == 0) {
+            if (memory[0] == 37) {
+                newX = newX - 1;
+            }
+
+            else if (memory[0] == 39) {
+                newX = newX + 1;
+            }
+            boll = 0;
+        }
+
+        memory.shift();
+
+    }
+
+    if (boll != 0) {
+        newX = newX + deltaX;
+        newY = newY + deltaY;
+    }
 
     if (newX * 20 < 0 || newY * 20 < 0 || 
         newX * 20 > document.getElementById('field').width - 20 || 
@@ -435,6 +432,10 @@ function check () {
    
             score++;
 
+            if (score < 90) {
+                setTime = setTime - 10;
+            }
+
             document.getElementById('score').innerHTML = 'Your score:'+score;
 
             snakeGrow (newX, newY);
@@ -445,8 +446,14 @@ function check () {
         }
     }
 
-    select = 0;
-     
+    if (setTime < 150) {
+        setTime = 149;
+    }
+
+    if (score >= 90) {
+        setTime = 100;
+    }
+
     snakeMove (newX, newY);
 
     setTimeout(check, setTime);
@@ -615,5 +622,21 @@ function appleMatch (appleID) {
          
     } while (collision == 1);
 }
+
+function palitra () {
+    const canvas = document.getElementById("field");
+    const ctx = canvas.getContext("2d");
+
+    for (var i=0;i<30;i++){
+        for (var j=0;j<30;j++){
+            ctx.fillStyle = 'rgb('+
+            Math.floor(Math.random()*256)+','+
+            Math.floor(Math.random()*256)+','+
+            Math.floor(Math.random()*256)+')';
+            ctx.fillRect(j*20,i*20,20,20);
+        }
+    }
+}
+
 
 
