@@ -10,15 +10,15 @@ var memory = [];
 
 var setTime = 400;
 
-var widthCell = 20;
+var widthCell = 60;
 
-var heightCell = 20;
+var heightCell = 60;
 
-var margin = 3;
+var margin = 10;
 
 var radius = widthCell - margin;
 
-var radiusM = 3;
+var radiusM = widthCell - (widthCell - margin);
 
 let score = 0;
 
@@ -135,7 +135,7 @@ class SnakePart {
                 return 32;
             }
 
-            else if (this.prev.y > this.coord.y) { //лево
+            else if (this.prev.y > this.coord.y) { //вверх
                 return 33;
             }
         }
@@ -178,38 +178,38 @@ class SnakePart {
         if (dir == 1) {
 
             this.ctx.moveTo(this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y + 1));
-            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + margin,this.cell.height * (this.coord.y + 1) - heightCell - margin,
-                                      this.cell.width * this.coord.x + widthCell/2 ,this.cell.height * (this.coord.y + 1) - heightCell - margin);
-            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell - margin,this.cell.height * (this.coord.y + 1) - heightCell - margin,
+            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y + 1) - heightCell,
+                                      this.cell.width * this.coord.x + widthCell/2 ,this.cell.height * (this.coord.y + 1) - heightCell);
+            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell - margin,this.cell.height * (this.coord.y + 1) - heightCell,
                                       this.cell.width * this.coord.x + widthCell - margin,this.cell.height * (this.coord.y + 1));
             this.ctx.lineTo (this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y + 1));
         }
     
         else if(dir == 2) {
             this.ctx.moveTo(this.cell.width * this.coord.x, this.cell.height * this.coord.y + margin);
-            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell-margin, this.cell.height * this.coord.y + margin,
-                                     this.cell.width * this.coord.x + widthCell-margin, this.cell.height * this.coord.y + heightCell/2);
-            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell-margin, this.cell.height * this.coord.y + heightCell - margin,
+            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell, this.cell.height * this.coord.y + margin,
+                                     this.cell.width * this.coord.x + widthCell, this.cell.height * this.coord.y + heightCell/2);
+            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell, this.cell.height * this.coord.y + heightCell - margin,
                                      this.cell.width * this.coord.x, this.cell.height * this.coord.y + heightCell - margin);
             this.ctx.lineTo (this.cell.width * this.coord.x, this.cell.height * this.coord.y + margin);
         }
   
         else if(dir == 3) {
             this.ctx.moveTo(this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y - 1) + heightCell - margin);
-            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + margin,this.cell.height * (this.coord.y + 1),
+            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y + 1),
                                       this.cell.width * this.coord.x + widthCell/2, this.cell.height * (this.coord.y + 1));
             this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell - margin, this.cell.height * (this.coord.y + 1),
-                                      this.cell.width * this.coord.x + widthCell - margin, this.cell.height * (this.coord.y - 1) + heightCell - margin);
-            this.ctx.lineTo (this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y - 1) + heightCell - margin);
+                                      this.cell.width * this.coord.x + widthCell - margin, this.cell.height * (this.coord.y - 1) + heightCell);
+            this.ctx.lineTo (this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y - 1) + heightCell);
         }
   
         else if(dir == 4) {
-            this.ctx.moveTo(this.cell.width * (this.coord.x + 1) - widthCell - margin, this.cell.height * this.coord.y + heightCell/2);
-            this.ctx.quadraticCurveTo(this.cell.width * (this.coord.x + 1) - widthCell - margin, this.cell.height * this.coord.y + margin,
+            this.ctx.moveTo(this.cell.width * (this.coord.x + 1) - widthCell, this.cell.height * this.coord.y + heightCell/2);
+            this.ctx.quadraticCurveTo(this.cell.width * (this.coord.x + 1) - widthCell, this.cell.height * this.coord.y + margin,
                                       this.cell.width * (this.coord.x + 1), this.cell.height * this.coord.y + margin);
             this.ctx.lineTo(this.cell.width * (this.coord.x + 1), this.cell.height * this.coord.y + heightCell - margin);
-            this.ctx.quadraticCurveTo(this.cell.width * (this.coord.x + 1) - widthCell - margin, this.cell.height * this.coord.y + heightCell - margin,
-                                      this.cell.width * (this.coord.x + 1) - widthCell - margin, this.cell.height * this.coord.y + heightCell/2);
+            this.ctx.quadraticCurveTo(this.cell.width * (this.coord.x + 1) - widthCell, this.cell.height * this.coord.y + heightCell - margin,
+                                      this.cell.width * (this.coord.x + 1) - widthCell, this.cell.height * this.coord.y + heightCell/2);
         }
 
         this.ctx.fill();  
@@ -221,39 +221,39 @@ class SnakePart {
         this.ctx.fillStyle = "blue";
   
         if (dir == 30) {
-            this.ctx.moveTo(this.cell.width * this.coord.x + margin, this.cell.height * this.coord.y);
+            this.ctx.moveTo(this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y - 1) + heightCell - margin);
             this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y + 1),
                                       this.cell.width * this.coord.x + widthCell/2, this.cell.height * (this.coord.y + 1));
-            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell-margin, this.cell.height * (this.coord.y + 1),
-                                      this.cell.width * this.coord.x + widthCell-margin, this.cell.height * this.coord.y);
-            this.ctx.lineTo (this.cell.width * this.coord.x + margin, this.cell.height * this.coord.y);
+            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell - margin, this.cell.height * (this.coord.y + 1),
+                                      this.cell.width * this.coord.x + widthCell - margin, this.cell.height * (this.coord.y - 1) + heightCell);
+            this.ctx.lineTo (this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y - 1) + heightCell);
         }
 
         else if (dir == 31) {
-            this.ctx.moveTo(this.cell.width * this.coord.x, this.cell.height * this.coord.y + heightCell - margin);
-            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell - margin, this.cell.height * this.coord.y + heightCell - margin,
-                                     this.cell.width * this.coord.x + widthCell - margin, this.cell.height * this.coord.y + heightCell/2);
-            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell - margin, this.cell.height * this.coord.y + margin,
-                                     this.cell.width * this.coord.x, this.cell.height * this.coord.y + margin);
-            this.ctx.lineTo (this.cell.width * this.coord.x, this.cell.height * this.coord.y + heightCell - margin);
+            this.ctx.moveTo(this.cell.width * this.coord.x, this.cell.height * this.coord.y + margin);
+            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell, this.cell.height * this.coord.y + margin,
+                                     this.cell.width * this.coord.x + widthCell, this.cell.height * this.coord.y + heightCell/2);
+            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell, this.cell.height * this.coord.y + heightCell - margin,
+                                     this.cell.width * this.coord.x, this.cell.height * this.coord.y + heightCell - margin);
+            this.ctx.lineTo (this.cell.width * this.coord.x, this.cell.height * this.coord.y + margin);
         }
     
         else if (dir == 32) {
-            this.ctx.moveTo(this.cell.width * (this.coord.x+1) - widthCell - margin, this.cell.height * this.coord.y + heightCell/2);
-            this.ctx.quadraticCurveTo(this.cell.width * (this.coord.x + 1) - widthCell - margin, this.cell.height * this.coord.y + margin,
-                                      this.cell.width * (this.coord.x+1), this.cell.height * this.coord.y + margin);
-            this.ctx.lineTo (this.cell.width * (this.coord.x+1), this.cell.height * this.coord.y+heightCell - margin);
-            this.ctx.quadraticCurveTo(this.cell.width * (this.coord.x + 1) - widthCell - margin, this.cell.height * this.coord.y + heightCell - margin,
-                                      this.cell.width * (this.coord.x + 1) - widthCell - margin, this.cell.height * this.coord.y + heightCell/2);
+            this.ctx.moveTo(this.cell.width * (this.coord.x + 1) - widthCell, this.cell.height * this.coord.y + heightCell/2);
+            this.ctx.quadraticCurveTo(this.cell.width * (this.coord.x + 1) - widthCell, this.cell.height * this.coord.y + margin,
+                                      this.cell.width * (this.coord.x + 1), this.cell.height * this.coord.y + margin);
+            this.ctx.lineTo(this.cell.width * (this.coord.x + 1), this.cell.height * this.coord.y + heightCell - margin);
+            this.ctx.quadraticCurveTo(this.cell.width * (this.coord.x + 1) - widthCell, this.cell.height * this.coord.y + heightCell - margin,
+                                      this.cell.width * (this.coord.x + 1) - widthCell, this.cell.height * this.coord.y + heightCell/2);
         }
   
         else if (dir == 33) {
             this.ctx.moveTo(this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y + 1));
-            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y + 1) - heightCell - margin,
-                                      this.cell.width * this.coord.x + widthCell/2, this.cell.height * (this.coord.y+1)-heightCell - margin);
-            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell-margin, this.cell.height * (this.coord.y + 1) - heightCell - margin,
-                                      this.cell.width * this.coord.x + widthCell-margin, this.cell.height * (this.coord.y + 1));
-            this.ctx.lineTo (this.cell.width * this.coord.x+margin, this.cell.height * (this.coord.y + 1));
+            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y + 1) - heightCell,
+                                      this.cell.width * this.coord.x + widthCell/2 ,this.cell.height * (this.coord.y + 1) - heightCell);
+            this.ctx.quadraticCurveTo(this.cell.width * this.coord.x + widthCell - margin,this.cell.height * (this.coord.y + 1) - heightCell,
+                                      this.cell.width * this.coord.x + widthCell - margin,this.cell.height * (this.coord.y + 1));
+            this.ctx.lineTo (this.cell.width * this.coord.x + margin, this.cell.height * (this.coord.y + 1));
         }
 
         this.ctx.fill(); 
@@ -331,8 +331,8 @@ window.onload = function() {
         snake[part].Draw();
     }
 
-    apple[0] = new ApplePart({x: 5, y: 29}, ctx);
-    apple[1] = new ApplePart({x: 9, y: 29}, ctx);
+    apple[0] = new ApplePart({x: 2, y: 5}, ctx);
+    apple[1] = new ApplePart({x: 5, y: 7}, ctx);
 
     for (part in apple) {
         apple[part].AppleDraw();
@@ -589,7 +589,7 @@ function appleMatch (appleID) {
 
     const canvas = document.getElementById("field");
     const ctx = canvas.getContext("2d");
-    
+
     var widthH = canvas.width/widthCell;
 
     do {
